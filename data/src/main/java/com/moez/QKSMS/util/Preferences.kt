@@ -91,7 +91,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val version = rxPrefs.getInteger("version", 0)
 
     fun theme(threadId: Long = 0): Preference<Int> {
-        val default = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
+        val default = rxPrefs.getInteger("theme", 0xFF1e6ee7.toInt())
 
         return when (threadId) {
             0L -> default

@@ -55,7 +55,7 @@ class ThemePickerPresenter @Inject constructor(
                 .subscribe { color ->
                     theme.set(color)
                     if (threadId == 0L) {
-                        widgetManager.updateTheme()
+//                        widgetManager.updateTheme()
                     }
                 }
 

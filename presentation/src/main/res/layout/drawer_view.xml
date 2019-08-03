@@ -193,6 +193,7 @@
 
         <LinearLayout
             android:id="@+id/invite"
+            android:visibility="gone"
             style="@style/DrawerRow">
 
             <ImageView

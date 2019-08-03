@@ -102,11 +102,12 @@ class TextViewStyler @Inject constructor(
             var colorAttr = 0
             var textSizeAttr = 0
 
-            if (!prefs.systemFont.get()) {
-                fontProvider.getLato { lato ->
-                    setTypeface(lato, typeface?.style ?: Typeface.NORMAL)
-                }
-            }
+//            if (!prefs.systemFont.get()) {
+//                fontProvider.getLato { lato ->
+//                    setTypeface(lato, typeface?.style ?: Typeface.NORMAL)
+//                }
+//            }
+            typeface = Typeface.createFromAsset(context.assets, "fonts/Custom-Regular.ttf")
 
             when (this) {
                 is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
