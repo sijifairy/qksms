@@ -54,7 +54,7 @@
         <item></item>
         <item>Fixed</item>
         <item>- Messages sometimes get stuck "Sending…"</item>
-        <item>- QK Reply window glitches when it\'s too big</item>
+        <item>- Popup Reply window glitches when it\'s too big</item>
         <item>- Crash in compose screen when a contact has no numbers</item>
     </string-array>
     <string name="changelog_more">More</string>

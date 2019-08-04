@@ -178,7 +178,7 @@
     </string-array>
     <string name="settings_category_appearance">ظاهر</string>
     <string name="settings_category_general">عمومی</string>
-    <string name="settings_category_qkreply">QK Reply</string>
+    <string name="settings_category_qkreply">Popup Reply</string>
     <string name="settings_theme_title">پوسته</string>
     <string name="settings_night_title">حالت شب</string>
     <string name="settings_black_title">حالت شب کامل</string>
