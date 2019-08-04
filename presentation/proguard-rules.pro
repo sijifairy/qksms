@@ -16,3 +16,5 @@
 
 # okio
 -dontwarn okio.**
+
+-dontwarn com.android.installreferrer

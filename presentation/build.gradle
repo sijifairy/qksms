@@ -170,6 +170,8 @@ dependencies {
     withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    implementation 'com.appsflyer:af-android-sdk:4.10.0'
+    implementation 'com.android.installreferrer:installreferrer:1.0'
 
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
     noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')

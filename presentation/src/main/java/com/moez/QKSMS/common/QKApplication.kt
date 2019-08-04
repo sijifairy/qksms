@@ -22,10 +22,14 @@ import android.app.Activity
 import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
+import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.akaita.java.rxjava2debug.RxJava2Debug
+import com.appsflyer.AppsFlyerConversionListener
+import com.appsflyer.AppsFlyerLib
+import com.appsflyer.AppsFlyerLibCore.LOG_TAG
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.ads.MobileAds
@@ -70,6 +74,32 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
         val crashlyticsKit = Crashlytics.Builder()
         crashlyticsKit.core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         Fabric.with(this@QKApplication, crashlyticsKit.build())
+        val conversionDataListener = object : AppsFlyerConversionListener {
+            override fun onInstallConversionDataLoaded(conversionData: Map<String, String>) {
+                for (attrName in conversionData.keys) {
+                    Log.d(LOG_TAG, "conversion_attribute: " + attrName + " = " +
+                            conversionData[attrName])
+                }
+            }
+
+            override fun onInstallConversionFailure(errorMessage: String) {
+                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
+            }
+
+            override fun onAppOpenAttribution(conversionData: Map<String, String>) {
+                for (attrName in conversionData.keys) {
+                    Log.d(LOG_TAG, "onAppOpen_attribute: " + attrName + " = " +
+                            conversionData[attrName])
+                }
+            }
+
+            override fun onAttributionFailure(errorMessage: String) {
+                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
+            }
+        }
+        AppsFlyerLib.getInstance().init("4N3JVcMXPziVis9ohCYuE", conversionDataListener, applicationContext)
+        AppsFlyerLib.getInstance().startTracking(this)
+
         MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()

@@ -18,7 +18,6 @@
  */
 package com.moez.QKSMS.util
 
-import android.os.Build
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
@@ -66,7 +65,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
 
     // User configurable
-    val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_OFF)
+    val nightMode = rxPrefs.getInteger("nightModeSummary", NIGHT_MODE_ON)
     val nightStart = rxPrefs.getString("nightStart", "18:00")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
     val black = rxPrefs.getBoolean("black", false)
@@ -76,8 +75,8 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
     val notifAction2 = rxPrefs.getInteger("notifAction2", NOTIFICATION_ACTION_REPLY)
     val notifAction3 = rxPrefs.getInteger("notifAction3", NOTIFICATION_ACTION_NONE)
-    val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-    val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", true)
+    val qkreply = rxPrefs.getBoolean("qkreply", true)
+    val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", false)
     val sendDelay = rxPrefs.getInteger("sendDelay", SEND_DELAY_NONE)
     val swipeRight = rxPrefs.getInteger("swipeRight", SWIPE_ACTION_ARCHIVE)
     val swipeLeft = rxPrefs.getInteger("swipeLeft", SWIPE_ACTION_ARCHIVE)
