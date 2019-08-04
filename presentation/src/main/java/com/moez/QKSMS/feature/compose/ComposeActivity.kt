@@ -61,7 +61,9 @@ import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.blocked_activity.*
 import kotlinx.android.synthetic.main.compose_activity.*
+import kotlinx.android.synthetic.main.compose_activity.toolbar
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -118,6 +120,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.compose_activity)
+
+        theme
+                .autoDisposable(scope())
+                .subscribe { theme ->
+                    toolbar.setBackgroundColor(theme.theme)
+                }
+
         showBackButton(true)
         viewModel.bindView(this)
 
@@ -325,10 +334,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         optionsItemIntent.onNext(item.itemId)
         return true
-    }
-
-    override fun getColoredMenuItems(): List<Int> {
-        return super.getColoredMenuItems() + R.id.call
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

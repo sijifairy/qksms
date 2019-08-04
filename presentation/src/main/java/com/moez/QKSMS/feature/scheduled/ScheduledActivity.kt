@@ -38,10 +38,14 @@ import javax.inject.Inject
 
 class ScheduledActivity : QkThemedActivity(), ScheduledView {
 
-    @Inject lateinit var dialog: QkDialog
-    @Inject lateinit var fontProvider: FontProvider
-    @Inject lateinit var messageAdapter: ScheduledMessageAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var dialog: QkDialog
+    @Inject
+    lateinit var fontProvider: FontProvider
+    @Inject
+    lateinit var messageAdapter: ScheduledMessageAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val messageClickIntent by lazy { messageAdapter.clicks }
     override val messageMenuIntent by lazy { dialog.adapter.menuItemClicks }
@@ -58,13 +62,9 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         showBackButton(true)
         viewModel.bindView(this)
 
-        if (!prefs.systemFont.get()) {
-            fontProvider.getLato { lato ->
-                val typeface = Typeface.create(lato, Typeface.BOLD)
-                collapsingToolbar.setCollapsedTitleTypeface(typeface)
-                collapsingToolbar.setExpandedTitleTypeface(typeface)
-            }
-        }
+        val typeface = Typeface.createFromAsset(assets, "fonts/Custom-Regular.ttf")
+        collapsingToolbar.setCollapsedTitleTypeface(typeface)
+        collapsingToolbar.setExpandedTitleTypeface(typeface)
 
         dialog.title = getString(R.string.scheduled_options_title)
         dialog.adapter.setData(R.array.scheduled_options)

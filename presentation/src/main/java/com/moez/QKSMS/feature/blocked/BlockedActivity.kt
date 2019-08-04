@@ -24,11 +24,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.blocked_activity.*
+import kotlinx.android.synthetic.main.blocked_activity.toolbar
+import kotlinx.android.synthetic.main.container_activity.*
 import kotlinx.android.synthetic.main.settings_switch_widget.view.*
 import javax.inject.Inject
 
@@ -47,6 +51,12 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.blocked_activity)
+
+        theme
+                .autoDisposable(scope())
+                .subscribe { theme ->
+                    toolbar.setBackgroundColor(theme.theme)
+                }
         setTitle(R.string.blocked_title)
         showBackButton(true)
         viewModel.bindView(this)

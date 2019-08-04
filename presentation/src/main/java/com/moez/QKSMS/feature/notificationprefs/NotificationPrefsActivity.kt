@@ -46,9 +46,12 @@ import javax.inject.Inject
 
 class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
-    @Inject lateinit var previewModeDialog: QkDialog
-    @Inject lateinit var actionsDialog: QkDialog
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var previewModeDialog: QkDialog
+    @Inject
+    lateinit var actionsDialog: QkDialog
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val previewModeSelectedIntent by lazy { previewModeDialog.adapter.menuItemClicks }
@@ -61,6 +64,13 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.notification_prefs_activity)
+
+        theme
+                .autoDisposable(scope())
+                .subscribe { theme ->
+                    toolbar.setBackgroundColor(theme.theme)
+                }
+
         setTitle(R.string.title_notification_prefs)
         showBackButton(true)
         viewModel.bindView(this)

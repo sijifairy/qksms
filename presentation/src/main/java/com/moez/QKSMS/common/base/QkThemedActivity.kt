@@ -21,9 +21,11 @@ package com.moez.QKSMS.common.base
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
@@ -47,8 +49,10 @@ import javax.inject.Inject
  */
 abstract class QkThemedActivity : QkActivity() {
 
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var prefs: Preferences
+    @Inject
+    lateinit var colors: Colors
+    @Inject
+    lateinit var prefs: Preferences
 
     /**
      * In case the activity should be themed for a specific conversation, the selected conversation
@@ -72,6 +76,12 @@ abstract class QkThemedActivity : QkActivity() {
 
         super.onCreate(savedInstanceState)
 
+        theme
+                .autoDisposable(scope())
+                .subscribe { theme ->
+                    setStatusBarColor(getColorDark(theme.theme))
+                }
+
         // When certain preferences change, we need to recreate the activity
         Observable.merge(
                 listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont).map { it.asObservable().skip(1) })
@@ -82,11 +92,7 @@ abstract class QkThemedActivity : QkActivity() {
         // If night mode, or no dark icons supported, use light icons
         // If night mode and only dark status icons supported, use dark status icons
         // If night mode and all dark icons supported, use all dark icons
-        window.decorView.systemUiVisibility = when {
-            night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> 0
-            Build.VERSION.SDK_INT < Build.VERSION_CODES.O -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            else -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        }
+        window.decorView.systemUiVisibility = 0
 
         // Some devices don't let you modify android.R.attr.navigationBarColor
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -133,4 +139,38 @@ abstract class QkThemedActivity : QkActivity() {
         else -> R.style.AppThemeLight
     }
 
+    @ColorInt
+    fun getColorDark(color: Int): Int {
+        val blendedRed = Math.floor(0.8 * Color.red(color)).toInt()
+        val blendedGreen = Math.floor(0.8 * Color.green(color)).toInt()
+        val blendedBlue = Math.floor(0.8 * Color.blue(color)).toInt()
+        return Color.rgb(blendedRed, blendedGreen, blendedBlue)
+    }
+
+    fun setStatusBarColor(color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // we need statusbar color same as actionbar color
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val decor = window.decorView
+                if (color == Color.WHITE) {
+                    decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                } else {
+                    // We want to change tint color to white again.
+                    // You can also record the flags in advance so that you can turn UI back completely if
+                    // you have set other flags before, such as translucent or full screen.
+                    decor.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+                }
+                window.statusBarColor = color
+            } else {
+                if (color == Color.WHITE) {
+                    val blendedRed = Math.floor(0.8 * Color.red(color)).toInt()
+                    val blendedGreen = Math.floor(0.8 * Color.green(color)).toInt()
+                    val blendedBlue = Math.floor(0.8 * Color.blue(color)).toInt()
+                    window.statusBarColor = Color.rgb(blendedRed, blendedGreen, blendedBlue)
+                } else {
+                    window.statusBarColor = color
+                }
+            }
+        }
+    }
 }

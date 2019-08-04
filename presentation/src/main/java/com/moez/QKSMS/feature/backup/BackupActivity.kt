@@ -23,7 +23,9 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.container_activity.*
 
@@ -36,6 +38,12 @@ class BackupActivity : QkThemedActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_activity)
+
+        theme
+                .autoDisposable(scope())
+                .subscribe { theme ->
+                    toolbar.setBackgroundColor(theme.theme)
+                }
 
         router = Conductor.attachRouter(this, container, savedInstanceState)
         if (!router.hasRootController()) {
