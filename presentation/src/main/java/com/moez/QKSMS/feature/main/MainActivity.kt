@@ -42,6 +42,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.feature.changelog.ChangelogDialog
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
@@ -127,6 +128,8 @@ class MainActivity : QkThemedActivity(), MainView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         viewModel.bindView(this)
+
+        SmsAnalytics.logEvent("Main_Create")
 
         (snackbar as? ViewStub)?.setOnInflateListener { _, _ ->
             snackbarButton.clicks().subscribe(snackbarButtonIntent)

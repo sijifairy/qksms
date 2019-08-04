@@ -26,23 +26,18 @@ import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.akaita.java.rxjava2debug.RxJava2Debug
-import com.bugsnag.android.Bugsnag
-import com.bugsnag.android.Configuration
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.core.CrashlyticsCore
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.BugsnagTree
-import com.moez.QKSMS.common.util.CrashlyticsTree
 import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasBroadcastReceiverInjector
-import dagger.android.HasServiceInjector
+import dagger.android.*
+import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
@@ -54,23 +49,26 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
      * Inject this so that it is forced to initialize
      */
     @Suppress("unused")
-    @Inject lateinit var analyticsManager: AnalyticsManager
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
-    @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-    @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-    @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
-    @Inject lateinit var fileLoggingTree: FileLoggingTree
-    @Inject lateinit var nightModeManager: NightModeManager
-
-    private val packages = arrayOf("com.moez.QKSMS")
+    @Inject
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+    @Inject
+    lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+    @Inject
+    lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+    @Inject
+    lateinit var fileLoggingTree: FileLoggingTree
+    @Inject
+    lateinit var nightModeManager: NightModeManager
 
     override fun onCreate() {
         super.onCreate()
 
-        Bugsnag.init(this, Configuration(BuildConfig.BUGSNAG_API_KEY).apply {
-            appVersion = BuildConfig.VERSION_NAME
-            projectPackages = packages
-        })
+        val crashlyticsKit = Crashlytics.Builder()
+        crashlyticsKit.core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+        Fabric.with(this@QKApplication, crashlyticsKit.build())
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
@@ -96,7 +94,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree(), BugsnagTree(), CrashlyticsTree(), fileLoggingTree)
+        Timber.plant(Timber.DebugTree(), fileLoggingTree)
 
         RxJava2Debug.enableRxJava2AssemblyTracking(arrayOf("com.moez.QKSMS"))
     }
