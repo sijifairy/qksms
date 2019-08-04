@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Infinity SMS.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Infinity SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Infinity SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Новая беседа</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Ваши архивированные беседы будут появляться здесь</string>
     <string name="main_fab_cd">Начать новую беседу</string>
     <string name="main_default_sms_title">Снова полюбите писать</string>
-    <string name="main_default_sms_message">Сделать QKSMS приложением SMS по умолчанию</string>
+    <string name="main_default_sms_message">Сделать Infinity SMS приложением SMS по умолчанию</string>
     <string name="main_default_sms_change">Изменить</string>
     <string name="main_permission_required">Требуется разрешение</string>
-    <string name="main_permission_sms">QKSMS необходимо разрешение для отправки и просмотра SMS сообщений</string>
-    <string name="main_permission_contacts">QKSMS необходимо разрешение для просмотра контактов</string>
+    <string name="main_permission_sms">Infinity SMS необходимо разрешение для отправки и просмотра SMS сообщений</string>
+    <string name="main_permission_contacts">Infinity SMS необходимо разрешение для просмотра контактов</string>
     <string name="main_permission_allow">Разрешить</string>
     <string name="drawer_inbox">Входящие</string>
     <string name="drawer_archived">Архив</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Блокировка</string>
     <string name="drawer_more">Ещё</string>
     <string name="drawer_settings">Настройки</string>
-    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_plus">Infinity SMS+</string>
     <string name="drawer_help">Помощь и обратная связь</string>
     <string name="drawer_invite">Пригласить друзей</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_title">Infinity SMS+</string>
     <string name="drawer_plus_banner_summary">Разблокировать новые удивительные функции и поддержать разработку</string>
-    <string name="rate_title">Нравится QKSMS?</string>
+    <string name="rate_title">Нравится Infinity SMS?</string>
     <string name="rate_summary">Поделитесь любовью и оцените нас в Google Play!</string>
     <string name="rate_okay">OK!</string>
     <string name="rate_dismiss">ОТКЛОНИТЬ</string>
@@ -94,7 +94,7 @@
     <string name="compose_vcard_label">Карточка контакта</string>
     <string name="compose_scheduled_for">Запланировано на</string>
     <string name="compose_scheduled_future">Выбранное время должно быть в будущем!</string>
-    <string name="compose_scheduled_plus">Вы должны разблокировать QKSMS +, чтобы использовать запланированные сообщения</string>
+    <string name="compose_scheduled_plus">Вы должны разблокировать Infinity SMS +, чтобы использовать запланированные сообщения</string>
     <string name="compose_scheduled_toast">Добавлено в запланированные сообщения</string>
     <string name="compose_hint">Написать сообщение&#8230;</string>
     <string name="compose_menu_copy">Скопировать текст</string>
@@ -145,7 +145,7 @@
     <string name="backup_never">Никогда</string>
     <string name="backup_restore_title">Восстановление</string>
     <string name="backup_restore_summary">Выберите бэкап</string>
-    <string name="backup_restore_error_plus">Пожалуйста, разблокируйте QKSMS + для использования резервного копирования и восстановления</string>
+    <string name="backup_restore_error_plus">Пожалуйста, разблокируйте Infinity SMS + для использования резервного копирования и восстановления</string>
     <string name="backup_restore_error_backup">Выполняется резервное копирование&#8230;</string>
     <string name="backup_restore_error_restore">Выполняется восстановление&#8230;</string>
     <string name="backup_restore_confirm_title">Восстановление из резервной копии</string>
@@ -232,7 +232,7 @@
     <string name="settings_mms_size_title">Автоматически сжимать MMS вложения</string>
     <string name="settings_sync_title">Синхронизация сообщений</string>
     <string name="settings_sync_summary">Повторная синхронизация ваших сообщений с собственной базой данных SMS Android</string>
-    <string name="settings_about_title">О QKSMS</string>
+    <string name="settings_about_title">О Infinity SMS</string>
     <string name="settings_version">Версия %s</string>
     <string name="settings_logging_enabled">Ведение журнала отладки включено</string>
     <string name="settings_logging_disabled">Ведение журнала отладки отключено</string>
@@ -253,9 +253,9 @@
     <string name="qksms_plus_description_summary">Вы можете спасти голодающего разработчика всего за %s</string>
     <string name="qksms_plus_upgrade">Пожизненное обновление для %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Разблокировать + пожертвовать для %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Спасибо за поддержку QKSMS!</string>
-    <string name="qksms_plus_thanks_summary">Теперь у вас есть доступ ко всем функциям QKSMS+</string>
-    <string name="qksms_plus_free_title">QKSMS + является бесплатным для пользователей F-Droid! Если вы хотите поддержать развитие программы, сделайте пожертвование.</string>
+    <string name="qksms_plus_thanks_title">Спасибо за поддержку Infinity SMS!</string>
+    <string name="qksms_plus_thanks_summary">Теперь у вас есть доступ ко всем функциям Infinity SMS+</string>
+    <string name="qksms_plus_free_title">Infinity SMS + является бесплатным для пользователей F-Droid! Если вы хотите поддержать развитие программы, сделайте пожертвование.</string>
     <string name="qksms_plus_donate">Пожертвовать через PayPal</string>
     <string name="qksms_plus_coming_soon">Скоро</string>
     <string name="qksms_plus_themes_title">Премиум темы</string>
@@ -277,7 +277,7 @@
     <string name="qksms_plus_respond_title">Авто-ответ</string>
     <string name="qksms_plus_respond_summary">Автоматически отвечать на входящие сообщения предустановленным ответом</string>
     <string name="qksms_plus_more_title">Еще</string>
-    <string name="qksms_plus_more_summary">QKSMS находится в активной разработке, и Ваша покупка будет включать в себя все функции QKSMS+ в будущем!</string>
+    <string name="qksms_plus_more_summary">Infinity SMS находится в активной разработке, и Ваша покупка будет включать в себя все функции Infinity SMS+ в будущем!</string>
     <string name="widget_loading">Загрузка&#8230;</string>
     <string name="widget_more">Посмотреть больше бесед</string>
     <string name="qkreply_menu_read">Отметить прочитанным</string>
@@ -287,7 +287,7 @@
     <string name="qkreply_menu_collapse">Показать меньше</string>
     <string name="qkreply_menu_view">Открыть беседу</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_plus">Infinity SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Применить</string>
     <string-array name="notification_actions">
@@ -307,7 +307,7 @@
     <string name="button_undo">Отмена</string>
     <string name="toast_copied">Скопировано</string>
     <string name="toast_archived">Архивированная беседа</string>
-    <string name="toast_qksms_plus">Вы должны разблокировать QKSMS +, чтобы использовать</string>
+    <string name="toast_qksms_plus">Вы должны разблокировать Infinity SMS +, чтобы использовать</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Новое сообщение</item>
         <item quantity="few">%s новых сообщения</item>

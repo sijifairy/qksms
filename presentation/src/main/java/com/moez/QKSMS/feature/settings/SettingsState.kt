@@ -24,7 +24,7 @@ import com.moez.QKSMS.util.Preferences
 data class SettingsState(
     val theme: Int = 0,
     val nightModeSummary: String = "",
-    val nightModeId: Int = Preferences.NIGHT_MODE_OFF,
+    val nightModeId: Int = Preferences.NIGHT_MODE_ON,
     val nightStart: String = "",
     val nightEnd: String = "",
     val black: Boolean = false,

@@ -1,20 +1,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Infinity SMS.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Infinity SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Infinity SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
 
@@ -61,8 +61,9 @@
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:maxLines">1</item>
-        <item name="textColor">@android:color/white</item>
-        <item name="textSize">toolbar</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="PreferenceCategory">

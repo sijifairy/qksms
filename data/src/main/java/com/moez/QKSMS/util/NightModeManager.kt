@@ -48,7 +48,7 @@ class NightModeManager @Inject constructor(
 
         // If the last nightStart was more recent than the last nightEnd, then it's night time
         prefs.night.set(nightStartTime > nightEndTime)
-        widgetManager.updateTheme()
+//        widgetManager.updateTheme()
     }
 
     fun updateNightMode(mode: Int) {
@@ -57,7 +57,7 @@ class NightModeManager @Inject constructor(
         // If it's not on auto mode, set the appropriate night mode
         if (mode != Preferences.NIGHT_MODE_AUTO) {
             prefs.night.set(mode == Preferences.NIGHT_MODE_ON)
-            widgetManager.updateTheme()
+//            widgetManager.updateTheme()
         }
 
         updateAlarms()

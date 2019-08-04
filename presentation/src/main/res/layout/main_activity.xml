@@ -44,7 +44,7 @@
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginStart="0dp"/>
 
             <com.moez.QKSMS.common.widget.QkEditText
                 android:id="@+id/toolbarSearch"

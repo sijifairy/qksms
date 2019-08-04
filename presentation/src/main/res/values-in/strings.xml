@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Infinity SMS.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Infinity SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Infinity SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Percakapan baru</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Arsip percakapan anda akan ditampilkan di sini</string>
     <string name="main_fab_cd">Mulai percakapan baru</string>
     <string name="main_default_sms_title">Love texting again</string>
-    <string name="main_default_sms_message">Tetapkan QKSMS sebagai apl SMS baku anda</string>
+    <string name="main_default_sms_message">Tetapkan Infinity SMS sebagai apl SMS baku anda</string>
     <string name="main_default_sms_change">Ubah</string>
     <string name="main_permission_required">Membutuhkan izin</string>
-    <string name="main_permission_sms">QKSMS membutuhkan izin untuk mengirim dan membaca pesan SMS</string>
-    <string name="main_permission_contacts">QKSMS membutuhkan izin untuk membaca kontak anda</string>
+    <string name="main_permission_sms">Infinity SMS membutuhkan izin untuk mengirim dan membaca pesan SMS</string>
+    <string name="main_permission_contacts">Infinity SMS membutuhkan izin untuk membaca kontak anda</string>
     <string name="main_permission_allow">Izinkan</string>
     <string name="drawer_inbox">Kotak Masuk</string>
     <string name="drawer_archived">Diarsipkan</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Pemblokiran</string>
     <string name="drawer_more">Lainnya</string>
     <string name="drawer_settings">Pengaturan</string>
-    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_plus">Infinity SMS+</string>
     <string name="drawer_help">Bantuan &amp; Umpan balik</string>
     <string name="drawer_invite">Undang teman</string>
-    <string name="drawer_plus_banner_title">QKSMS+</string>
+    <string name="drawer_plus_banner_title">Infinity SMS+</string>
     <string name="drawer_plus_banner_summary">Membuka fitur-fitur baru yang menakjubkan, dan mendukung pengembangan</string>
-    <string name="rate_title">Menikmati QKSMS?</string>
+    <string name="rate_title">Menikmati Infinity SMS?</string>
     <string name="rate_summary">Share some love and rate us on Google Play!</string>
     <string name="rate_okay">OKE!</string>
     <string name="rate_dismiss">ABAIKAN</string>
@@ -91,7 +91,7 @@
     <string name="compose_vcard_label">Kartu nama</string>
     <string name="compose_scheduled_for">Jadwalkan pada</string>
     <string name="compose_scheduled_future">Waktu yang dipilih harus berada di masa depan!</string>
-    <string name="compose_scheduled_plus">Anda harus membuka akses QKSMS+ untuk menggunakan pesan terjadwal</string>
+    <string name="compose_scheduled_plus">Anda harus membuka akses Infinity SMS+ untuk menggunakan pesan terjadwal</string>
     <string name="compose_scheduled_toast">Ditambahkan ke pesan terjadwal</string>
     <string name="compose_hint">Tulis pesan&#8230;</string>
     <string name="compose_menu_copy">Salin teks</string>
@@ -142,7 +142,7 @@
     <string name="backup_never">Tidak pernah</string>
     <string name="backup_restore_title">Pulihkan</string>
     <string name="backup_restore_summary">Pilih cadangan</string>
-    <string name="backup_restore_error_plus">Silakan buka akses QKSMS+ untuk menggunakan pencadangan dan pemulihan</string>
+    <string name="backup_restore_error_plus">Silakan buka akses Infinity SMS+ untuk menggunakan pencadangan dan pemulihan</string>
     <string name="backup_restore_error_backup">Pencadangan sedang berlangsung&#8230;</string>
     <string name="backup_restore_error_restore">Pemulihan sedang berlangsung&#8230;</string>
     <string name="backup_restore_confirm_title">Pulihkan dari cadangan</string>
@@ -226,7 +226,7 @@
     <string name="settings_mms_size_title">Otomatis kompres lampiran MMS</string>
     <string name="settings_sync_title">Sinkronisasi pesan</string>
     <string name="settings_sync_summary">Sinkron ulang pesan anda dengan basis data apl SMS Android bawaan</string>
-    <string name="settings_about_title">Tentang QKSMS</string>
+    <string name="settings_about_title">Tentang Infinity SMS</string>
     <string name="settings_version">Versi %s</string>
     <string name="settings_logging_enabled">Log awakutu diaktifkan</string>
     <string name="settings_logging_disabled">Log awakutu dinonaktifkan</string>
@@ -247,9 +247,9 @@
     <string name="qksms_plus_description_summary">Anda bisa membantu pengembang hanya dengan %s</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Terima kasih telah mendukung QKSMS!</string>
-    <string name="qksms_plus_thanks_summary">Anda sekarang bisa mengakses semua fitur QKSMS+</string>
-    <string name="qksms_plus_free_title">QKSMS+ selalu gratis untuk pengguna F-Droid! Jika anda ingin mendukung pengembangan, jangan ragu untuk donasi.</string>
+    <string name="qksms_plus_thanks_title">Terima kasih telah mendukung Infinity SMS!</string>
+    <string name="qksms_plus_thanks_summary">Anda sekarang bisa mengakses semua fitur Infinity SMS+</string>
+    <string name="qksms_plus_free_title">Infinity SMS+ selalu gratis untuk pengguna F-Droid! Jika anda ingin mendukung pengembangan, jangan ragu untuk donasi.</string>
     <string name="qksms_plus_donate">Donasi via PayPal</string>
     <string name="qksms_plus_coming_soon">Akan datang</string>
     <string name="qksms_plus_themes_title">Tema premium</string>
@@ -271,7 +271,7 @@
     <string name="qksms_plus_respond_title">Balasan otomatis</string>
     <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
     <string name="qksms_plus_more_title">Lainnya</string>
-    <string name="qksms_plus_more_summary">QKSMS selalu dalam pengembangan aktif, dan pembelian anda sudah termasuk semua fitur QKSMS+ yang akan datang!</string>
+    <string name="qksms_plus_more_summary">Infinity SMS selalu dalam pengembangan aktif, dan pembelian anda sudah termasuk semua fitur Infinity SMS+ yang akan datang!</string>
     <string name="widget_loading">Memuat&#8230;</string>
     <string name="widget_more">Lihat percakapan lainnya</string>
     <string name="qkreply_menu_read">Tandai dibaca</string>
@@ -281,7 +281,7 @@
     <string name="qkreply_menu_collapse">Tampilkan sedikit</string>
     <string name="qkreply_menu_view">Buka percakapan</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_plus">Infinity SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Terapkan</string>
     <string-array name="notification_actions">
@@ -301,7 +301,7 @@
     <string name="button_undo">Urungkan</string>
     <string name="toast_copied">Disalin</string>
     <string name="toast_archived">Percakapan diarsipkan</string>
-    <string name="toast_qksms_plus">Anda harus membuka akses QKSMS+ untuk menggunakan ini</string>
+    <string name="toast_qksms_plus">Anda harus membuka akses Infinity SMS+ untuk menggunakan ini</string>
     <plurals name="notification_new_messages">
         <item quantity="other">%s pesan baru</item>
     </plurals>

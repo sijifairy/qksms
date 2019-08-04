@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Infinity SMS.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Infinity SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Infinity SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">New conversation</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">您存檔的對話將出現在這裡</string>
     <string name="main_fab_cd">開始新對話</string>
     <string name="main_default_sms_title">愛上發訊息</string>
-    <string name="main_default_sms_message">將QKSMS設為預設信息應用程式</string>
+    <string name="main_default_sms_message">將Infinity SMS設為預設信息應用程式</string>
     <string name="main_default_sms_change">更改</string>
     <string name="main_permission_required">需要授權</string>
-    <string name="main_permission_sms">需要允許QKSMS發送和查看SMS訊息</string>
-    <string name="main_permission_contacts">需要允許QKSMS查看您的連絡人</string>
+    <string name="main_permission_sms">需要允許Infinity SMS發送和查看SMS訊息</string>
+    <string name="main_permission_contacts">需要允許Infinity SMS查看您的連絡人</string>
     <string name="main_permission_allow">允許</string>
     <string name="drawer_inbox">收件箱</string>
     <string name="drawer_archived">已存檔</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">更多</string>
     <string name="drawer_settings">設定</string>
-    <string name="drawer_plus">QKSMS+</string>
+    <string name="drawer_plus">Infinity SMS+</string>
     <string name="drawer_help">幫助與反饋</string>
     <string name="drawer_invite">邀請朋友</string>
-    <string name="drawer_plus_banner_title">QKSMS +</string>
+    <string name="drawer_plus_banner_title">Infinity SMS +</string>
     <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
-    <string name="rate_title">喜歡QKSMS？</string>
+    <string name="rate_title">喜歡Infinity SMS？</string>
     <string name="rate_summary">在Google Play分享你的感受，並給我們評分！</string>
     <string name="rate_okay">好！</string>
     <string name="rate_dismiss">放棄</string>
@@ -91,7 +91,7 @@
     <string name="compose_vcard_label">連絡人卡片</string>
     <string name="compose_scheduled_for">Scheduled for</string>
     <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
+    <string name="compose_scheduled_plus">You must unlock Infinity SMS+ to use scheduled messaging</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_hint">寫一條訊息...</string>
     <string name="compose_menu_copy">複製文本</string>
@@ -142,7 +142,7 @@
     <string name="backup_never">Never</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
+    <string name="backup_restore_error_plus">Please unlock Infinity SMS+ to use backup and restore</string>
     <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
     <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
     <string name="backup_restore_confirm_title">Restore from backup</string>
@@ -226,7 +226,7 @@
     <string name="settings_mms_size_title">自動壓縮MMS附件</string>
     <string name="settings_sync_title">同步消息</string>
     <string name="settings_sync_summary">重新與安卓原生訊息數據庫進行同步</string>
-    <string name="settings_about_title">關於QKSMS</string>
+    <string name="settings_about_title">關於Infinity SMS</string>
     <string name="settings_version">版本 %s</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
@@ -247,9 +247,9 @@
     <string name="qksms_plus_description_summary">你可以支付%s來拯救一個飢餓的開發者</string>
     <string name="qksms_plus_upgrade">終身升級只需 %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">解鎖並捐贈只需 %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">感謝你對QKSMS的支持！</string>
-    <string name="qksms_plus_thanks_summary">現在你可以使用QKSMS+的全部功能！</string>
-    <string name="qksms_plus_free_title">QKSMS+對F-Droid用戶免費！如果您想支持開發，可以隨意捐款。</string>
+    <string name="qksms_plus_thanks_title">感謝你對Infinity SMS的支持！</string>
+    <string name="qksms_plus_thanks_summary">現在你可以使用Infinity SMS+的全部功能！</string>
+    <string name="qksms_plus_free_title">Infinity SMS+對F-Droid用戶免費！如果您想支持開發，可以隨意捐款。</string>
     <string name="qksms_plus_donate">使用PayPal捐贈</string>
     <string name="qksms_plus_coming_soon">即將推出</string>
     <string name="qksms_plus_themes_title">高級主題</string>
@@ -271,7 +271,7 @@
     <string name="qksms_plus_respond_title">自動回覆</string>
     <string name="qksms_plus_respond_summary">使用預設回應自動回覆傳入郵件</string>
     <string name="qksms_plus_more_title">更多</string>
-    <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+    <string name="qksms_plus_more_summary">Infinity SMS is under active development, and your purchase will include all future Infinity SMS+ features!</string>
     <string name="widget_loading">載入中...</string>
     <string name="widget_more">查看更多對話</string>
     <string name="qkreply_menu_read">標記為已讀</string>
@@ -281,7 +281,7 @@
     <string name="qkreply_menu_collapse">顯示較少</string>
     <string name="qkreply_menu_view">打開對話</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">QKSMS+</string>
+    <string name="theme_plus">Infinity SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">應用</string>
     <string-array name="notification_actions">
@@ -301,7 +301,7 @@
     <string name="button_undo">復原</string>
     <string name="toast_copied">已複製</string>
     <string name="toast_archived">存檔的會話</string>
-    <string name="toast_qksms_plus">您必須解鎖QKSMS+才能使用此功能</string>
+    <string name="toast_qksms_plus">您必須解鎖Infinity SMS+才能使用此功能</string>
     <plurals name="notification_new_messages">
         <item quantity="other">%s條新訊息</item>
     </plurals>

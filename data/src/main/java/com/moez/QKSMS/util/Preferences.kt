@@ -62,7 +62,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     }
 
     // Internal
-    val night = rxPrefs.getBoolean("night", false)
+    val night = rxPrefs.getBoolean("night", true)
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
 
     // User configurable
