@@ -46,6 +46,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3c0bc37fc39e5926cf9fb6a6157c84999b0cf356" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5061957740026229~4750010097"/>
         <activity
             android:name=".feature.main.MainActivity"
             android:launchMode="singleTask">

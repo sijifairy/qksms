@@ -169,6 +169,8 @@ dependencies {
     withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
     withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
     noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')
     withAnalyticsDebug project(path: ':data', configuration: 'withAnalyticsDebug')

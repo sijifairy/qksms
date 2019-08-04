@@ -28,6 +28,7 @@ import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
+import com.google.android.gms.ads.MobileAds
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.FileLoggingTree
@@ -69,7 +70,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
         val crashlyticsKit = Crashlytics.Builder()
         crashlyticsKit.core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         Fabric.with(this@QKApplication, crashlyticsKit.build())
-
+        MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()
