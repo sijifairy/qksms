@@ -22,6 +22,8 @@ import android.app.Activity
 import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
+import android.content.Context
+import android.provider.Settings
 import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
@@ -67,6 +69,15 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     lateinit var fileLoggingTree: FileLoggingTree
     @Inject
     lateinit var nightModeManager: NightModeManager
+
+    companion object {
+        lateinit var context: Context
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        context = this
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -127,7 +138,9 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         Timber.plant(Timber.DebugTree(), fileLoggingTree)
 
-        RxJava2Debug.enableRxJava2AssemblyTracking(arrayOf("com.moez.QKSMS"))
+        val uri = Settings.Secure.getUriFor("sms_default_application")
+        val context = applicationContext
+        context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

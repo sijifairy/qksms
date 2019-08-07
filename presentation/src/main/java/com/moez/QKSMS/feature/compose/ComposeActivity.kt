@@ -46,13 +46,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.extensions.autoScrollToStart
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.scrapViews
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.common.util.extensions.showKeyboard
+import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Message
@@ -61,9 +55,7 @@ import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.blocked_activity.*
 import kotlinx.android.synthetic.main.compose_activity.*
-import kotlinx.android.synthetic.main.compose_activity.toolbar
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -76,12 +68,18 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         private const val CONTACT_REQUEST_CODE = 2
     }
 
-    @Inject lateinit var attachmentAdapter: AttachmentAdapter
-    @Inject lateinit var chipsAdapter: ChipsAdapter
-    @Inject lateinit var contactsAdapter: ContactAdapter
-    @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var messageAdapter: MessagesAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var attachmentAdapter: AttachmentAdapter
+    @Inject
+    lateinit var chipsAdapter: ChipsAdapter
+    @Inject
+    lateinit var contactsAdapter: ContactAdapter
+    @Inject
+    lateinit var dateFormatter: DateFormatter
+    @Inject
+    lateinit var messageAdapter: MessagesAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
@@ -346,6 +344,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
     }
 
-    override fun onBackPressed() = backPressedIntent.onNext(Unit)
-
+    override fun onBackPressed() {
+        backPressedIntent.onNext(Unit)
+    }
 }
