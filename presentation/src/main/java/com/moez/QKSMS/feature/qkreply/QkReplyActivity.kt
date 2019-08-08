@@ -32,6 +32,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
@@ -82,6 +83,14 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             composeBackgroundGradient.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
             composeBackgroundSolid.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
+
+        SmsAnalytics.logEvent("Reply_Create")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        SmsAnalytics.logEvent("Reply_Resume")
     }
 
     override fun render(state: QkReplyState) {

@@ -39,6 +39,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -46,6 +49,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
@@ -80,6 +84,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     lateinit var messageAdapter: MessagesAdapter
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var mInterstitialAd: InterstitialAd
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
@@ -163,6 +169,43 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             messageBackground.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
             composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
+
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = "ca-app-pub-5061957740026229/5025234461"
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
+        mInterstitialAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdFailedToLoad(errorCode: Int) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the interstitial ad is closed.
+            }
+        }
+
+        SmsAnalytics.logEvent("Compose_Create")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        SmsAnalytics.logEvent("Compose_Resume")
     }
 
     override fun onStart() {
@@ -177,6 +220,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun render(state: ComposeState) {
         if (state.hasError) {
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+            }
+
             finish()
             return
         }
@@ -345,6 +392,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun onBackPressed() {
+        if (mInterstitialAd.isLoaded) {
+            mInterstitialAd.show()
+        }
         backPressedIntent.onNext(Unit)
     }
 }

@@ -21,6 +21,7 @@ package com.moez.QKSMS.feature.main
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.*
@@ -43,11 +44,16 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.Navigations
+import com.moez.QKSMS.common.util.Permissions
+import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.feature.changelog.ChangelogDialog
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
+import com.moez.QKSMS.feature.guide.SettingLauncherPadActivity
+import com.moez.QKSMS.feature.guide.UsageUtils
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
@@ -78,7 +84,7 @@ class MainActivity : QkThemedActivity(), MainView {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var mAdView : AdView
+    lateinit var mAdView: AdView
 
     override val activityResumedIntent: Subject<Unit> = PublishSubject.create()
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
@@ -324,6 +330,8 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun onResume() {
         super.onResume()
         activityResumedIntent.onNext(Unit)
+
+        SmsAnalytics.logEvent("Main_Resume")
     }
 
     override fun onDestroy() {
@@ -384,7 +392,26 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onBackPressed() {
+        if (Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 30
+                && !Permissions.isUsageAccessGranted()) {
+            showDeleteDialog()
+            Preferences.getDefault().incrementAndGetInt("pref_key_usage_guide_times")
+            return
+        }
         backPressedIntent.onNext(Unit)
     }
 
+    fun showDeleteDialog() {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle(R.string.dialog_usage_title)
+        builder.setMessage(R.string.dialog_usage_message)
+        builder.setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, which ->
+            UsageUtils.requestUsageAccessPermission(this, {
+                SettingLauncherPadActivity.closeSettingsActivity(this)
+                Navigations.startActivity(this@MainActivity, MainActivity::class.java)
+            }, false, false, false)
+        })
+        builder.setNegativeButton(R.string.button_cancel, null)
+        builder.show()
+    }
 }

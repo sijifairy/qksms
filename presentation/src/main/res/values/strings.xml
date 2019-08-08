@@ -89,6 +89,12 @@
         <item quantity="other">Are you sure you would like to delete %d conversations?</item>
     </plurals>
 
+    <string name="dialog_usage_title">Want to start Infinity SMS when click desktop icon?</string>
+    <string name="dialog_usage_message">Grant usage access permission to enable this function.</string>
+    <string name="permission_guide_description">Enable now and enjoy Infinity SMS.</string>
+    <string name="got_it">Got it</string>
+    <string name="promotion_enable_btn">ENABLE</string>
+
     <string-array name="message_options">
         <item>Copy text</item>
         <item>Forward</item>
@@ -402,5 +408,4 @@
         <item>LOL</item>
         <item>That\'s okay</item>
     </string-array>
-
 </resources>

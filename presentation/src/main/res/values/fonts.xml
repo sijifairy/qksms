@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="roboto_medium" translatable="false">sans-serif-medium</string>
+    <string name="roboto_regular" translatable="false">sans-serif</string>
+    <string name="roboto_black" translatable="false">sans-serif-black</string>
+
+    <string name="custom_black" translatable="false">Custom-Black</string>
+    <string name="custom_bold" translatable="false">Custom-Bold</string>
+    <string name="custom_heavy" translatable="false">Custom-Heavy</string>
+    <string name="custom_light" translatable="false">Custom-Light</string>
+    <string name="custom_medium" translatable="false">Custom-Medium</string>
+    <string name="custom_regular" translatable="false">Custom-Regular</string>
+    <string name="custom_semibold" translatable="false">Custom-Semibold</string>
+    <string name="custom_thin" translatable="false">Custom-Thin</string>
+    <string name="custom_ultralight" translatable="false">Custom-Ultralight</string>
+</resources>

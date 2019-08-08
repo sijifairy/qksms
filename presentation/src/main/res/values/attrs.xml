@@ -55,4 +55,35 @@
         <attr name="icon" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="TypefacedTextView">
+        <attr name="typeface" format="reference"/>
+        <attr name="font_style" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="bold" value="1"/>
+            <enum name="italic" value="2"/>
+            <enum name="bold_italic" value="3"/>
+        </attr>
+
+        <attr name="drawable_width" format="dimension"/>
+        <attr name="drawable_height" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ShapeImageView">
+        <attr name="shape" format="enum">
+            <enum name="rectangle" value="1"/>
+            <enum name="circle" value="2"/>
+            <enum name="oval" value="3"/>
+        </attr>
+        <attr name="radius" format="dimension"/>
+        <attr name="radius_leftTop" format="dimension"/>
+        <attr name="radius_leftBottom" format="dimension"/>
+        <attr name="radius_rightTop" format="dimension"/>
+        <attr name="radius_rightBottom" format="dimension"/>
+        <attr name="border_size" format="dimension"/>
+        <attr name="border_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="FixedRatioLayout">
+        <attr name="aspectRatio" format="float"/>
+    </declare-styleable>
 </resources>

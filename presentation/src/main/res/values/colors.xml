@@ -26,6 +26,7 @@
 
     <color name="statusBarLight">#FFFFFF</color>
     <color name="statusBarDark">#1d262b</color>
+    <color name="ripples_ripple_color">#FFCCCCCC</color>
 
     <color name="toolbarLight">#FFFFFF</color>
     <color name="toolbarDark">#1d262b</color>
@@ -64,4 +65,12 @@
 
     <!-- This colour should only ever be used for attrs with the tools tag -->
     <color name="tools_theme">#00838F</color>
+
+    <color name="transparent_black_pressed_color">#40000000</color>
+
+    <color name="dialog_negative_button_color">#ebeef3</color>
+    <color name="dialog_positive_button_color">@android:color/black</color>
+    <color name="permission_guide_phone_frame">#373a3b</color>
+    <color name="divider_gray">#D8D8D8</color>
+
 </resources>

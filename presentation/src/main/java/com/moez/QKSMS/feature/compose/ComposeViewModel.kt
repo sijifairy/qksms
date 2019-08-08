@@ -39,21 +39,10 @@ import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.filter.ContactFilter
-import com.moez.QKSMS.interactor.AddScheduledMessage
-import com.moez.QKSMS.interactor.CancelDelayedMessage
-import com.moez.QKSMS.interactor.ContactSync
-import com.moez.QKSMS.interactor.DeleteMessages
-import com.moez.QKSMS.interactor.MarkRead
-import com.moez.QKSMS.interactor.RetrySending
-import com.moez.QKSMS.interactor.SendMessage
+import com.moez.QKSMS.interactor.*
 import com.moez.QKSMS.manager.ActiveConversationManager
 import com.moez.QKSMS.manager.PermissionManager
-import com.moez.QKSMS.model.Attachment
-import com.moez.QKSMS.model.Attachments
-import com.moez.QKSMS.model.Contact
-import com.moez.QKSMS.model.Conversation
-import com.moez.QKSMS.model.Message
-import com.moez.QKSMS.model.PhoneNumber
+import com.moez.QKSMS.model.*
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
@@ -77,30 +66,30 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ComposeViewModel @Inject constructor(
-    @Named("query") private val query: String,
-    @Named("threadId") private val threadId: Long,
-    @Named("address") private val address: String,
-    @Named("text") private val sharedText: String,
-    @Named("attachments") private val sharedAttachments: Attachments,
-    private val context: Context,
-    private val activeConversationManager: ActiveConversationManager,
-    private val addScheduledMessage: AddScheduledMessage,
-    private val billingManager: BillingManager,
-    private val cancelMessage: CancelDelayedMessage,
-    private val contactFilter: ContactFilter,
-    private val contactsRepo: ContactRepository,
-    private val conversationRepo: ConversationRepository,
-    private val deleteMessages: DeleteMessages,
-    private val markRead: MarkRead,
-    private val messageDetailsFormatter: MessageDetailsFormatter,
-    private val messageRepo: MessageRepository,
-    private val navigator: Navigator,
-    private val permissionManager: PermissionManager,
-    private val prefs: Preferences,
-    private val retrySending: RetrySending,
-    private val sendMessage: SendMessage,
-    private val subscriptionManager: SubscriptionManagerCompat,
-    private val syncContacts: ContactSync
+        @Named("query") private val query: String,
+        @Named("threadId") private val threadId: Long,
+        @Named("address") private val address: String,
+        @Named("text") private val sharedText: String,
+        @Named("attachments") private val sharedAttachments: Attachments,
+        private val context: Context,
+        private val activeConversationManager: ActiveConversationManager,
+        private val addScheduledMessage: AddScheduledMessage,
+        private val billingManager: BillingManager,
+        private val cancelMessage: CancelDelayedMessage,
+        private val contactFilter: ContactFilter,
+        private val contactsRepo: ContactRepository,
+        private val conversationRepo: ConversationRepository,
+        private val deleteMessages: DeleteMessages,
+        private val markRead: MarkRead,
+        private val messageDetailsFormatter: MessageDetailsFormatter,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager,
+        private val prefs: Preferences,
+        private val retrySending: RetrySending,
+        private val sendMessage: SendMessage,
+        private val subscriptionManager: SubscriptionManagerCompat,
+        private val syncContacts: ContactSync
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && address.isBlank(),
         selectedConversation = threadId,
@@ -128,7 +117,9 @@ class ComposeViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .doOnNext { newState { copy(loading = true) } }
                 .observeOn(Schedulers.io())
-                .map { addresses -> Pair(conversationRepo.getOrCreateConversation(addresses)?.id ?: 0, addresses) }
+                .map { addresses ->
+                    Pair(conversationRepo.getOrCreateConversation(addresses)?.id ?: 0, addresses)
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { newState { copy(loading = false) } }
                 .switchMap { (threadId, addresses) ->
@@ -221,7 +212,8 @@ class ComposeViewModel @Inject constructor(
 
         val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
         disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
-            val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
+            val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId }
+                    ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
 
@@ -665,7 +657,8 @@ class ComposeViewModel @Inject constructor(
                                     TelephonyCompat.getOrCreateThreadId(context, addr)
                                 } ?: 0
                                 val address = listOf(conversationRepo
-                                        .getConversation(threadId)?.recipients?.firstOrNull()?.address ?: addr)
+                                        .getConversation(threadId)?.recipients?.firstOrNull()?.address
+                                        ?: addr)
                                 sendMessage.execute(SendMessage
                                         .Params(subId, threadId, address, body, attachments, delay))
                             }
@@ -695,7 +688,9 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(state) { _, state ->
                     when {
                         state.selectedMessages > 0 -> view.clearSelection()
-                        else -> newState { copy(hasError = true) }
+                        else -> {
+                            newState { copy(hasError = true) }
+                        }
                     }
                 }
                 .autoDisposable(view.scope())

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="permission_guide_phone_frame_margin">44dp</dimen>
+    <dimen name="permission_guide_phone_content_margin">56dp</dimen>
+    <dimen name="permission_guide_phone_content_top_margin">4dp</dimen>
+</resources>

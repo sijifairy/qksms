@@ -50,7 +50,7 @@ import io.realm.RealmConfiguration
 import timber.log.Timber
 import javax.inject.Inject
 
-class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
+class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
     /**
      * Inject this so that it is forced to initialize
