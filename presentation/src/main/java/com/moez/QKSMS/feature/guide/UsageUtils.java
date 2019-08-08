@@ -37,7 +37,6 @@ public class UsageUtils {
         }
     }
 
-
     public static void startObservingUsageAccessPermission(final Runnable grantedAction) {
         sUsageAccessTimer = new Timer();
         sUsageAccessTimer.schedule(new TimerTask() {

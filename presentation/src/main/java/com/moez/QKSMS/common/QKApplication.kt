@@ -38,6 +38,7 @@ import com.google.android.gms.ads.MobileAds
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.FileLoggingTree
+import com.moez.QKSMS.feature.guide.topapp.TopAppManager
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
@@ -141,6 +142,8 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         val uri = Settings.Secure.getUriFor("sms_default_application")
         val context = applicationContext
         context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
+
+        TopAppManager.getInstance().startPollingTask()
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {
