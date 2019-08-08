@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.moez.QKSMS.common.BaseApplication;
+import com.moez.QKSMS.common.util.SmsAnalytics;
 import com.moez.QKSMS.common.util.TransitionUtils;
 import com.moez.QKSMS.feature.main.MainActivity;
 
@@ -110,6 +111,7 @@ public class TopAppManager {
             if (!TextUtils.isEmpty(packageName) && packageName.equals("com.android.mms")) {
                 Intent intent = new Intent(BaseApplication.getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                SmsAnalytics.logEvent("AutoStart_Main");
                 BaseApplication.getContext().startActivity(intent,
                         TransitionUtils.getNoAnimationBundle(BaseApplication.getContext()));
             }

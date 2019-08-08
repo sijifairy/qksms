@@ -188,6 +188,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
             override fun onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
+                SmsAnalytics.logEvent("Detail_Wire_Click")
             }
 
             override fun onAdLeftApplication() {
@@ -392,7 +393,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun onBackPressed() {
+        SmsAnalytics.logEvent("Detail_Wire_Chance")
         if (mInterstitialAd.isLoaded) {
+            SmsAnalytics.logEvent("Detail_Wire_Show")
             mInterstitialAd.show()
         }
         backPressedIntent.onNext(Unit)

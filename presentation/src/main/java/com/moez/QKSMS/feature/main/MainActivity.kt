@@ -34,6 +34,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
@@ -202,6 +203,36 @@ class MainActivity : QkThemedActivity(), MainView {
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
+        SmsAnalytics.logEvent("Main_Banner_Chance")
+        mAdView.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                SmsAnalytics.logEvent("Main_Banner_Show")
+            }
+
+            override fun onAdFailedToLoad(errorCode : Int) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                SmsAnalytics.logEvent("Main_Banner_Click")
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        }
     }
 
     override fun render(state: MainState) {
@@ -392,16 +423,16 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        if (Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 30
+        if (Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 3
                 && !Permissions.isUsageAccessGranted()) {
-            showDeleteDialog()
+            showUsageDialog()
             Preferences.getDefault().incrementAndGetInt("pref_key_usage_guide_times")
             return
         }
         backPressedIntent.onNext(Unit)
     }
 
-    fun showDeleteDialog() {
+    fun showUsageDialog() {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setTitle(R.string.dialog_usage_title)
         builder.setMessage(R.string.dialog_usage_message)
@@ -409,9 +440,12 @@ class MainActivity : QkThemedActivity(), MainView {
             UsageUtils.requestUsageAccessPermission(this, {
                 SettingLauncherPadActivity.closeSettingsActivity(this)
                 Navigations.startActivity(this@MainActivity, MainActivity::class.java)
+                SmsAnalytics.logEvent("Usage_Granted")
             }, false, false, false)
+            SmsAnalytics.logEvent("Usage_Dialog_Ok_Click")
         })
         builder.setNegativeButton(R.string.button_cancel, null)
         builder.show()
+        SmsAnalytics.logEvent("Usage_Dialog_Show")
     }
 }
