@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.moez.QKSMS.common.BaseApplication;
@@ -106,7 +107,7 @@ public class TopAppManager {
 
         try {
             packageName = null == foregroundAppInfo ? null : foregroundAppInfo.packageName;
-            if (packageName.equals("com.android.mms")) {
+            if (!TextUtils.isEmpty(packageName) && packageName.equals("com.android.mms")) {
                 Intent intent = new Intent(BaseApplication.getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                 BaseApplication.getContext().startActivity(intent,
