@@ -133,7 +133,7 @@
             android:excludeFromRecents="true"
             android:screenOrientation="portrait"
             android:taskAffinity=".permission.guide"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/Transparent"/>
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>

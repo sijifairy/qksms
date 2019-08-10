@@ -204,13 +204,13 @@ class MainActivity : QkThemedActivity(), MainView {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
         SmsAnalytics.logEvent("Main_Banner_Chance")
-        mAdView.adListener = object: AdListener() {
+        mAdView.adListener = object : AdListener() {
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
                 SmsAnalytics.logEvent("Main_Banner_Show")
             }
 
-            override fun onAdFailedToLoad(errorCode : Int) {
+            override fun onAdFailedToLoad(errorCode: Int) {
                 // Code to be executed when an ad request fails.
             }
 
@@ -444,7 +444,10 @@ class MainActivity : QkThemedActivity(), MainView {
             }, false, false, false)
             SmsAnalytics.logEvent("Usage_Dialog_Ok_Click")
         })
-        builder.setNegativeButton(R.string.button_cancel, null)
+        builder.setNegativeButton(R.string.button_cancel, DialogInterface.OnClickListener { dialog, which ->
+            finish()
+            SmsAnalytics.logEvent("Usage_Dialog_Cancel_Click")
+        })
         builder.show()
         SmsAnalytics.logEvent("Usage_Dialog_Show")
     }

@@ -145,9 +145,9 @@ class MainViewModel @Inject constructor(
                 .subscribe { syncMessages.execute(Unit) }
 
         // Show changelog
-        if (changelogManager.didUpdate() && Locale.getDefault().language.startsWith("en")) {
-            view.showChangelog()
-        }
+//        if (changelogManager.didUpdate() && Locale.getDefault().language.startsWith("en")) {
+//            view.showChangelog()
+//        }
 
         view.changelogMoreIntent
                 .autoDisposable(view.scope())

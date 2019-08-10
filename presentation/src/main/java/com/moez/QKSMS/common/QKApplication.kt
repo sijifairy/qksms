@@ -19,7 +19,6 @@
 package com.moez.QKSMS.common
 
 import android.app.Activity
-import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -28,7 +27,6 @@ import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.akaita.java.rxjava2debug.RxJava2Debug
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.AppsFlyerLibCore.LOG_TAG
@@ -38,6 +36,7 @@ import com.google.android.gms.ads.MobileAds
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.FileLoggingTree
+import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.feature.guide.topapp.TopAppManager
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
@@ -144,6 +143,10 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
 
         TopAppManager.getInstance().startPollingTask()
+
+        if (!Preferences.getDefault().contains("pref_key_install_time")) {
+            Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
+        }
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

@@ -8,6 +8,7 @@ import com.moez.QKSMS.R;
 
 
 public class NotificationAccessDialogActivity extends Activity {
+
     private NotificationAccessGuideAnimationDialog mPermissionGuide;
 
     @Override

@@ -31,6 +31,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.format.DateFormat
+import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -49,6 +50,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.model.Attachment
@@ -221,9 +223,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun render(state: ComposeState) {
         if (state.hasError) {
-            if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
-            }
+            tryShowInterstitialAd()
 
             finish()
             return
@@ -393,11 +393,25 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun onBackPressed() {
+        tryShowInterstitialAd()
+        backPressedIntent.onNext(Unit)
+    }
+
+    private fun tryShowInterstitialAd() {
+        SmsAnalytics.logEvent("Compose_Back")
+
+        if (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
+                < DateUtils.MINUTE_IN_MILLIS * 5
+                || System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
+                < DateUtils.MINUTE_IN_MILLIS * 30) {
+            return
+        }
+
         SmsAnalytics.logEvent("Detail_Wire_Chance")
         if (mInterstitialAd.isLoaded) {
             SmsAnalytics.logEvent("Detail_Wire_Show")
             mInterstitialAd.show()
+            Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
         }
-        backPressedIntent.onNext(Unit)
     }
 }

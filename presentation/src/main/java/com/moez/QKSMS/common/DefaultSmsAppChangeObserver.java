@@ -6,6 +6,7 @@ import android.provider.Telephony;
 import android.util.Log;
 
 import com.klinker.android.send_message.Utils;
+import com.moez.QKSMS.common.util.Preferences;
 import com.moez.QKSMS.common.util.SmsAnalytics;
 
 public class DefaultSmsAppChangeObserver extends ContentObserver {
@@ -25,6 +26,9 @@ public class DefaultSmsAppChangeObserver extends ContentObserver {
             Log.d("DefaultSmsAppChange", "default sms cleared by " + Telephony.Sms.getDefaultSmsPackage(QKApplication.context));
 
             SmsAnalytics.logEvent("Default_Cleared", "by", Telephony.Sms.getDefaultSmsPackage(QKApplication.context));
+        } else {
+            Preferences.getDefault().doOnce(() -> SmsAnalytics.logEvent("Default_First_Set"), "pref_key_log_first_set_as_default");
+            SmsAnalytics.logEvent("Default_Set");
         }
     }
 }
