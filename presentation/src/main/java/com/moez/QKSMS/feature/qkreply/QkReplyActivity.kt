@@ -139,6 +139,12 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
         // The headline is guaranteed to be in every UnifiedNativeAd.
         (adView.headlineView as TextView).setText(ad.getHeadline())
+        val night = prefs.night.get()
+        if (night) {
+            (adView.headlineView as TextView).setTextColor(0xffffffff.toInt())
+        } else {
+            (adView.headlineView as TextView).setTextColor(0xff333333.toInt())
+        }
 
         // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
         // check before trying to display them.
