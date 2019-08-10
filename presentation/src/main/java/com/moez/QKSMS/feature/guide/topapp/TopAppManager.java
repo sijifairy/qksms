@@ -12,6 +12,9 @@ import com.moez.QKSMS.common.util.SmsAnalytics;
 import com.moez.QKSMS.common.util.TransitionUtils;
 import com.moez.QKSMS.feature.main.MainActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TopAppManager {
 
     private static final int EVENT_CHECKING_TOP_PROCESS_TO_PROTECT = 100;
@@ -97,6 +100,19 @@ public class TopAppManager {
         });
     }
 
+    private static List<String> sPackages = new ArrayList<>();
+
+    static {
+        sPackages.add("com.samsung.android.messaging");
+        sPackages.add("com.android.mms");
+        sPackages.add("com.google.android.apps.messaging");
+        sPackages.add("com.motorola.messaging");
+        sPackages.add("com.sonyericsson.conversations");
+        sPackages.add("com.htc.sense.mms");
+        sPackages.add("com.asus.message");
+        sPackages.add("com.lge.message");
+    }
+
     private void checkTopProcessToProtect(String lastPackageName) {
         workerHandler.removeMessages(EVENT_CHECKING_TOP_PROCESS_TO_PROTECT);
 
@@ -108,7 +124,7 @@ public class TopAppManager {
 
         try {
             packageName = null == foregroundAppInfo ? null : foregroundAppInfo.packageName;
-            if (!TextUtils.isEmpty(packageName) && packageName.equals("com.android.mms")) {
+            if (!TextUtils.isEmpty(packageName) && sPackages.contains(packageName)) {
                 Intent intent = new Intent(BaseApplication.getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
                 SmsAnalytics.logEvent("AutoStart_Main");
