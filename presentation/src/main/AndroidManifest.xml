@@ -131,7 +131,6 @@
             android:name=".feature.guide.NotificationAccessDialogActivity"
             android:allowTaskReparenting="false"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait"
             android:taskAffinity=".permission.guide"
             android:theme="@style/Transparent"/>
 
