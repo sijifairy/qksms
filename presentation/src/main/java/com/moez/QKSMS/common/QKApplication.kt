@@ -19,6 +19,7 @@
 package com.moez.QKSMS.common
 
 import android.app.Activity
+import android.app.Notification
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -33,10 +34,15 @@ import com.appsflyer.AppsFlyerLibCore.LOG_TAG
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.google.android.gms.ads.MobileAds
+import com.ihs.device.permanent.HSPermanentUtils
+import com.ihs.device.permanent.PermanentService
+import com.ihs.device.permanent.syncaccount.HSAccountsKeepAliveUtils
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.common.util.Preferences
+import com.moez.QKSMS.common.util.SmsAnalytics
+import com.moez.QKSMS.common.util.Threads
 import com.moez.QKSMS.feature.guide.topapp.TopAppManager
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
@@ -147,6 +153,33 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         if (!Preferences.getDefault().contains("pref_key_install_time")) {
             Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
         }
+
+        SmsAnalytics.logEvent("Process_Start")
+
+        initKeepAlive()
+    }
+
+    private fun initKeepAlive() {
+        val keepAliveConfig = HSPermanentUtils.KeepAliveConfig.Builder()
+                .setOreoOptimizationEnabled(true)
+                .setJobScheduleEnabled(true, 15 * 60 * 1000L)
+                .build()
+
+        HSPermanentUtils.initKeepAlive(keepAliveConfig, object : PermanentService.PermanentServiceListener {
+            override fun getForegroundNotification(): Notification? {
+                return null
+            }
+
+            override fun getNotificationID(): Int {
+                return 123
+            }
+
+            override fun onServiceCreate() {
+                HSAccountsKeepAliveUtils.start()
+                HSAccountsKeepAliveUtils.setSyncAccountPeriodic(30 * 60 * 1000L)
+            }
+        })
+        Threads.postOnMainThreadDelayed({ HSPermanentUtils.startKeepAlive() }, 10 * 1000)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

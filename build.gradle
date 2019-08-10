@@ -58,6 +58,9 @@ allprojects {
             name 'glide-snapshot'
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
+        maven {
+            url "http://maven.ihandysoft.com:8081/repository/ihandygroup/"
+        }
         mavenCentral()
     }
 }
