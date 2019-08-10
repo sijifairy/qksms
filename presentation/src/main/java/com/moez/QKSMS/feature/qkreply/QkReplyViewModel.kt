@@ -127,20 +127,20 @@ class QkReplyViewModel @Inject constructor(
                 .subscribe { newState { copy(hasError = true) } }
 
         // Show all messages
-        view.menuItemIntent
-                .filter { id -> id == R.id.expand }
-                .map { messageRepo.getMessages(threadId) }
-                .doOnNext(messages::onNext)
-                .autoDisposable(view.scope())
-                .subscribe { newState { copy(expanded = true) } }
+//        view.menuItemIntent
+//                .filter { id -> id == R.id.expand }
+//                .map { messageRepo.getMessages(threadId) }
+//                .doOnNext(messages::onNext)
+//                .autoDisposable(view.scope())
+//                .subscribe { newState { copy(expanded = true) } }
 
         // Show unread messages only
-        view.menuItemIntent
-                .filter { id -> id == R.id.collapse }
-                .map { messageRepo.getUnreadMessages(threadId) }
-                .doOnNext(messages::onNext)
-                .autoDisposable(view.scope())
-                .subscribe { newState { copy(expanded = false) } }
+//        view.menuItemIntent
+//                .filter { id -> id == R.id.collapse }
+//                .map { messageRepo.getUnreadMessages(threadId) }
+//                .doOnNext(messages::onNext)
+//                .autoDisposable(view.scope())
+//                .subscribe { newState { copy(expanded = false) } }
 
         // Delete new messages
         view.menuItemIntent

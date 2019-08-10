@@ -20,14 +20,20 @@ package com.moez.QKSMS.feature.qkreply
 
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.formats.MediaView
+import com.google.android.gms.ads.formats.NativeAdOptions
+import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -46,13 +52,17 @@ import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
-    @Inject lateinit var adapter: MessagesAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var adapter: MessagesAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val menuItemIntent: Subject<Int> = PublishSubject.create()
     override val textChangedIntent by lazy { message.textChanges() }
     override val changeSimIntent by lazy { sim.clicks() }
     override val sendIntent by lazy { send.clicks() }
+
+    lateinit var nativeAd: UnifiedNativeAd
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[QkReplyViewModel::class.java] }
 
@@ -84,13 +94,122 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             composeBackgroundSolid.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
 
+        val adLoader = AdLoader.Builder(this, "ca-app-pub-5061957740026229/7256693868")
+                .forUnifiedNativeAd { unifiedNativeAd: UnifiedNativeAd ->
+                    // Assumes that your ad layout is in a file call ad_unified.xml
+                    // in the res/layout folder
+                    nativeAd = unifiedNativeAd;
+                    val adView = layoutInflater
+                            .inflate(R.layout.ad_unified, null) as UnifiedNativeAdView
+                    // This method sets the text, images and the native ad, etc into the ad
+                    // view.
+                    populateUnifiedNativeAdView(nativeAd, adView)
+                    // Assumes you have a placeholder FrameLayout in your View layout
+                    // (with id ad_frame) where the ad is to be placed.
+                    ad_frame.removeAllViews()
+                    ad_frame.addView(adView)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(errorCode: Int) {
+                        // Handle the failure by logging, altering the UI, and so on.
+                    }
+                })
+                .withNativeAdOptions(NativeAdOptions.Builder()
+                        // Methods in the NativeAdOptions.Builder class can be
+                        // used here to specify individual options settings.
+                        .build())
+                .build()
+        adLoader.loadAd(AdRequest.Builder().build())
+
         SmsAnalytics.logEvent("Reply_Create")
+    }
+
+    private fun populateUnifiedNativeAdView(ad: UnifiedNativeAd, adView: UnifiedNativeAdView) {
+        val mediaView = adView.findViewById<MediaView>(R.id.ad_media)
+        adView.mediaView = mediaView
+
+        adView.headlineView = adView.findViewById(R.id.ad_headline)
+        adView.bodyView = adView.findViewById(R.id.ad_body)
+        adView.callToActionView = adView.findViewById(R.id.ad_call_to_action)
+        adView.iconView = adView.findViewById(R.id.ad_app_icon)
+//        adView.priceView = adView.findViewById(R.id.ad_price)
+//        adView.starRatingView = adView.findViewById(R.id.ad_stars)
+//        adView.storeView = adView.findViewById(R.id.ad_store)
+//        adView.advertiserView = adView.findViewById(R.id.ad_advertiser)
+
+        // The headline is guaranteed to be in every UnifiedNativeAd.
+        (adView.headlineView as TextView).setText(ad.getHeadline())
+
+        // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
+        // check before trying to display them.
+        if (ad.body == null) {
+            adView.bodyView.visibility = View.INVISIBLE
+        } else {
+            adView.bodyView.visibility = View.VISIBLE
+            (adView.bodyView as TextView).setText(ad.getBody())
+        }
+
+        if (ad.getCallToAction() == null) {
+            adView.callToActionView.visibility = View.INVISIBLE
+        } else {
+            adView.callToActionView.visibility = View.VISIBLE
+            (adView.callToActionView as Button).setText(ad.getCallToAction())
+        }
+
+        if (ad.getIcon() == null) {
+            adView.iconView.visibility = View.GONE
+        } else {
+            (adView.iconView as ImageView).setImageDrawable(
+                    ad.getIcon().getDrawable())
+            adView.iconView.visibility = View.VISIBLE
+        }
+
+//        if (ad.getPrice() == null) {
+//            adView.priceView.visibility = View.INVISIBLE
+//        } else {
+//            adView.priceView.visibility = View.VISIBLE
+//            (adView.priceView as TextView).setText(ad.getPrice())
+//        }
+//
+//        if (ad.getStore() == null) {
+//            adView.storeView.visibility = View.INVISIBLE
+//        } else {
+//            adView.storeView.visibility = View.VISIBLE
+//            (adView.storeView as TextView).setText(ad.getStore())
+//        }
+//
+//        if (ad.getStarRating() == null) {
+//            adView.starRatingView.visibility = View.INVISIBLE
+//        } else {
+//            (adView.starRatingView as RatingBar)
+//                    .setRating(ad.getStarRating().floatValue())
+//            adView.starRatingView.setVisibility(View.VISIBLE)
+//        }
+//
+//        if (ad.getAdvertiser() == null) {
+//            adView.advertiserView.visibility = View.INVISIBLE
+//        } else {
+//            (adView.advertiserView as TextView).setText(ad.getAdvertiser())
+//            adView.advertiserView.visibility = View.VISIBLE
+//        }
+
+        // Call the UnifiedNativeAdView's setNativeAd method to register the
+        // NativeAdObject.
+        adView.setNativeAd(ad)
     }
 
     override fun onResume() {
         super.onResume()
 
         SmsAnalytics.logEvent("Reply_Resume")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (nativeAd != null) {
+            nativeAd.destroy()
+        }
     }
 
     override fun render(state: QkReplyState) {
@@ -102,8 +221,8 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
         title = state.title
 
-        toolbar.menu.findItem(R.id.expand)?.isVisible = !state.expanded
-        toolbar.menu.findItem(R.id.collapse)?.isVisible = state.expanded
+//        toolbar.menu.findItem(R.id.expand)?.isVisible = !state.expanded
+//        toolbar.menu.findItem(R.id.collapse)?.isVisible = state.expanded
 
         adapter.data = state.data
 

@@ -25,18 +25,18 @@
         android:title="@string/qkreply_menu_read"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/expand"
-        android:icon="@drawable/ic_unfold_more_black_24dp"
-        android:title="@string/qkreply_menu_expand"
-        app:showAsAction="ifRoom" />
+    <!--<item-->
+        <!--android:id="@+id/expand"-->
+        <!--android:icon="@drawable/ic_unfold_more_black_24dp"-->
+        <!--android:title="@string/qkreply_menu_expand"-->
+        <!--app:showAsAction="ifRoom" />-->
 
-    <item
-        android:id="@+id/collapse"
-        android:icon="@drawable/ic_unfold_less_black_24dp"
-        android:title="@string/qkreply_menu_collapse"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
+    <!--<item-->
+        <!--android:id="@+id/collapse"-->
+        <!--android:icon="@drawable/ic_unfold_less_black_24dp"-->
+        <!--android:title="@string/qkreply_menu_collapse"-->
+        <!--android:visible="false"-->
+        <!--app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/call"
