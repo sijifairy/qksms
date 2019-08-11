@@ -63,6 +63,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
     override val sendIntent by lazy { send.clicks() }
 
     lateinit var nativeAd: UnifiedNativeAd
+    private fun isNativeAdInitialized() = ::nativeAd.isInitialized
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[QkReplyViewModel::class.java] }
 
@@ -213,7 +214,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
     override fun onDestroy() {
         super.onDestroy()
 
-        if (nativeAd != null) {
+        if (isNativeAdInitialized() && nativeAd != null) {
             nativeAd.destroy()
         }
     }

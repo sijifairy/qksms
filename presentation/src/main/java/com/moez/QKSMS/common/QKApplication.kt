@@ -33,10 +33,8 @@ import com.appsflyer.AppsFlyerLib
 import com.appsflyer.AppsFlyerLibCore.LOG_TAG
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
+import com.flurry.android.FlurryAgent
 import com.google.android.gms.ads.MobileAds
-import com.ihs.device.permanent.HSPermanentUtils
-import com.ihs.device.permanent.PermanentService
-import com.ihs.device.permanent.syncaccount.HSAccountsKeepAliveUtils
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.FileLoggingTree
@@ -87,6 +85,10 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
 
     override fun onCreate() {
         super.onCreate()
+
+        FlurryAgent.Builder()
+                .withLogEnabled(true)
+                .build(this, "63DH56Z7X2568JSZBDPS")
 
         val crashlyticsKit = Crashlytics.Builder()
         crashlyticsKit.core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
@@ -160,26 +162,26 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
     }
 
     private fun initKeepAlive() {
-        val keepAliveConfig = HSPermanentUtils.KeepAliveConfig.Builder()
-                .setOreoOptimizationEnabled(true)
-                .setJobScheduleEnabled(true, 15 * 60 * 1000L)
-                .build()
-
-        HSPermanentUtils.initKeepAlive(keepAliveConfig, object : PermanentService.PermanentServiceListener {
-            override fun getForegroundNotification(): Notification? {
-                return null
-            }
-
-            override fun getNotificationID(): Int {
-                return 123
-            }
-
-            override fun onServiceCreate() {
-                HSAccountsKeepAliveUtils.start()
-                HSAccountsKeepAliveUtils.setSyncAccountPeriodic(30 * 60 * 1000L)
-            }
-        })
-        Threads.postOnMainThreadDelayed({ HSPermanentUtils.startKeepAlive() }, 10 * 1000)
+//        val keepAliveConfig = HSPermanentUtils.KeepAliveConfig.Builder()
+//                .setOreoOptimizationEnabled(true)
+//                .setJobScheduleEnabled(true, 15 * 60 * 1000L)
+//                .build()
+//
+//        HSPermanentUtils.initKeepAlive(keepAliveConfig, object : PermanentService.PermanentServiceListener {
+//            override fun getForegroundNotification(): Notification? {
+//                return null
+//            }
+//
+//            override fun getNotificationID(): Int {
+//                return 123
+//            }
+//
+//            override fun onServiceCreate() {
+//                HSAccountsKeepAliveUtils.start()
+//                HSAccountsKeepAliveUtils.setSyncAccountPeriodic(30 * 60 * 1000L)
+//            }
+//        })
+//        Threads.postOnMainThreadDelayed({ HSPermanentUtils.startKeepAlive() }, 10 * 1000)
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

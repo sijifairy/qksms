@@ -18,3 +18,17 @@
 -dontwarn okio.**
 
 -dontwarn com.android.installreferrer
+
+# Flurry
+-keep class com.flurry.** { *; }
+-dontwarn com.flurry.**
+
+# Tapjoy
+-keep class com.tapjoy.** { *; }
+-dontwarn com.tapjoy.**
+-dontwarn com.google.**
+-dontwarn com.ihs.**
+-dontwarn com.messagecenter.**
+-dontwarn net.appcloudbox.**
+-dontwarn com.amazon.**
+-dontwarn com.appsflyer.FirebaseInstanceIdListener**

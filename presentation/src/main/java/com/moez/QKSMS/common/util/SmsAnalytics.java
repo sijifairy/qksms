@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
+import com.flurry.android.FlurryAgent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.common.QKApplication;
@@ -28,6 +29,7 @@ public class SmsAnalytics {
     static {
         sFirebaseAnalytics = FirebaseAnalytics.getInstance(QKApplication.context);
     }
+
     private static HashMap<String, List<String>> sDebugEventMap = null;
 
     public static void logEvent(String eventID) {
@@ -68,7 +70,7 @@ public class SmsAnalytics {
         logEvent(eventID, false, eventValues);
     }
 
-    public static void logEvent(final String eventID, boolean alsoLogToFlurry,  Map<String, String> eventValues) {
+    public static void logEvent(final String eventID, boolean alsoLogToFlurry, Map<String, String> eventValues) {
         try {
             CustomEvent event = new CustomEvent(eventID);
 
@@ -78,14 +80,12 @@ public class SmsAnalytics {
                 }
             }
 
-                Answers.getInstance().logCustom(event);
+            Answers.getInstance().logCustom(event);
 
-            if (alsoLogToFlurry) {
-                if (eventValues == null) {
-                    eventValues = new HashMap<>(1);
-                }
-//                HSAnalytics.logEvent(eventID, eventValues);
+            if (eventValues == null) {
+                eventValues = new HashMap<>(1);
             }
+            FlurryAgent.logEvent(eventID, eventValues);
 
             Bundle params = new Bundle();
             if (eventValues != null) {
@@ -110,8 +110,8 @@ public class SmsAnalytics {
     }
 
     private static void onLogEvent(String eventID, boolean alsoLogToFlurry, Map<String, String> eventValues) {
-            String eventDescription = getEventInfoDescription(eventID, alsoLogToFlurry, eventValues);
-            Log.d(TAG, eventDescription);
+        String eventDescription = getEventInfoDescription(eventID, alsoLogToFlurry, eventValues);
+        Log.d(TAG, eventDescription);
     }
 
     private static String getEventInfoDescription(String eventID, boolean alsoLogToFlurry, Map<String, String> eventValues) {

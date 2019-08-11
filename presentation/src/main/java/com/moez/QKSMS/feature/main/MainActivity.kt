@@ -198,7 +198,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 }
 
         itemTouchCallback.adapter = conversationsAdapter
-        conversationsAdapter.autoScrollToStart(recyclerView)
+//        conversationsAdapter.autoScrollToStart(recyclerView)
 
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()
@@ -448,7 +448,9 @@ class MainActivity : QkThemedActivity(), MainView {
             finish()
             SmsAnalytics.logEvent("Usage_Dialog_Cancel_Click")
         })
-        builder.show()
+        val dialog = builder.create()
+        dialog.setOnDismissListener { finish() }
+        dialog.show()
         SmsAnalytics.logEvent("Usage_Dialog_Show")
     }
 }
