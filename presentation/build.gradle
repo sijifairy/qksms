@@ -171,6 +171,7 @@ dependencies {
     implementation 'com.flurry.android:analytics:11.4.0@aar'
 
     withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
+    withAnalyticsImplementation 'com.google.firebase:firebase-config:18.0.0'
     withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     implementation 'com.google.android.gms:play-services-ads:17.2.0'

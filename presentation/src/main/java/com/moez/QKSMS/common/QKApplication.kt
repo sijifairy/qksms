@@ -34,7 +34,9 @@ import com.appsflyer.AppsFlyerLibCore.LOG_TAG
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.flurry.android.FlurryAgent
+import com.flurry.sdk.fa
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.FileLoggingTree
@@ -52,6 +54,7 @@ import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
+import java.util.HashMap
 import javax.inject.Inject
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
@@ -159,6 +162,9 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         SmsAnalytics.logEvent("Process_Start")
 
         initKeepAlive()
+        val eventValue = HashMap<String, Any>()
+        eventValue.put("should_show_usage_dialog", false)
+        FirebaseRemoteConfig.getInstance().setDefaults(eventValue)
     }
 
     private fun initKeepAlive() {

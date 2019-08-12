@@ -38,6 +38,7 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -423,7 +424,8 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        if (Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 3
+        if (FirebaseRemoteConfig.getInstance().getBoolean("should_show_usage_dialog")
+                && Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 3
                 && !Permissions.isUsageAccessGranted()) {
             showUsageDialog()
             Preferences.getDefault().incrementAndGetInt("pref_key_usage_guide_times")
