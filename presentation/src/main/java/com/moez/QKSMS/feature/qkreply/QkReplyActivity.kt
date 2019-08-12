@@ -133,10 +133,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         adView.bodyView = adView.findViewById(R.id.ad_body)
         adView.callToActionView = adView.findViewById(R.id.ad_call_to_action)
         adView.iconView = adView.findViewById(R.id.ad_app_icon)
-//        adView.priceView = adView.findViewById(R.id.ad_price)
-//        adView.starRatingView = adView.findViewById(R.id.ad_stars)
-//        adView.storeView = adView.findViewById(R.id.ad_store)
-//        adView.advertiserView = adView.findViewById(R.id.ad_advertiser)
 
         // The headline is guaranteed to be in every UnifiedNativeAd.
         (adView.headlineView as TextView).setText(ad.getHeadline())
@@ -147,8 +143,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             (adView.headlineView as TextView).setTextColor(0xff333333.toInt())
         }
 
-        // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
-        // check before trying to display them.
         if (ad.body == null) {
             adView.bodyView.visibility = View.INVISIBLE
         } else {
@@ -170,38 +164,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
                     ad.getIcon().getDrawable())
             adView.iconView.visibility = View.VISIBLE
         }
-
-//        if (ad.getPrice() == null) {
-//            adView.priceView.visibility = View.INVISIBLE
-//        } else {
-//            adView.priceView.visibility = View.VISIBLE
-//            (adView.priceView as TextView).setText(ad.getPrice())
-//        }
-//
-//        if (ad.getStore() == null) {
-//            adView.storeView.visibility = View.INVISIBLE
-//        } else {
-//            adView.storeView.visibility = View.VISIBLE
-//            (adView.storeView as TextView).setText(ad.getStore())
-//        }
-//
-//        if (ad.getStarRating() == null) {
-//            adView.starRatingView.visibility = View.INVISIBLE
-//        } else {
-//            (adView.starRatingView as RatingBar)
-//                    .setRating(ad.getStarRating().floatValue())
-//            adView.starRatingView.setVisibility(View.VISIBLE)
-//        }
-//
-//        if (ad.getAdvertiser() == null) {
-//            adView.advertiserView.visibility = View.INVISIBLE
-//        } else {
-//            (adView.advertiserView as TextView).setText(ad.getAdvertiser())
-//            adView.advertiserView.visibility = View.VISIBLE
-//        }
-
-        // Call the UnifiedNativeAdView's setNativeAd method to register the
-        // NativeAdObject.
         adView.setNativeAd(ad)
     }
 

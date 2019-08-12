@@ -264,7 +264,7 @@ class NotificationManagerImpl @Inject constructor(
                 .forEach { notification.addAction(it) }
 
         if (prefs.qkreply.get()) {
-            notification.priority = NotificationCompat.PRIORITY_DEFAULT
+            notification.priority = NotificationCompat.PRIORITY_LOW
 
             val intent = Intent(context, QkReplyActivity::class.java)
                     .putExtra("threadId", threadId)

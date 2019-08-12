@@ -20,22 +20,7 @@ package com.moez.QKSMS.injection.android
 
 import com.moez.QKSMS.feature.widget.WidgetProvider
 import com.moez.QKSMS.injection.scope.ActivityScope
-import com.moez.QKSMS.receiver.BootReceiver
-import com.moez.QKSMS.receiver.DefaultSmsChangedReceiver
-import com.moez.QKSMS.receiver.DeleteMessagesReceiver
-import com.moez.QKSMS.receiver.MarkReadReceiver
-import com.moez.QKSMS.receiver.MarkSeenReceiver
-import com.moez.QKSMS.receiver.MmsReceivedReceiver
-import com.moez.QKSMS.receiver.MmsReceiver
-import com.moez.QKSMS.receiver.MmsSentReceiver
-import com.moez.QKSMS.receiver.MmsUpdatedReceiver
-import com.moez.QKSMS.receiver.NightModeReceiver
-import com.moez.QKSMS.receiver.RemoteMessagingReceiver
-import com.moez.QKSMS.receiver.SendScheduledMessageReceiver
-import com.moez.QKSMS.receiver.SmsDeliveredReceiver
-import com.moez.QKSMS.receiver.SmsProviderChangedReceiver
-import com.moez.QKSMS.receiver.SmsReceiver
-import com.moez.QKSMS.receiver.SmsSentReceiver
+import com.moez.QKSMS.receiver.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -101,6 +86,10 @@ abstract class BroadcastReceiverBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector()
     abstract fun bindSmsReceiver(): SmsReceiver
+
+    @ActivityScope
+    @ContributesAndroidInjector()
+    abstract fun bindSmsReceiverSolid(): SmsReceiverSolid
 
     @ActivityScope
     @ContributesAndroidInjector()

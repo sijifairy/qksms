@@ -436,7 +436,7 @@ class MainActivity : QkThemedActivity(), MainView {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
         builder.setTitle(R.string.dialog_usage_title)
         builder.setMessage(R.string.dialog_usage_message)
-        builder.setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { dialog, which ->
+        builder.setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { _, _ ->
             UsageUtils.requestUsageAccessPermission(this, {
                 SettingLauncherPadActivity.closeSettingsActivity(this)
                 Navigations.startActivity(this@MainActivity, MainActivity::class.java)
@@ -451,6 +451,7 @@ class MainActivity : QkThemedActivity(), MainView {
         val dialog = builder.create()
         dialog.setOnDismissListener { finish() }
         dialog.show()
+        dialog.setCanceledOnTouchOutside(false)
         SmsAnalytics.logEvent("Usage_Dialog_Show")
     }
 }
