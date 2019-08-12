@@ -24,6 +24,7 @@ import com.moez.QKSMS.feature.blocked.BlockedActivityModule
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
+import com.moez.QKSMS.feature.feedback.FeedbackActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
 import com.moez.QKSMS.feature.main.MainActivity
@@ -83,6 +84,10 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [])
     abstract fun bindSettingsActivity(): SettingsActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindFeedbackActivity(): FeedbackActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [BlockedActivityModule::class])
