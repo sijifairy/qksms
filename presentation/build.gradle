@@ -175,6 +175,10 @@ dependencies {
     withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     withAnalyticsImplementation 'com.google.firebase:firebase-database:17.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-auth:17.0.0'
+    withAnalyticsImplementation 'com.google.firebase:firebase-messaging:19.0.1'
+    implementation "com.ihandy.appframework:libAppframework.gm:4.13.0.gm"
+    implementation "com.ihandy.permanent:permanent.gm:4.0.0.gm"
+    implementation "com.ihandy.permanent:accounts-keep-alive.gm:4.0.0.gm"
 
     implementation 'com.airbnb.android:lottie:2.7.0'
 

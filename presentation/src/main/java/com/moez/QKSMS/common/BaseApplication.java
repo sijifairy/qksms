@@ -1,9 +1,10 @@
 package com.moez.QKSMS.common;
 
-import android.app.Application;
 import android.content.Context;
 
-public class BaseApplication extends Application {
+import com.ihs.app.framework.HSApplication;
+
+public class BaseApplication extends HSApplication {
 
     private static Context context;
 
