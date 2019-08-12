@@ -24,6 +24,9 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- Used for starting foreground service for backup/restore on Android P+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="22"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -112,6 +115,9 @@
         </activity>
         <activity android:name=".feature.settings.SettingsActivity"/>
         <activity android:name=".feature.plus.PlusActivity"/>
+        <activity android:name=".feature.feedback.FeedbackActivity"
+                  android:launchMode="singleTop"
+                  android:screenOrientation="portrait"/>
         <activity
             android:name=".feature.gallery.GalleryActivity"
             android:theme="@style/AppThemeBlack"/>

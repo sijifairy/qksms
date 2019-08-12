@@ -173,6 +173,10 @@ dependencies {
     withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
     withAnalyticsImplementation 'com.google.firebase:firebase-config:18.0.0'
     withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    withAnalyticsImplementation 'com.google.firebase:firebase-database:17.0.0'
+    withAnalyticsImplementation 'com.google.firebase:firebase-auth:17.0.0'
+
+    implementation 'com.airbnb.android:lottie:2.7.0'
 
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'com.appsflyer:af-android-sdk:4.10.0'

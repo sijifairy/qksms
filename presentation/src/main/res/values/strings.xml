@@ -409,4 +409,17 @@
         <item>LOL</item>
         <item>That\'s okay</item>
     </string-array>
+
+    <!-- 5-star rating -->
+    <string name="sms_five_star_hint_text">How was your experience with us?</string>
+    <string name="sms_five_star_positive_text">SUBMIT</string>
+    <string name="message_five_star_one_text">Hated it</string>
+    <string name="message_five_star_two_text">Disliked it</string>
+    <string name="message_five_star_three_text">It was OK</string>
+    <string name="message_five_star_four_text">Liked it</string>
+    <string name="message_five_star_five_text">Loved it</string>
+
+    <string name="sms_loved_it_desc">Thanks! Please rate with words like Nice, Useful, Stylish…</string>
+    <string name="sms_liked_it_desc">Please tell us what you dislike. We will try our best to improve it!</string>
+    <string name="sms_five_star_rate">Scroll up to rate 5 stars.</string>
 </resources>

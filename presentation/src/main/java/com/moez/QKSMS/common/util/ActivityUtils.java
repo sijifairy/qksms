@@ -3,16 +3,66 @@ package com.moez.QKSMS.common.util;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.common.BaseApplication;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 public class ActivityUtils {
+
+
+    public static void configSimpleAppBar(AppCompatActivity activity, String title, boolean showElevation, int bgColor,
+                                          boolean containsBackButton) {
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.action_bar);
+
+        // Title
+        assert toolbar != null;
+        toolbar.setTitle("");
+        TextView titleTextView = new TextView(activity);
+        setToolBarTitle(titleTextView, !containsBackButton);
+        titleTextView.setText(title);
+        toolbar.addView(titleTextView);
+
+        toolbar.setBackgroundColor(bgColor);
+        activity.setSupportActionBar(toolbar);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && showElevation) {
+            activity.getSupportActionBar().setElevation(
+                    activity.getResources().getDimensionPixelSize(R.dimen.app_bar_elevation));
+        }
+        if (containsBackButton) {
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    public static void setToolBarTitle(TextView titleTextView, boolean largeMargin) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            titleTextView.setTextAppearance(R.style.ToolbarTextAppearance);
+        } else {
+            titleTextView.setTextAppearance(BaseApplication.getContext(), R.style.ToolbarTextAppearance);
+        }
+        titleTextView.setTextColor(0xff000000);
+        titleTextView.setTextSize(20);
+//        final Typeface typeface = Fonts.getTypeface(R.string.cheltenham_normal_500);
+//        titleTextView.setTypeface(typeface);
+        Toolbar.LayoutParams toolbarTitleParams = new Toolbar.LayoutParams(
+                Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT, Gravity.START);
+        boolean isRtl = Dimensions.isRtl();
+        int margin = largeMargin ? Dimensions.pxFromDp(20) : Dimensions.pxFromDp(16);
+        //noinspection ResourceType
+        toolbarTitleParams.setMargins(isRtl ? 0 : margin, 0, isRtl ? margin : 0, 0);
+        titleTextView.setLayoutParams(toolbarTitleParams);
+    }
 
     public static void configStatusBarColor(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

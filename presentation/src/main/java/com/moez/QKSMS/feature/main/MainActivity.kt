@@ -46,6 +46,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.dialog.FiveStarRateDialog
 import com.moez.QKSMS.common.util.Navigations
 import com.moez.QKSMS.common.util.Permissions
 import com.moez.QKSMS.common.util.Preferences
@@ -429,6 +430,10 @@ class MainActivity : QkThemedActivity(), MainView {
                 && !Permissions.isUsageAccessGranted()) {
             showUsageDialog()
             Preferences.getDefault().incrementAndGetInt("pref_key_usage_guide_times")
+            return
+        }
+
+        if (FiveStarRateDialog.showShowFiveStarRateDialogOnBackToDesktopIfNeed(this)) {
             return
         }
         backPressedIntent.onNext(Unit)

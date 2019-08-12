@@ -36,6 +36,10 @@ import com.crashlytics.android.core.CrashlyticsCore
 import com.flurry.android.FlurryAgent
 import com.flurry.sdk.fa
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
@@ -165,6 +169,14 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         val eventValue = HashMap<String, Any>()
         eventValue.put("should_show_usage_dialog", false)
         FirebaseRemoteConfig.getInstance().setDefaults(eventValue)
+
+        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("auth", "login anonymously success!")
+            } else {
+                Log.d("auth", "login anonymously failed!")
+            }
+        }
     }
 
     private fun initKeepAlive() {
