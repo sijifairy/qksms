@@ -24,18 +24,9 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
+import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.extensions.removeAccents
-import com.moez.QKSMS.interactor.DeleteConversations
-import com.moez.QKSMS.interactor.MarkAllSeen
-import com.moez.QKSMS.interactor.MarkArchived
-import com.moez.QKSMS.interactor.MarkBlocked
-import com.moez.QKSMS.interactor.MarkPinned
-import com.moez.QKSMS.interactor.MarkRead
-import com.moez.QKSMS.interactor.MarkUnarchived
-import com.moez.QKSMS.interactor.MarkUnpinned
-import com.moez.QKSMS.interactor.MarkUnread
-import com.moez.QKSMS.interactor.MigratePreferences
-import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.interactor.*
 import com.moez.QKSMS.manager.ChangelogManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.manager.RatingManager
@@ -50,30 +41,29 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    billingManager: BillingManager,
-    markAllSeen: MarkAllSeen,
-    migratePreferences: MigratePreferences,
-    syncRepository: SyncRepository,
-    private val changelogManager: ChangelogManager,
-    private val conversationRepo: ConversationRepository,
-    private val deleteConversations: DeleteConversations,
-    private val markArchived: MarkArchived,
-    private val markBlocked: MarkBlocked,
-    private val markPinned: MarkPinned,
-    private val markRead: MarkRead,
-    private val markUnarchived: MarkUnarchived,
-    private val markUnpinned: MarkUnpinned,
-    private val markUnread: MarkUnread,
-    private val navigator: Navigator,
-    private val permissionManager: PermissionManager,
-    private val prefs: Preferences,
-    private val ratingManager: RatingManager,
-    private val syncMessages: SyncMessages
+        billingManager: BillingManager,
+        markAllSeen: MarkAllSeen,
+        migratePreferences: MigratePreferences,
+        syncRepository: SyncRepository,
+        private val changelogManager: ChangelogManager,
+        private val conversationRepo: ConversationRepository,
+        private val deleteConversations: DeleteConversations,
+        private val markArchived: MarkArchived,
+        private val markBlocked: MarkBlocked,
+        private val markPinned: MarkPinned,
+        private val markRead: MarkRead,
+        private val markUnarchived: MarkUnarchived,
+        private val markUnpinned: MarkUnpinned,
+        private val markUnread: MarkUnread,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager,
+        private val prefs: Preferences,
+        private val ratingManager: RatingManager,
+        private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
     init {
@@ -105,7 +95,9 @@ class MainViewModel @Inject constructor(
 
         // If we have all permissions and we've never run a sync, run a sync. This will be the case
         // when upgrading from 2.7.3, or if the app's data was cleared
-        val lastSync = Realm.getDefaultInstance().use { realm -> realm.where(SyncLog::class.java)?.max("date") ?: 0 }
+        val lastSync = Realm.getDefaultInstance().use { realm ->
+            realm.where(SyncLog::class.java)?.max("date") ?: 0
+        }
         if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasReadSms() && permissionManager.hasContacts()) {
             syncMessages.execute(Unit)
         }
@@ -198,18 +190,49 @@ class MainViewModel @Inject constructor(
 
         view.drawerItemIntent
                 .doOnNext { newState { copy(drawerOpen = false) } }
-                .doOnNext { if (it == DrawerItem.BACKUP) navigator.showBackup() }
-                .doOnNext { if (it == DrawerItem.SCHEDULED) navigator.showScheduled() }
-                .doOnNext { if (it == DrawerItem.BLOCKING) navigator.showBlockedConversations() }
-                .doOnNext { if (it == DrawerItem.SETTINGS) navigator.showSettings() }
+                .doOnNext {
+                    if (it == DrawerItem.BACKUP) {
+                        navigator.showBackup()
+                        SmsAnalytics.logEvent("Menu_Backup_Click")
+                    }
+                }
+                .doOnNext {
+                    if (it == DrawerItem.SCHEDULED) {
+                        navigator.showScheduled()
+                        SmsAnalytics.logEvent("Menu_Schedule_Click")
+                    }
+                }
+                .doOnNext {
+                    if (it == DrawerItem.BLOCKING) {
+                        navigator.showBlockedConversations()
+                        SmsAnalytics.logEvent("Menu_Schedule_Click")
+                    }
+                }
+                .doOnNext {
+                    if (it == DrawerItem.SETTINGS) {
+                        navigator.showSettings()
+                        SmsAnalytics.logEvent("Menu_Setting_Click")
+                    }
+                }
                 .doOnNext { if (it == DrawerItem.PLUS) navigator.showQksmsPlusActivity("main_menu") }
-                .doOnNext { if (it == DrawerItem.HELP) navigator.showSupport() }
+                .doOnNext {
+                    if (it == DrawerItem.HELP) {
+                        navigator.showSupport()
+                        SmsAnalytics.logEvent("Menu_Feedback_Click")
+                    }
+                }
                 .doOnNext { if (it == DrawerItem.INVITE) navigator.showInvite() }
                 .distinctUntilChanged()
                 .doOnNext {
                     when (it) {
-                        DrawerItem.INBOX -> newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
-                        DrawerItem.ARCHIVED -> newState { copy(page = Archived(data = conversationRepo.getConversations(true))) }
+                        DrawerItem.INBOX -> {
+                            newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
+                            SmsAnalytics.logEvent("Menu_Inbox_Click")
+                        }
+                        DrawerItem.ARCHIVED -> {
+                            newState { copy(page = Archived(data = conversationRepo.getConversations(true))) }
+                            SmsAnalytics.logEvent("Menu_Archived_Click")
+                        }
                         else -> {
                         } // Do nothing
                     }
@@ -222,6 +245,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markArchived.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Archive")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -231,6 +255,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markUnarchived.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Unarchive")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -240,6 +265,7 @@ class MainViewModel @Inject constructor(
                 .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     view.showDeleteDialog(conversations)
+                    SmsAnalytics.logEvent("Main_Menu_Delete")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -249,6 +275,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markPinned.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Pin")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -258,6 +285,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markUnpinned.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Unpin")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -268,6 +296,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markRead.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Read")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -278,6 +307,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markUnread.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Unread")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -287,6 +317,7 @@ class MainViewModel @Inject constructor(
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markBlocked.execute(conversations)
                     view.clearSelection()
+                    SmsAnalytics.logEvent("Main_Menu_Block")
                 }
                 .autoDisposable(view.scope())
                 .subscribe()

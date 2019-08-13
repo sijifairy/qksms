@@ -121,6 +121,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
                         .build())
                 .build()
         adLoader.loadAd(AdRequest.Builder().build())
+        SmsAnalytics.logEvent("Reply_Ad_Chance")
 
         SmsAnalytics.logEvent("Reply_Create")
     }
@@ -166,6 +167,8 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             adView.iconView.visibility = View.VISIBLE
         }
         adView.setNativeAd(ad)
+
+        SmsAnalytics.logEvent("Reply_Ad_Show")
     }
 
     override fun onResume() {

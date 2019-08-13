@@ -278,7 +278,7 @@ class MainActivity : QkThemedActivity(), MainView {
         }
         plus.isVisible = false
         plusBanner.isVisible = false
-        rateLayout.setVisible(state.showRating)
+        rateLayout.setVisible(false)
 
         compose.setVisible(state.page is Inbox || state.page is Archived)
         conversationsAdapter.emptyView = empty.takeIf { state.page is Inbox || state.page is Archived }
@@ -364,7 +364,7 @@ class MainActivity : QkThemedActivity(), MainView {
         super.onResume()
         activityResumedIntent.onNext(Unit)
 
-        SmsAnalytics.logEvent("Main_Resume")
+        SmsAnalytics.logEvent("Main_Resume", "nightmode", prefs.night.get().toString())
     }
 
     override fun onDestroy() {
