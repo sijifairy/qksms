@@ -72,6 +72,7 @@
         <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
         <item name="bubbleColor">@color/bubbleDark</item>
         <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="colorAccent">#288ec7</item>
         <item name="composeBackground">@color/backgroundDark</item>
         <item name="selectableItemBackground">@drawable/ripple_dark</item>
         <item name="windowActionBar">false</item>

@@ -18,6 +18,7 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.moez.QKSMS">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -139,6 +140,12 @@
             android:excludeFromRecents="true"
             android:taskAffinity=".permission.guide"
             android:theme="@style/Transparent"/>
+        <activity
+            android:name=".feature.guide.SetAsDefaultGuideActivity"
+            android:allowTaskReparenting="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity=".permission.guide"
+            android:theme="@style/Transparent"/>
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>
@@ -242,6 +249,110 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts"/>
 
-    </application>
+        <service
+            android:name="com.ihs.device.permanent.PermanentService"
+            android:exported="true"
+            android:label="GuardService"
+            android:stopWithTask="false"
+            tools:remove="android:process">
+            <intent-filter>
+                <action android:name="com.ihs.device.permanent.StartPermanentService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.ihs.device.permanent.PermanentDaemonService"
+            android:exported="true"
+            android:label="DaemonService"
+            android:stopWithTask="false"
+            tools:remove="android:process" />
+        <service
+            android:name="com.ihs.device.permanent.PermanentService$PermanentServiceInner"
+            tools:remove="android:process" />
 
+        <receiver
+            android:name="com.ihs.device.permanent.PermanentService$PermanentReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:remove="android:process" />
+        <receiver
+            android:name="com.ihs.device.permanent.PermanentReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:remove="android:process">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+            <intent-filter android:priority="999">
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="ihs.device.permanent.GUARD_PERMANENT" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Job Schedule -->
+        <service
+            android:name="com.ihs.device.permanent.GuardJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            tools:remove="android:process"></service>
+
+        <activity
+            android:name="com.ihs.device.permanent.PermanentActivity"
+            tools:remove="android:process" />
+        <activity
+            android:name="com.ihs.device.permanent.foreground.ForegroundActivity"
+            tools:remove="android:process" />
+
+        <service
+            android:name="com.ihs.device.permanent.syncaccount.AuthenticationService"
+            android:exported="true"
+            tools:remove="android:process">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <service
+            android:name="com.ihs.device.permanent.syncaccount.SyncService"
+            android:exported="true"
+            tools:remove="android:process">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter"
+                android:value="true" />
+        </service>
+
+        <provider
+            android:name="com.ihs.device.permanent.syncaccount.SyncContentProvider"
+            android:authorities="@string/sync_account_type"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/sync_account_title"
+            android:syncable="true"
+            tools:remove="android:process" />
+    </application>
 </manifest>

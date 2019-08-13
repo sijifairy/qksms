@@ -130,6 +130,7 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         AppsFlyerLib.getInstance().startTracking(this)
 
         MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
+
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()

@@ -8,6 +8,8 @@ import android.util.Log;
 import com.klinker.android.send_message.Utils;
 import com.moez.QKSMS.common.util.Preferences;
 import com.moez.QKSMS.common.util.SmsAnalytics;
+import com.moez.QKSMS.common.util.Threads;
+import com.moez.QKSMS.feature.guide.SetAsDefaultGuideActivity;
 
 public class DefaultSmsAppChangeObserver extends ContentObserver {
     /**
@@ -22,13 +24,16 @@ public class DefaultSmsAppChangeObserver extends ContentObserver {
     @Override
     public void onChange(boolean selfChange) {
         super.onChange(selfChange);
-        if (!Utils.isDefaultSmsApp(QKApplication.context)) {
-            Log.d("DefaultSmsAppChange", "default sms cleared by " + Telephony.Sms.getDefaultSmsPackage(QKApplication.context));
+        Threads.postOnMainThreadDelayed(() -> {
+            if (!Utils.isDefaultSmsApp(QKApplication.context)) {
+                Log.d("DefaultSmsAppChange", "default sms cleared by " + Telephony.Sms.getDefaultSmsPackage(QKApplication.context));
 
-            SmsAnalytics.logEvent("Default_Cleared", "by", Telephony.Sms.getDefaultSmsPackage(QKApplication.context));
-        } else {
-            Preferences.getDefault().doOnce(() -> SmsAnalytics.logEvent("Default_First_Set"), "pref_key_log_first_set_as_default");
-            SmsAnalytics.logEvent("Default_Set");
-        }
+                SmsAnalytics.logEvent("Default_Cleared", "by", Telephony.Sms.getDefaultSmsPackage(QKApplication.context));
+                SetAsDefaultGuideActivity.startActivity(BaseApplication.getContext(), SetAsDefaultGuideActivity.DEFAULT_CHANGED);
+            } else {
+                Preferences.getDefault().doOnce(() -> SmsAnalytics.logEvent("Default_First_Set"), "pref_key_log_first_set_as_default");
+                SmsAnalytics.logEvent("Default_Set");
+            }
+        }, 500);
     }
 }
