@@ -127,6 +127,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
     private fun populateUnifiedNativeAdView(ad: UnifiedNativeAd, adView: UnifiedNativeAdView) {
         val mediaView = adView.findViewById<MediaView>(R.id.ad_media)
+
         adView.mediaView = mediaView
 
         adView.headlineView = adView.findViewById(R.id.ad_headline)
