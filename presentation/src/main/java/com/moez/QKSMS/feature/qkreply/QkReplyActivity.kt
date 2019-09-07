@@ -34,6 +34,7 @@ import com.google.android.gms.ads.formats.MediaView
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -95,7 +96,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             composeBackgroundSolid.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
 
-        val adLoader = AdLoader.Builder(this, "ca-app-pub-5061957740026229/7256693868")
+        val adLoader = AdLoader.Builder(this, FirebaseRemoteConfig.getInstance().getString("Ad_Reply_Native_Admob_ID"))
                 .forUnifiedNativeAd { unifiedNativeAd: UnifiedNativeAd ->
                     // Assumes that your ad layout is in a file call ad_unified.xml
                     // in the res/layout folder

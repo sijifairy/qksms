@@ -149,6 +149,12 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="Welcome" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowBackground">@drawable/conversation_start_bg</item>
+    </style>
+
     <style name="DialogTitleText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

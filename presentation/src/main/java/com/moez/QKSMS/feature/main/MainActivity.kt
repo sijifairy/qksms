@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
@@ -202,8 +203,11 @@ class MainActivity : QkThemedActivity(), MainView {
         itemTouchCallback.adapter = conversationsAdapter
 //        conversationsAdapter.autoScrollToStart(recyclerView)
 
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
+        mAdView = AdView(this)
+        mAdView.adSize = AdSize.BANNER
+        mAdView.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Homepage_Banner_Admob_ID");
+        adViewContainer.addView(mAdView)
+        val adRequest = AdRequest.Builder().addTestDevice("023989BFBFB4293AF9F7F96F1DDBFC65").build()
         mAdView.loadAd(adRequest)
         SmsAnalytics.logEvent("Main_Banner_Chance")
         mAdView.adListener = object : AdListener() {
@@ -425,7 +429,7 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        if (FirebaseRemoteConfig.getInstance().getBoolean("should_show_usage_dialog")
+        if (FirebaseRemoteConfig.getInstance().getBoolean("Usage_Request_Enabled")
                 && Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 3
                 && !Permissions.isUsageAccessGranted()) {
             showUsageDialog()

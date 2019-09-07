@@ -28,28 +28,20 @@ import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.appsflyer.AppsFlyerConversionListener
-import com.appsflyer.AppsFlyerLib
-import com.appsflyer.AppsFlyerLibCore.LOG_TAG
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.flurry.android.FlurryAgent
-import com.flurry.sdk.fa
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ihs.device.permanent.HSPermanentUtils
 import com.ihs.device.permanent.PermanentService
 import com.ihs.device.permanent.syncaccount.HSAccountsKeepAliveUtils
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.FileLoggingTree
-import com.moez.QKSMS.common.util.Preferences
-import com.moez.QKSMS.common.util.SmsAnalytics
-import com.moez.QKSMS.common.util.Threads
+import com.moez.QKSMS.common.util.*
 import com.moez.QKSMS.feature.guide.topapp.TopAppManager
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
@@ -61,7 +53,7 @@ import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
-import java.util.HashMap
+import java.util.*
 import javax.inject.Inject
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
@@ -103,31 +95,31 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         val crashlyticsKit = Crashlytics.Builder()
         crashlyticsKit.core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
         Fabric.with(this@QKApplication, crashlyticsKit.build())
-        val conversionDataListener = object : AppsFlyerConversionListener {
-            override fun onInstallConversionDataLoaded(conversionData: Map<String, String>) {
-                for (attrName in conversionData.keys) {
-                    Log.d(LOG_TAG, "conversion_attribute: " + attrName + " = " +
-                            conversionData[attrName])
-                }
-            }
-
-            override fun onInstallConversionFailure(errorMessage: String) {
-                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
-            }
-
-            override fun onAppOpenAttribution(conversionData: Map<String, String>) {
-                for (attrName in conversionData.keys) {
-                    Log.d(LOG_TAG, "onAppOpen_attribute: " + attrName + " = " +
-                            conversionData[attrName])
-                }
-            }
-
-            override fun onAttributionFailure(errorMessage: String) {
-                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
-            }
-        }
-        AppsFlyerLib.getInstance().init("4N3JVcMXPziVis9ohCYuE", conversionDataListener, applicationContext)
-        AppsFlyerLib.getInstance().startTracking(this)
+//        val conversionDataListener = object : AppsFlyerConversionListener {
+//            override fun onInstallConversionDataLoaded(conversionData: Map<String, String>) {
+//                for (attrName in conversionData.keys) {
+//                    Log.d(LOG_TAG, "conversion_attribute: " + attrName + " = " +
+//                            conversionData[attrName])
+//                }
+//            }
+//
+//            override fun onInstallConversionFailure(errorMessage: String) {
+//                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
+//            }
+//
+//            override fun onAppOpenAttribution(conversionData: Map<String, String>) {
+//                for (attrName in conversionData.keys) {
+//                    Log.d(LOG_TAG, "onAppOpen_attribute: " + attrName + " = " +
+//                            conversionData[attrName])
+//                }
+//            }
+//
+//            override fun onAttributionFailure(errorMessage: String) {
+//                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
+//            }
+//        }
+//        AppsFlyerLib.getInstance().init("4N3JVcMXPziVis9ohCYuE", conversionDataListener, applicationContext)
+//        AppsFlyerLib.getInstance().startTracking(this)
 
         MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
 
@@ -172,9 +164,25 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         initKeepAlive()
 
         val eventValue = HashMap<String, Any>()
-        eventValue.put("should_show_usage_dialog", false)
+        eventValue["Usage_Request_Enabled"] = false
+        eventValue["Ad_Reply_Native_Admob_ID"] = "ca-app-pub-5061957740026229/1647450984"
+        eventValue["Ad_Detail_Interstitial_Admob_ID"] = "ca-app-pub-5061957740026229/6377033487"
+        eventValue["Ad_Detail_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/5188623637"
+        eventValue["Ad_Homepage_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/6444358387"
         FirebaseRemoteConfig.getInstance().setDefaults(eventValue)
-
+        FirebaseRemoteConfig.getInstance().setConfigSettings(
+                FirebaseRemoteConfigSettings
+                        .Builder()
+                        .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                        .setMinimumFetchIntervalInSeconds(3600).build());
+        FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener(
+                OnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toasts.showToast("Fetch success " + task.getResult())
+                    } else {
+                        Toasts.showToast("Fetch failed")
+                    }
+                })
         FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d("auth", "login anonymously success!")

@@ -34,17 +34,16 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -63,6 +62,10 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
+import kotlinx.android.synthetic.main.compose_activity.adViewContainer
+import kotlinx.android.synthetic.main.compose_activity.toolbar
+import kotlinx.android.synthetic.main.compose_activity.toolbarTitle
+import kotlinx.android.synthetic.main.main_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -176,7 +179,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
 
         mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-5061957740026229/5025234461"
+        mInterstitialAd.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Interstitial_Admob_ID")
         mInterstitialAd.loadAd(AdRequest.Builder().build())
         mInterstitialAd.adListener = object : AdListener() {
             override fun onAdLoaded() {
@@ -207,8 +210,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         SmsAnalytics.logEvent("Compose_Create")
 
-
-        mAdView = findViewById(R.id.adView)
+        mAdView = AdView(this)
+        mAdView.adSize = AdSize.BANNER
+        mAdView.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Banner_Admob_ID");
+        adViewContainer.addView(mAdView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
         SmsAnalytics.logEvent("Detail_Banner_Chance")

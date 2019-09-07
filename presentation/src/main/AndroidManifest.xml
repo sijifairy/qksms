@@ -53,6 +53,9 @@
             android:name="io.fabric.ApiKey"
             android:value="3c0bc37fc39e5926cf9fb6a6157c84999b0cf356"/>
 
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+                   android:value="@string/facebook_app_id"/>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5061957740026229~4750010097"/>
@@ -68,13 +71,6 @@
         <activity
             android:name=".feature.main.MainActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
         </activity>
         <activity
             android:name=".feature.compose.ComposeActivity"
@@ -146,6 +142,19 @@
             android:excludeFromRecents="true"
             android:taskAffinity=".permission.guide"
             android:theme="@style/Transparent"/>
+        <activity
+            android:name=".feature.guide.SetAsDefaultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Welcome">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity>
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>

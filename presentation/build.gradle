@@ -182,8 +182,10 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:2.7.0'
 
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
-    implementation 'com.appsflyer:af-android-sdk:4.10.0'
+//    implementation 'com.appsflyer:af-android-sdk:4.10.0'
     implementation 'com.android.installreferrer:installreferrer:1.0'
 
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')

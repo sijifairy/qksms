@@ -565,14 +565,12 @@
             tools:tint="@color/textPrimaryDark"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.gms.ads.AdView
+    <FrameLayout
         xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
+        android:id="@+id/adViewContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-5061957740026229/6564141877"
         ads:layout_constraintBottom_toTopOf="@id/bottom"
         ads:layout_constraintLeft_toLeftOf="parent"
         ads:layout_constraintRight_toRightOf="parent"
