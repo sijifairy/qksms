@@ -31,8 +31,8 @@ android {
         applicationId "com.messenger.sms.infinity.theme"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.0.4"
+        versionCode 10
+        versionName "1.0.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -170,11 +170,11 @@ dependencies {
     implementation project(':domain')
     implementation 'com.flurry.android:analytics:11.4.0@aar'
 
-    withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
+    withAnalyticsImplementation 'com.google.firebase:firebase-core:17.2.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-config:18.0.0'
     withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    withAnalyticsImplementation 'com.google.firebase:firebase-database:17.0.0'
-    withAnalyticsImplementation 'com.google.firebase:firebase-auth:17.0.0'
+    withAnalyticsImplementation 'com.google.firebase:firebase-database:19.0.0'
+    withAnalyticsImplementation 'com.google.firebase:firebase-auth:19.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-messaging:19.0.1'
     implementation "com.ihandy.appframework:libAppframework.gm:4.13.0.gm"
     implementation "com.ihandy.permanent:permanent.gm:4.0.0.gm"
@@ -183,8 +183,9 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.7.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.facebook.android:audience-network-sdk:5.+'
+    implementation 'com.google.ads.mediation:facebook:5.5.0.0'
 
-    implementation 'com.google.android.gms:play-services-ads:17.2.0'
 //    implementation 'com.appsflyer:af-android-sdk:4.10.0'
     implementation 'com.android.installreferrer:installreferrer:1.0'
 
