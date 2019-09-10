@@ -182,9 +182,14 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:2.7.0'
 
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-    implementation 'com.facebook.android:audience-network-sdk:5.+'
-    implementation 'com.google.ads.mediation:facebook:5.5.0.0'
+//    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+//    implementation 'com.facebook.android:audience-network-sdk:5.+'
+//    implementation 'com.google.ads.mediation:facebook:5.5.0.0'
+    implementation 'com.appodeal.ads:maxdex:2.5.7'
+    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'
 
 //    implementation 'com.appsflyer:af-android-sdk:4.10.0'
     implementation 'com.android.installreferrer:installreferrer:1.0'

@@ -111,15 +111,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
-        <FrameLayout
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <com.appodeal.ads.BannerView
             android:id="@+id/adViewContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            ads:layout_constraintBottom_toTopOf="@id/bottom"
-            ads:layout_constraintLeft_toLeftOf="parent"
-            ads:layout_constraintRight_toRightOf="parent"
-            ads:layout_constraintTop_toBottomOf="@id/recyclerView"/>
+            app:layout_constraintBottom_toTopOf="@id/bottom"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView"/>
 
         <View
             android:id="@+id/bottom"

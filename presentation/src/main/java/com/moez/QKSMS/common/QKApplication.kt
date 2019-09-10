@@ -28,6 +28,7 @@ import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import com.appodeal.ads.Appodeal
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.flurry.android.FlurryAgent
@@ -120,8 +121,7 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
 //        }
 //        AppsFlyerLib.getInstance().init("4N3JVcMXPziVis9ohCYuE", conversionDataListener, applicationContext)
 //        AppsFlyerLib.getInstance().startTracking(this)
-
-        MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
+//        MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()

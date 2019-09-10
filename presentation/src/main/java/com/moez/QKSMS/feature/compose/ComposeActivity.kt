@@ -40,6 +40,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.appodeal.ads.Appodeal
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.gms.ads.*
 import com.google.android.material.snackbar.Snackbar
@@ -91,7 +92,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var mInterstitialAd: InterstitialAd
+//    private lateinit var mInterstitialAd: InterstitialAd
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
@@ -122,7 +123,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
-    lateinit var mAdView: AdView
+//    lateinit var mAdView: AdView
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
@@ -178,78 +179,83 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
 
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Interstitial_Admob_ID")
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
-        mInterstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-            }
-
-            override fun onAdOpened() {
-                // Code to be executed when the ad is displayed.
-            }
-
-            override fun onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-                SmsAnalytics.logEvent("Detail_Wire_Click")
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                // Code to be executed when the interstitial ad is closed.
-            }
-        }
+//        mInterstitialAd = InterstitialAd(this)
+//        mInterstitialAd.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Interstitial_Admob_ID")
+//        mInterstitialAd.loadAd(AdRequest.Builder().build())
+//        mInterstitialAd.adListener = object : AdListener() {
+//            override fun onAdLoaded() {
+//                // Code to be executed when an ad finishes loading.
+//            }
+//
+//            override fun onAdFailedToLoad(errorCode: Int) {
+//                // Code to be executed when an ad request fails.
+//            }
+//
+//            override fun onAdOpened() {
+//                // Code to be executed when the ad is displayed.
+//            }
+//
+//            override fun onAdClicked() {
+//                // Code to be executed when the user clicks on an ad.
+//                SmsAnalytics.logEvent("Detail_Wire_Click")
+//            }
+//
+//            override fun onAdLeftApplication() {
+//                // Code to be executed when the user has left the app.
+//            }
+//
+//            override fun onAdClosed() {
+//                // Code to be executed when the interstitial ad is closed.
+//            }
+//        }
 
         SmsAnalytics.logEvent("Compose_Create")
 
-        mAdView = AdView(this)
-        mAdView.adSize = AdSize.BANNER
-        mAdView.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Banner_Admob_ID");
-        adViewContainer.addView(mAdView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+//        mAdView = AdView(this)
+//        mAdView.adSize = AdSize.BANNER
+//        mAdView.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Banner_Admob_ID");
+//        adViewContainer.addView(mAdView)
+//        val adRequest = AdRequest.Builder().build()
+//        mAdView.loadAd(adRequest)
         SmsAnalytics.logEvent("Detail_Banner_Chance")
-        mAdView.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                SmsAnalytics.logEvent("Detail_Banner_Show")
-            }
+//        mAdView.adListener = object : AdListener() {
+//            override fun onAdLoaded() {
+//                // Code to be executed when an ad finishes loading.
+//                SmsAnalytics.logEvent("Detail_Banner_Show")
+//            }
+//
+//            override fun onAdFailedToLoad(errorCode: Int) {
+//                // Code to be executed when an ad request fails.
+//            }
+//
+//            override fun onAdOpened() {
+//                // Code to be executed when an ad opens an overlay that
+//                // covers the screen.
+//            }
+//
+//            override fun onAdClicked() {
+//                // Code to be executed when the user clicks on an ad.
+//                SmsAnalytics.logEvent("Main_Banner_Click")
+//            }
+//
+//            override fun onAdLeftApplication() {
+//                // Code to be executed when the user has left the app.
+//            }
+//
+//            override fun onAdClosed() {
+//                // Code to be executed when the user is about to return
+//                // to the app after tapping on an ad.
+//            }
+//        }
 
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-            }
-
-            override fun onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-
-            override fun onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-                SmsAnalytics.logEvent("Main_Banner_Click")
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            override fun onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-            }
-        }
+        Appodeal.setBannerViewId(R.id.adViewContainer)
+        Appodeal.show(this, Appodeal.BANNER_VIEW)
+        Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     override fun onResume() {
         super.onResume()
+        Appodeal.onResume(this, Appodeal.BANNER_VIEW)
 
         SmsAnalytics.logEvent("Compose_Resume")
     }
@@ -262,6 +268,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun onPause() {
         super.onPause()
         activityVisibleIntent.onNext(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Appodeal.destroy(Appodeal.BANNER_VIEW)
     }
 
     override fun render(state: ComposeState) {
@@ -446,14 +457,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         if (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
                 < DateUtils.MINUTE_IN_MILLIS * 5
                 || System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
-                < DateUtils.MINUTE_IN_MILLIS * 30) {
+                < DateUtils.MINUTE_IN_MILLIS * 3) {
             return
         }
 
         SmsAnalytics.logEvent("Detail_Wire_Chance")
-        if (mInterstitialAd.isLoaded) {
+        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
             SmsAnalytics.logEvent("Detail_Wire_Show")
-            mInterstitialAd.show()
+            Appodeal.show(this, Appodeal.INTERSTITIAL)
             Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
         }
     }
