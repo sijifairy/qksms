@@ -21,7 +21,6 @@ package com.moez.QKSMS.feature.qkreply
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
@@ -45,11 +44,6 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.qkreply_activity.*
 import javax.inject.Inject
-import com.moez.QKSMS.feature.main.MainActivity
-import com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed
-
-
-
 
 
 class QkReplyActivity : QkThemedActivity(), QkReplyView {
@@ -165,6 +159,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
     private fun showNativeAd(nativeAd: NativeAd) {
         val nav_nf = findViewById(R.id.native_ad_view_content_stream) as NativeAdViewContentStream
+        nav_nf.setPlacement("ReplyNative")
         nav_nf.setNativeAd(nativeAd)
     }
 

@@ -249,7 +249,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 //        }
 
         Appodeal.setBannerViewId(R.id.adViewContainer)
-        Appodeal.show(this, Appodeal.BANNER_VIEW)
+        Appodeal.show(this, Appodeal.BANNER_VIEW, "DetailBanner")
         Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
@@ -464,7 +464,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         SmsAnalytics.logEvent("Detail_Wire_Chance")
         if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
             SmsAnalytics.logEvent("Detail_Wire_Show")
-            Appodeal.show(this, Appodeal.INTERSTITIAL)
+            Appodeal.show(this, Appodeal.INTERSTITIAL, "DetailWire")
             Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
         }
     }

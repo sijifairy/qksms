@@ -245,7 +245,7 @@ class MainActivity : QkThemedActivity(), MainView {
 //        }
 
         Appodeal.setBannerViewId(R.id.adViewContainer)
-        Appodeal.show(this, Appodeal.BANNER_VIEW)
+        Appodeal.show(this, Appodeal.BANNER_VIEW, "HomepageBanner")
     }
 
     override fun render(state: MainState) {
