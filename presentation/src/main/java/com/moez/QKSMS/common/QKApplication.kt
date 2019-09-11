@@ -24,19 +24,19 @@ import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.provider.Settings
+import android.text.TextUtils
 import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.appodeal.ads.Appodeal
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.flurry.android.FlurryAgent
-import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.ihs.app.framework.HSApplication
 import com.ihs.device.permanent.HSPermanentUtils
 import com.ihs.device.permanent.PermanentService
 import com.ihs.device.permanent.syncaccount.HSAccountsKeepAliveUtils
@@ -122,72 +122,76 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
 //        AppsFlyerLib.getInstance().init("4N3JVcMXPziVis9ohCYuE", conversionDataListener, applicationContext)
 //        AppsFlyerLib.getInstance().startTracking(this)
 //        MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
+        val packageName = packageName
+        val processName = HSApplication.getProcessName()
+        val isOnMainProcess = TextUtils.equals(processName, packageName)
+        if (isOnMainProcess) {
+            Realm.init(this)
+            Realm.setDefaultConfiguration(RealmConfiguration.Builder()
+                    .compactOnLaunch()
+                    .migration(QkRealmMigration())
+                    .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
+                    .build())
 
-        Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-                .compactOnLaunch()
-                .migration(QkRealmMigration())
-                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
-                .build())
+            AppComponentManager.init(this)
+            appComponent.inject(this)
 
-        AppComponentManager.init(this)
-        appComponent.inject(this)
+            packageManager.getInstallerPackageName(packageName)?.let { installer ->
+                analyticsManager.setUserProperty("Installer", installer)
+            }
 
-        packageManager.getInstallerPackageName(packageName)?.let { installer ->
-            analyticsManager.setUserProperty("Installer", installer)
-        }
+            nightModeManager.updateCurrentTheme()
 
-        nightModeManager.updateCurrentTheme()
+            val fontRequest = FontRequest(
+                    "com.google.android.gms.fonts",
+                    "com.google.android.gms",
+                    "Noto Color Emoji Compat",
+                    R.array.com_google_android_gms_fonts_certs)
 
-        val fontRequest = FontRequest(
-                "com.google.android.gms.fonts",
-                "com.google.android.gms",
-                "Noto Color Emoji Compat",
-                R.array.com_google_android_gms_fonts_certs)
+            EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
+            Timber.plant(Timber.DebugTree(), fileLoggingTree)
 
-        Timber.plant(Timber.DebugTree(), fileLoggingTree)
+            val uri = Settings.Secure.getUriFor("sms_default_application")
+            val context = applicationContext
+            context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
 
-        val uri = Settings.Secure.getUriFor("sms_default_application")
-        val context = applicationContext
-        context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
+            TopAppManager.getInstance().startPollingTask()
 
-        TopAppManager.getInstance().startPollingTask()
+            if (!Preferences.getDefault().contains("pref_key_install_time")) {
+                Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
+            }
 
-        if (!Preferences.getDefault().contains("pref_key_install_time")) {
-            Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
-        }
+            SmsAnalytics.logEvent("Process_Start")
 
-        SmsAnalytics.logEvent("Process_Start")
+            initKeepAlive()
 
-        initKeepAlive()
-
-        val eventValue = HashMap<String, Any>()
-        eventValue["Usage_Request_Enabled"] = false
-        eventValue["Ad_Reply_Native_Admob_ID"] = "ca-app-pub-5061957740026229/1647450984"
-        eventValue["Ad_Detail_Interstitial_Admob_ID"] = "ca-app-pub-5061957740026229/6377033487"
-        eventValue["Ad_Detail_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/5188623637"
-        eventValue["Ad_Homepage_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/6444358387"
-        FirebaseRemoteConfig.getInstance().setDefaults(eventValue)
-        FirebaseRemoteConfig.getInstance().setConfigSettings(
-                FirebaseRemoteConfigSettings
-                        .Builder()
-                        .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                        .setMinimumFetchIntervalInSeconds(3600).build());
-        FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener(
-                OnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toasts.showToast("Fetch success " + task.getResult())
-                    } else {
-                        Toasts.showToast("Fetch failed")
-                    }
-                })
-        FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("auth", "login anonymously success!")
-            } else {
-                Log.d("auth", "login anonymously failed!")
+            val eventValue = HashMap<String, Any>()
+            eventValue["Usage_Request_Enabled"] = false
+            eventValue["Ad_Reply_Native_Admob_ID"] = "ca-app-pub-5061957740026229/1647450984"
+            eventValue["Ad_Detail_Interstitial_Admob_ID"] = "ca-app-pub-5061957740026229/6377033487"
+            eventValue["Ad_Detail_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/5188623637"
+            eventValue["Ad_Homepage_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/6444358387"
+            FirebaseRemoteConfig.getInstance().setDefaults(eventValue)
+            FirebaseRemoteConfig.getInstance().setConfigSettings(
+                    FirebaseRemoteConfigSettings
+                            .Builder()
+                            .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                            .setMinimumFetchIntervalInSeconds(3600).build());
+            FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener(
+                    OnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toasts.showToast("Fetch success " + task.getResult())
+                        } else {
+                            Toasts.showToast("Fetch failed")
+                        }
+                    })
+            FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("auth", "login anonymously success!")
+                } else {
+                    Log.d("auth", "login anonymously failed!")
+                }
             }
         }
     }
