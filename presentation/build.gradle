@@ -28,7 +28,7 @@ android {
     flavorDimensions "analytics"
 
     defaultConfig {
-        applicationId "com.messenger.sms.infinity.theme"
+        applicationId "com.joyinsight.sms"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 12
@@ -176,17 +176,16 @@ dependencies {
     withAnalyticsImplementation 'com.google.firebase:firebase-database:19.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-auth:19.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-messaging:19.0.1'
-    implementation "com.ihandy.appframework:libAppframework.gm:4.13.0.gm"
-    implementation "com.ihandy.permanent:permanent.gm:4.0.0.gm"
-    implementation "com.ihandy.permanent:accounts-keep-alive.gm:4.0.0.gm"
+//    implementation "com.ihandy.appframework:libAppframework.gm:4.13.0.gm"
+//    implementation "com.ihandy.permanent:permanent.gm:4.0.0.gm"
+//    implementation "com.ihandy.permanent:accounts-keep-alive.gm:4.0.0.gm"
 
     implementation 'com.airbnb.android:lottie:2.7.0'
 
 //    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 //    implementation 'com.facebook.android:audience-network-sdk:5.+'
 //    implementation 'com.google.ads.mediation:facebook:5.5.0.0'
-    implementation 'com.appodeal.ads:maxdex:2.5.7'
-    implementation 'com.google.android.gms:play-services-ads:15.0.0'
+//    implementation 'com.google.android.gms:play-services-ads:15.0.0'
     implementation 'com.google.android.gms:play-services-location:15.0.0'
     implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'

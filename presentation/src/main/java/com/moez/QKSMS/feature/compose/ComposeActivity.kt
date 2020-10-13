@@ -40,11 +40,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.appodeal.ads.Appodeal
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.gms.ads.*
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -63,7 +60,6 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
-import kotlinx.android.synthetic.main.compose_activity.adViewContainer
 import kotlinx.android.synthetic.main.compose_activity.toolbar
 import kotlinx.android.synthetic.main.compose_activity.toolbarTitle
 import kotlinx.android.synthetic.main.main_activity.*
@@ -81,14 +77,19 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     @Inject
     lateinit var attachmentAdapter: AttachmentAdapter
+
     @Inject
     lateinit var chipsAdapter: ChipsAdapter
+
     @Inject
     lateinit var contactsAdapter: ContactAdapter
+
     @Inject
     lateinit var dateFormatter: DateFormatter
+
     @Inject
     lateinit var messageAdapter: MessagesAdapter
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -248,14 +249,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 //            }
 //        }
 
-        Appodeal.setBannerViewId(R.id.adViewContainer)
-        Appodeal.show(this, Appodeal.BANNER_VIEW, "DetailBanner")
-        Appodeal.cache(this, Appodeal.INTERSTITIAL);
     }
 
     override fun onResume() {
         super.onResume()
-        Appodeal.onResume(this, Appodeal.BANNER_VIEW)
 
         SmsAnalytics.logEvent("Compose_Resume")
     }
@@ -272,7 +269,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun onDestroy() {
         super.onDestroy()
-        Appodeal.destroy(Appodeal.BANNER_VIEW)
     }
 
     override fun render(state: ComposeState) {
@@ -462,10 +458,5 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
 
         SmsAnalytics.logEvent("Detail_Wire_Chance")
-        if (Appodeal.isLoaded(Appodeal.INTERSTITIAL)) {
-            SmsAnalytics.logEvent("Detail_Wire_Show")
-            Appodeal.show(this, Appodeal.INTERSTITIAL, "DetailWire")
-            Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
-        }
     }
 }

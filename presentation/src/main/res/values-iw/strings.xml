@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">התכתבות חדשה</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">ההתכתבויות שהעברת לארכיון תופענה כאן</string>
     <string name="main_fab_cd">התחלת התכתבות חדשה</string>
     <string name="main_default_sms_title">להתאהב בהתכתבות</string>
-    <string name="main_default_sms_message">הגדרת Infinity SMS ליישומון המסרונים כבררת מחדל</string>
+    <string name="main_default_sms_message">הגדרת Joy SMS ליישומון המסרונים כבררת מחדל</string>
     <string name="main_default_sms_change">החלפה</string>
     <string name="main_permission_required">נדרשת הרשאה</string>
-    <string name="main_permission_sms">ל־Infinity SMS נדרשות הרשאות כדי לשלוח ולצפות במסרונים</string>
-    <string name="main_permission_contacts">ל־Infinity SMS נדרשות הרשאות כדי לצפות באנשי הקשר שלך</string>
+    <string name="main_permission_sms">ל־Joy SMS נדרשות הרשאות כדי לשלוח ולצפות במסרונים</string>
+    <string name="main_permission_contacts">ל־Joy SMS נדרשות הרשאות כדי לצפות באנשי הקשר שלך</string>
     <string name="main_permission_allow">לאפשר</string>
     <string name="drawer_inbox">דואר נכנס</string>
     <string name="drawer_archived">בארכיון</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">חסימה</string>
     <string name="drawer_more">עוד</string>
     <string name="drawer_settings">הגדרות</string>
-    <string name="drawer_plus">Infinity SMS+‎</string>
+    <string name="drawer_plus">Joy SMS+‎</string>
     <string name="drawer_help">עזרה ומשוב</string>
     <string name="drawer_invite">הזמנת חברים</string>
-    <string name="drawer_plus_banner_title">Infinity SMS+‎</string>
+    <string name="drawer_plus_banner_title">Joy SMS+‎</string>
     <string name="drawer_plus_banner_summary">לחשוף תכונות מדהימות ולתמוך בפיתוח</string>
-    <string name="rate_title">Infinity SMS נושא חן בעיניך?</string>
+    <string name="rate_title">Joy SMS נושא חן בעיניך?</string>
     <string name="rate_summary">נשמח לקבל ממך דירוג ב־Google Play!</string>
     <string name="rate_okay">כמובן!</string>
     <string name="rate_dismiss">התעלמות</string>
@@ -94,7 +94,7 @@
     <string name="compose_vcard_label">כרטיס קשר</string>
     <string name="compose_scheduled_for">מתוזמן למועד</string>
     <string name="compose_scheduled_future">הזמן הנבחר חייב להיות בעתיד!</string>
-    <string name="compose_scheduled_plus">עליך לשחרר את Infinity SMS+‎ כדי להשתמש בהודעות מתוזמנות</string>
+    <string name="compose_scheduled_plus">עליך לשחרר את Joy SMS+‎ כדי להשתמש בהודעות מתוזמנות</string>
     <string name="compose_scheduled_toast">הוספה להודעות המתוזמנות</string>
     <string name="compose_hint">כתיבת הודעה&#8230;</string>
     <string name="compose_menu_copy">העתקת טקסט</string>
@@ -145,7 +145,7 @@
     <string name="backup_never">מעולם לא</string>
     <string name="backup_restore_title">שחזור</string>
     <string name="backup_restore_summary">בחירת גיבוי</string>
-    <string name="backup_restore_error_plus">נא לשחרר את Infinity SMS+‎ כדי להשתמש בגיבוי ובשחזור</string>
+    <string name="backup_restore_error_plus">נא לשחרר את Joy SMS+‎ כדי להשתמש בגיבוי ובשחזור</string>
     <string name="backup_restore_error_backup">מתבצע גיבוי&#8230;</string>
     <string name="backup_restore_error_restore">מתבצע שחזור&#8230;</string>
     <string name="backup_restore_confirm_title">שחזור מגיבוי</string>
@@ -232,7 +232,7 @@
     <string name="settings_mms_size_title">דחיסה אוטומטית של קבצים מצורפים להודעות MMS</string>
     <string name="settings_sync_title">סנכרון הודעות</string>
     <string name="settings_sync_summary">סנכרון ההודעות שלך מחדש עם מסד הנתונים המובנה של Android</string>
-    <string name="settings_about_title">על אודות Infinity SMS</string>
+    <string name="settings_about_title">על אודות Joy SMS</string>
     <string name="settings_version">גרסה %s</string>
     <string name="settings_logging_enabled">תיעוד ניפוי שגיאות פעיל</string>
     <string name="settings_logging_disabled">תיעוד ניפוי שגיאות כבוי</string>
@@ -253,9 +253,9 @@
     <string name="qksms_plus_description_summary">באפשרותך להציל מפתח גווע ברעב עבור %s בלבד</string>
     <string name="qksms_plus_upgrade">שדרוג לכל החיים תמורת %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">שחרור ותרומה תמורת %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">תודה לך על תמיכתך ב־Infinity SMS!</string>
-    <string name="qksms_plus_thanks_summary">כעת יש לך גישה לכל התכונות של Infinity SMS+‎</string>
-    <string name="qksms_plus_free_title">התכנית Infinity SMS+‎ מוגשת בחינם למשתמשי F-Droid! אם מעניין אותך לתמוך בפיתוח, אפשר להגיש תרומה.</string>
+    <string name="qksms_plus_thanks_title">תודה לך על תמיכתך ב־Joy SMS!</string>
+    <string name="qksms_plus_thanks_summary">כעת יש לך גישה לכל התכונות של Joy SMS+‎</string>
+    <string name="qksms_plus_free_title">התכנית Joy SMS+‎ מוגשת בחינם למשתמשי F-Droid! אם מעניין אותך לתמוך בפיתוח, אפשר להגיש תרומה.</string>
     <string name="qksms_plus_donate">תרומה באמצעות PayPal</string>
     <string name="qksms_plus_coming_soon">בקרוב</string>
     <string name="qksms_plus_themes_title">ערכות עיצוב פרימיום</string>
@@ -277,7 +277,7 @@
     <string name="qksms_plus_respond_title">תגובה אוטומטית</string>
     <string name="qksms_plus_respond_summary">להגיב אוטומטית להודעות נכנסות עם תשובה שנכתבה מראש</string>
     <string name="qksms_plus_more_title">עוד</string>
-    <string name="qksms_plus_more_summary">הפיתוח של Infinity SMS מתקיים בימים אלו והרכישה שלך תכלול את כל התכונות העתידיות של Infinity SMS+‎!</string>
+    <string name="qksms_plus_more_summary">הפיתוח של Joy SMS מתקיים בימים אלו והרכישה שלך תכלול את כל התכונות העתידיות של Joy SMS+‎!</string>
     <string name="widget_loading">בטעינה&#8230;</string>
     <string name="widget_more">הצגת התכתבויות נוספות</string>
     <string name="qkreply_menu_read">לסמן כנקראה</string>
@@ -287,7 +287,7 @@
     <string name="qkreply_menu_collapse">להציג פחות</string>
     <string name="qkreply_menu_view">פתיחת דיון</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">Infinity SMS+‎</string>
+    <string name="theme_plus">Joy SMS+‎</string>
     <string name="theme_hex">הקסה</string>
     <string name="theme_apply">החלה</string>
     <string-array name="notification_actions">
@@ -307,7 +307,7 @@
     <string name="button_undo">ביטול</string>
     <string name="toast_copied">הועתק</string>
     <string name="toast_archived">דיון בארכיון</string>
-    <string name="toast_qksms_plus">עליך לשחרר את Infinity SMS+‎ כדי להשתמש בזה</string>
+    <string name="toast_qksms_plus">עליך לשחרר את Joy SMS+‎ כדי להשתמש בזה</string>
     <plurals name="notification_new_messages">
         <item quantity="one">הודעה חדשה</item>
         <item quantity="two">%s הודעות חדשות</item>

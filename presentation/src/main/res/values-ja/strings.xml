@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">新しい会話</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">保存した会話がここに表示されます</string>
     <string name="main_fab_cd">新しい会話を開始します。</string>
     <string name="main_default_sms_title">もう一度テキストメッセージが大好き</string>
-    <string name="main_default_sms_message">Infinity SMS のデフォルトの SMS アプリを作る</string>
+    <string name="main_default_sms_message">Joy SMS のデフォルトの SMS アプリを作る</string>
     <string name="main_default_sms_change">変更</string>
     <string name="main_permission_required">必要なアクセス許可</string>
-    <string name="main_permission_sms">Infinity SMSはSMSメッセージを送信および表示する権限を必要とします</string>
-    <string name="main_permission_contacts">Infinity SMSはあなたの連絡先を閲覧する許可を必要とします</string>
+    <string name="main_permission_sms">Joy SMSはSMSメッセージを送信および表示する権限を必要とします</string>
+    <string name="main_permission_contacts">Joy SMSはあなたの連絡先を閲覧する許可を必要とします</string>
     <string name="main_permission_allow">許可する</string>
     <string name="drawer_inbox">受信トレイ</string>
     <string name="drawer_archived">アーカイブ済</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">ブロック</string>
     <string name="drawer_more">もっと</string>
     <string name="drawer_settings">設定</string>
-    <string name="drawer_plus">Infinity SMS+</string>
+    <string name="drawer_plus">Joy SMS+</string>
     <string name="drawer_help">ヘルプとフィードバック</string>
     <string name="drawer_invite">友達を招待する</string>
-    <string name="drawer_plus_banner_title">Infinity SMSプラス</string>
+    <string name="drawer_plus_banner_title">Joy SMSプラス</string>
     <string name="drawer_plus_banner_summary">驚くべき新機能のロックを解除し、開発をサポート</string>
-    <string name="rate_title">Infinity SMS をお楽みいただいていますか?</string>
+    <string name="rate_title">Joy SMS をお楽みいただいていますか?</string>
     <string name="rate_summary">Google Play で愛を共有して私たちを評価してください!</string>
     <string name="rate_okay">OK!</string>
     <string name="rate_dismiss">免じる</string>
@@ -91,7 +91,7 @@
     <string name="compose_vcard_label">連絡先カード</string>
     <string name="compose_scheduled_for">予定されている</string>
     <string name="compose_scheduled_future">選択した時間は、将来的にする必要があります!</string>
-    <string name="compose_scheduled_plus">あなたのロックを解除する必要があります Infinity SMS + スケジュールされたメッセージングを使用するには</string>
+    <string name="compose_scheduled_plus">あなたのロックを解除する必要があります Joy SMS + スケジュールされたメッセージングを使用するには</string>
     <string name="compose_scheduled_toast">スケジュールされたメッセージに追加</string>
     <string name="compose_hint">メッセージを書く&#8230;</string>
     <string name="compose_menu_copy">テキストのコピー</string>
@@ -142,7 +142,7 @@
     <string name="backup_never">決して</string>
     <string name="backup_restore_title">リストア</string>
     <string name="backup_restore_summary">バックアップを選択</string>
-    <string name="backup_restore_error_plus">バックアップと復元を使用するにはInfinity SMS+のロックを解除してください</string>
+    <string name="backup_restore_error_plus">バックアップと復元を使用するにはJoy SMS+のロックを解除してください</string>
     <string name="backup_restore_error_backup">バックアップ中&#8230;</string>
     <string name="backup_restore_error_restore">復元中&#8230;</string>
     <string name="backup_restore_confirm_title">バックアップから復元</string>
@@ -226,7 +226,7 @@
     <string name="settings_mms_size_title">MMS添付ファイルの自動圧縮</string>
     <string name="settings_sync_title">メッセージを同期</string>
     <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
-    <string name="settings_about_title">Infinity SMS について</string>
+    <string name="settings_about_title">Joy SMS について</string>
     <string name="settings_version">バージョン %s</string>
     <string name="settings_logging_enabled">デバッグログが有効</string>
     <string name="settings_logging_disabled">デバッグログを無効にする</string>
@@ -247,9 +247,9 @@
     <string name="qksms_plus_description_summary">ちょうど %s 人の飢えている開発者を助けることができます</string>
     <string name="qksms_plus_upgrade">%1$s %2$s のライフタイムのアップグレード</string>
     <string name="qksms_plus_upgrade_donate">%1$s %2$s のロック解除と寄付</string>
-    <string name="qksms_plus_thanks_title">Infinity SMS を支援いただきありがとうございます!</string>
-    <string name="qksms_plus_thanks_summary">Infinity SMS+ のすべての機能にアクセスできます</string>
-    <string name="qksms_plus_free_title">Infinity SMS+ は F-Droid ユーザーは無料です! 開発をサポートしたい場合は、気軽に寄付をしてください。</string>
+    <string name="qksms_plus_thanks_title">Joy SMS を支援いただきありがとうございます!</string>
+    <string name="qksms_plus_thanks_summary">Joy SMS+ のすべての機能にアクセスできます</string>
+    <string name="qksms_plus_free_title">Joy SMS+ は F-Droid ユーザーは無料です! 開発をサポートしたい場合は、気軽に寄付をしてください。</string>
     <string name="qksms_plus_donate">PayPal で寄付する</string>
     <string name="qksms_plus_coming_soon">近日登場</string>
     <string name="qksms_plus_themes_title">プレミアムテーマ</string>
@@ -281,7 +281,7 @@
     <string name="qkreply_menu_collapse">少なく表示</string>
     <string name="qkreply_menu_view">会話を開く</string>
     <string name="theme_material">マテリアル</string>
-    <string name="theme_plus">Infinity SMS+</string>
+    <string name="theme_plus">Joy SMS+</string>
     <string name="theme_hex">16 進数</string>
     <string name="theme_apply">適用</string>
     <string-array name="notification_actions">
@@ -301,7 +301,7 @@
     <string name="button_undo">元に戻す</string>
     <string name="toast_copied">コピーしました</string>
     <string name="toast_archived">会話をアーカイブしました</string>
-    <string name="toast_qksms_plus">これを使用するには Infinity SMS+ のロックを解除する必要があります</string>
+    <string name="toast_qksms_plus">これを使用するには Joy SMS+ のロックを解除する必要があります</string>
     <plurals name="notification_new_messages">
         <item quantity="other">%s 新着メッセージ</item>
     </plurals>

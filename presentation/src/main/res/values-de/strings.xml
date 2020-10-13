@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Neue Unterhaltung</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Archivierte Unterhaltungen werden hier angezeigt</string>
     <string name="main_fab_cd">Neue Unterhaltung starten</string>
     <string name="main_default_sms_title">Liebe es wieder, SMS zu schreiben</string>
-    <string name="main_default_sms_message">Infinity SMS als Standard-SMS-App festlegen</string>
+    <string name="main_default_sms_message">Joy SMS als Standard-SMS-App festlegen</string>
     <string name="main_default_sms_change">Ändern</string>
     <string name="main_permission_required">Berechtigung erforderlich</string>
-    <string name="main_permission_sms">Infinity SMS benötigt die Berechtigung zum Senden und Anzeigen von SMS-Nachrichten</string>
-    <string name="main_permission_contacts">Infinity SMS benötigt die Berechtigung zum Zugreifen auf die Kontakte</string>
+    <string name="main_permission_sms">Joy SMS benötigt die Berechtigung zum Senden und Anzeigen von SMS-Nachrichten</string>
+    <string name="main_permission_contacts">Joy SMS benötigt die Berechtigung zum Zugreifen auf die Kontakte</string>
     <string name="main_permission_allow">Zulassen</string>
     <string name="drawer_inbox">Posteingang</string>
     <string name="drawer_archived">Archiviert</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Blockiert</string>
     <string name="drawer_more">Mehr</string>
     <string name="drawer_settings">Einstellungen</string>
-    <string name="drawer_plus">Infinity SMS+</string>
+    <string name="drawer_plus">Joy SMS+</string>
     <string name="drawer_help">Hilfe &amp; Feedback</string>
     <string name="drawer_invite">Freunde einladen</string>
-    <string name="drawer_plus_banner_title">Infinity SMS+</string>
+    <string name="drawer_plus_banner_title">Joy SMS+</string>
     <string name="drawer_plus_banner_summary">Schalte erstaunliche Neue Funktionen frei und unterstütze die Entwicklung</string>
-    <string name="rate_title">Gefällt dir Infinity SMS?</string>
+    <string name="rate_title">Gefällt dir Joy SMS?</string>
     <string name="rate_summary">Teile etwas von deiner Liebe und Bewerte uns auf Google Play!</string>
     <string name="rate_okay">OKAY!</string>
     <string name="rate_dismiss">VERWERFEN</string>
@@ -92,7 +92,7 @@
     <string name="compose_vcard_label">Kontaktkarte</string>
     <string name="compose_scheduled_for">Geplant für</string>
     <string name="compose_scheduled_future">Gewählte Zeit muss in der Zukunft liegen!</string>
-    <string name="compose_scheduled_plus">Für diese Funktion muss Infinity SMS+ freigeschalten werden</string>
+    <string name="compose_scheduled_plus">Für diese Funktion muss Joy SMS+ freigeschalten werden</string>
     <string name="compose_scheduled_toast">Zu geplanten Nachrichten hinzugefügt</string>
     <string name="compose_hint">Schreibe eine Nachricht&#8230;</string>
     <string name="compose_menu_copy">Text kopieren</string>
@@ -143,7 +143,7 @@
     <string name="backup_never">Niemals</string>
     <string name="backup_restore_title">Wiederherstellen</string>
     <string name="backup_restore_summary">Sicherung auswählen</string>
-    <string name="backup_restore_error_plus">Bitte Infinity SMS+ freischalten, um die Sicherung und Wiederherstellung zu nutzen</string>
+    <string name="backup_restore_error_plus">Bitte Joy SMS+ freischalten, um die Sicherung und Wiederherstellung zu nutzen</string>
     <string name="backup_restore_error_backup">Sicherung wird durchgeführt&#8230;</string>
     <string name="backup_restore_error_restore">Wiederherstellung wird durchgeführt&#8230;</string>
     <string name="backup_restore_confirm_title">Aus einer Sicherung wiederherstellen</string>
@@ -228,7 +228,7 @@
     <string name="settings_mms_size_title">MMS-Anhänge automatisch komprimieren</string>
     <string name="settings_sync_title">Nachrichten synchronisieren</string>
     <string name="settings_sync_summary">Nachrichten mit der Android SMS-Datenbank abgleichen</string>
-    <string name="settings_about_title">Über Infinity SMS</string>
+    <string name="settings_about_title">Über Joy SMS</string>
     <string name="settings_version">Version %s</string>
     <string name="settings_logging_enabled">Protokollierung zur Fehlerbehebung aktiviert</string>
     <string name="settings_logging_disabled">Protokollierung zur Fehlerbehebung deaktiviert</string>
@@ -249,9 +249,9 @@
     <string name="qksms_plus_description_summary">Rette einen hungernden Entwickler für nur %s</string>
     <string name="qksms_plus_upgrade">Lebenslanges Upgrade für %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Entsperren &amp; Spenden für %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Vielen Dank für die Unterstützung von Infinity SMS!</string>
-    <string name="qksms_plus_thanks_summary">Du kannst jetzt alle Infinity SMS+ Funktionen verwenden</string>
-    <string name="qksms_plus_free_title">Infinity SMS+ ist für Nutzer von F-Droid kostenfrei! Spende gerne um die Entwicklung zu Unterstützen.</string>
+    <string name="qksms_plus_thanks_title">Vielen Dank für die Unterstützung von Joy SMS!</string>
+    <string name="qksms_plus_thanks_summary">Du kannst jetzt alle Joy SMS+ Funktionen verwenden</string>
+    <string name="qksms_plus_free_title">Joy SMS+ ist für Nutzer von F-Droid kostenfrei! Spende gerne um die Entwicklung zu Unterstützen.</string>
     <string name="qksms_plus_donate">Spenden per PayPal</string>
     <string name="qksms_plus_coming_soon">Demnächst verfügbar</string>
     <string name="qksms_plus_themes_title">Premium-Erscheinungsbilder</string>
@@ -273,7 +273,7 @@
     <string name="qksms_plus_respond_title">Automatische Antwort</string>
     <string name="qksms_plus_respond_summary">Eingehende Nachrichten werden mit einer voreingestellten Antwort beantwortet</string>
     <string name="qksms_plus_more_title">Mehr</string>
-    <string name="qksms_plus_more_summary">Infinity SMS wird aktiv weiterentwickelt und Dein Erwerb wird alle zukünftigen Funktionen enthalten!</string>
+    <string name="qksms_plus_more_summary">Joy SMS wird aktiv weiterentwickelt und Dein Erwerb wird alle zukünftigen Funktionen enthalten!</string>
     <string name="widget_loading">Lädt&#8230;</string>
     <string name="widget_more">Weitere Unterhaltungen anzeigen</string>
     <string name="qkreply_menu_read">Als gelesen markieren</string>
@@ -283,7 +283,7 @@
     <string name="qkreply_menu_collapse">Weniger anzeigen</string>
     <string name="qkreply_menu_view">Unterhaltung öffnen</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">Infinity SMS+</string>
+    <string name="theme_plus">Joy SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Übernehmen</string>
     <string-array name="notification_actions">
@@ -303,7 +303,7 @@
     <string name="button_undo">Rückgängig</string>
     <string name="toast_copied">Kopiert</string>
     <string name="toast_archived">Archivierte Unterhaltung</string>
-    <string name="toast_qksms_plus">Für diese Funktion muss Infinity SMS+ freigeschalten werden</string>
+    <string name="toast_qksms_plus">Für diese Funktion muss Joy SMS+ freigeschalten werden</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Neue Nachricht</item>
         <item quantity="other">%s neue Nachrichten</item>

@@ -54,13 +54,9 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://maven.google.com' }
-        maven { url "https://artifactory.appodeal.com/appodeal" }
         maven {
             name 'glide-snapshot'
             url 'http://oss.sonatype.org/content/repositories/snapshots'
-        }
-        maven {
-            url "http://maven.ihandysoft.com:8081/repository/ihandygroup/"
         }
         mavenCentral()
     }

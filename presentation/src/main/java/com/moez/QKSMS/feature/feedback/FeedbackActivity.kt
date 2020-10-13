@@ -10,8 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
@@ -62,10 +60,6 @@ class FeedbackActivity : QkThemedActivity() {
             if (!feedbackContent!!.text.toString().trim { it <= ' ' }.isEmpty()) {
                 val content = getFeedbackContent()
                 try {
-                    FirebaseDatabase.getInstance().getReference("feedbacks")
-                            .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                            .push()
-                            .setValue(content)
                 } catch (e: Exception) {
                 }
 

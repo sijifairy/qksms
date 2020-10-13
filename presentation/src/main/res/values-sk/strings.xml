@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Nová konverzácia</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Tu sa zobrazia vaše archivované konverzácie</string>
     <string name="main_fab_cd">Začať novú konverzáciu</string>
     <string name="main_default_sms_title">Opäť si zamilujte písanie</string>
-    <string name="main_default_sms_message">Nastavte Infinity SMS ako predvolenú SMS aplikáciu</string>
+    <string name="main_default_sms_message">Nastavte Joy SMS ako predvolenú SMS aplikáciu</string>
     <string name="main_default_sms_change">Zmeniť</string>
     <string name="main_permission_required">Vyžadované povolenie</string>
-    <string name="main_permission_sms">Infinity SMS potrebuje povolenie posielať a zobrazovať správy SMS</string>
-    <string name="main_permission_contacts">Infinity SMS potrebuje povolenie na zobrazenie kontaktov</string>
+    <string name="main_permission_sms">Joy SMS potrebuje povolenie posielať a zobrazovať správy SMS</string>
+    <string name="main_permission_contacts">Joy SMS potrebuje povolenie na zobrazenie kontaktov</string>
     <string name="main_permission_allow">Povoliť</string>
     <string name="drawer_inbox">Doručené</string>
     <string name="drawer_archived">Archivované</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Blokovanie</string>
     <string name="drawer_more">Viac</string>
     <string name="drawer_settings">Nastavenia</string>
-    <string name="drawer_plus">Infinity SMS+</string>
+    <string name="drawer_plus">Joy SMS+</string>
     <string name="drawer_help">Nápoveda &amp; spätná väzba</string>
     <string name="drawer_invite">Pozvať priateľov</string>
-    <string name="drawer_plus_banner_title">Infinity SMS+</string>
+    <string name="drawer_plus_banner_title">Joy SMS+</string>
     <string name="drawer_plus_banner_summary">Odomknutie úžasné nové funkcie a podporte vývoj</string>
-    <string name="rate_title">Máte radi Infinity SMS?</string>
+    <string name="rate_title">Máte radi Joy SMS?</string>
     <string name="rate_summary">Podeľte sa o trochu lásky a ohodnoťte nás na Google Play!</string>
     <string name="rate_okay">OUKEJ!</string>
     <string name="rate_dismiss">ODMIETNUŤ</string>
@@ -94,7 +94,7 @@
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
     <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_plus">You must unlock Infinity SMS+ to use scheduled messaging</string>
+    <string name="compose_scheduled_plus">You must unlock Joy SMS+ to use scheduled messaging</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_hint">Napíšte správu&#8230;</string>
     <string name="compose_menu_copy">Kopírovať text</string>
@@ -145,7 +145,7 @@
     <string name="backup_never">Nikdy</string>
     <string name="backup_restore_title">Obnoviť</string>
     <string name="backup_restore_summary">Zvoľte zálohu</string>
-    <string name="backup_restore_error_plus">Please unlock Infinity SMS+ to use backup and restore</string>
+    <string name="backup_restore_error_plus">Please unlock Joy SMS+ to use backup and restore</string>
     <string name="backup_restore_error_backup">Prebieha zálohovanie&#8230;</string>
     <string name="backup_restore_error_restore">Prebieha obnova&#8230;</string>
     <string name="backup_restore_confirm_title">Obnoviť zo zálohy</string>
@@ -232,7 +232,7 @@
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-    <string name="settings_about_title">O aplikácii Infinity SMS</string>
+    <string name="settings_about_title">O aplikácii Joy SMS</string>
     <string name="settings_version">Verzia %s</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
@@ -253,9 +253,9 @@
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Thank you for supporting Infinity SMS!</string>
-    <string name="qksms_plus_thanks_summary">You now have access to all Infinity SMS+ features</string>
-    <string name="qksms_plus_free_title">Infinity SMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+    <string name="qksms_plus_thanks_title">Thank you for supporting Joy SMS!</string>
+    <string name="qksms_plus_thanks_summary">You now have access to all Joy SMS+ features</string>
+    <string name="qksms_plus_free_title">Joy SMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
     <string name="qksms_plus_donate">Donate via PayPal</string>
     <string name="qksms_plus_coming_soon">Už čoskoro</string>
     <string name="qksms_plus_themes_title">Premium themes</string>
@@ -277,7 +277,7 @@
     <string name="qksms_plus_respond_title">Auto-respond</string>
     <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
     <string name="qksms_plus_more_title">Viac</string>
-    <string name="qksms_plus_more_summary">Infinity SMS is under active development, and your purchase will include all future Infinity SMS+ features!</string>
+    <string name="qksms_plus_more_summary">Joy SMS is under active development, and your purchase will include all future Joy SMS+ features!</string>
     <string name="widget_loading">Načítavanie&#8230;</string>
     <string name="widget_more">View more conversations</string>
     <string name="qkreply_menu_read">Označiť ako prečítané</string>
@@ -287,7 +287,7 @@
     <string name="qkreply_menu_collapse">Zobraziť menej</string>
     <string name="qkreply_menu_view">Otvoriť konverzáciu</string>
     <string name="theme_material">Materiál</string>
-    <string name="theme_plus">Infinity SMS+</string>
+    <string name="theme_plus">Joy SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Použiť</string>
     <string-array name="notification_actions">
@@ -307,7 +307,7 @@
     <string name="button_undo">Undo</string>
     <string name="toast_copied">Copied</string>
     <string name="toast_archived">Archived conversation</string>
-    <string name="toast_qksms_plus">You must unlock Infinity SMS+ to use this</string>
+    <string name="toast_qksms_plus">You must unlock Joy SMS+ to use this</string>
     <plurals name="notification_new_messages">
         <item quantity="one">New message</item>
         <item quantity="few">%s new messages</item>

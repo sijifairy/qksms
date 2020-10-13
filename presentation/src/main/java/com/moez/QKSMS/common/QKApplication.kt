@@ -19,30 +19,18 @@
 package com.moez.QKSMS.common
 
 import android.app.Activity
-import android.app.Notification
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.provider.Settings
-import android.text.TextUtils
-import android.util.Log
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.flurry.android.FlurryAgent
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.ihs.app.framework.HSApplication
-import com.ihs.device.permanent.HSPermanentUtils
-import com.ihs.device.permanent.PermanentService
-import com.ihs.device.permanent.syncaccount.HSAccountsKeepAliveUtils
-import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.*
+import com.moez.QKSMS.common.util.FileLoggingTree
+import com.moez.QKSMS.common.util.Preferences
+import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.feature.guide.topapp.TopAppManager
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
@@ -50,11 +38,9 @@ import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
 import dagger.android.*
-import io.fabric.sdk.android.Fabric
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
@@ -68,12 +54,16 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
 
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+
     @Inject
     lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+
     @Inject
     lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+
     @Inject
     lateinit var fileLoggingTree: FileLoggingTree
+
     @Inject
     lateinit var nightModeManager: NightModeManager
 
@@ -93,130 +83,48 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
                 .withLogEnabled(true)
                 .build(this, "63DH56Z7X2568JSZBDPS")
 
-        val crashlyticsKit = Crashlytics.Builder()
-        crashlyticsKit.core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-        Fabric.with(this@QKApplication, crashlyticsKit.build())
-//        val conversionDataListener = object : AppsFlyerConversionListener {
-//            override fun onInstallConversionDataLoaded(conversionData: Map<String, String>) {
-//                for (attrName in conversionData.keys) {
-//                    Log.d(LOG_TAG, "conversion_attribute: " + attrName + " = " +
-//                            conversionData[attrName])
-//                }
-//            }
-//
-//            override fun onInstallConversionFailure(errorMessage: String) {
-//                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
-//            }
-//
-//            override fun onAppOpenAttribution(conversionData: Map<String, String>) {
-//                for (attrName in conversionData.keys) {
-//                    Log.d(LOG_TAG, "onAppOpen_attribute: " + attrName + " = " +
-//                            conversionData[attrName])
-//                }
-//            }
-//
-//            override fun onAttributionFailure(errorMessage: String) {
-//                Log.d(LOG_TAG, "error onAttributionFailure : $errorMessage")
-//            }
-//        }
-//        AppsFlyerLib.getInstance().init("4N3JVcMXPziVis9ohCYuE", conversionDataListener, applicationContext)
-//        AppsFlyerLib.getInstance().startTracking(this)
-//        MobileAds.initialize(this, "ca-app-pub-5061957740026229~4750010097");
-        val packageName = packageName
-        val processName = HSApplication.getProcessName()
-        val isOnMainProcess = TextUtils.equals(processName, packageName)
-        if (isOnMainProcess) {
-            Realm.init(this)
-            Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-                    .compactOnLaunch()
-                    .migration(QkRealmMigration())
-                    .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
-                    .build())
+//        val packageName = packageName
+//        val processName = HSApplication.getProcessName()
+//        val isOnMainProcess = TextUtils.equals(processName, packageName)
+//        if (isOnMainProcess) {
+        Realm.init(this)
+        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
+                .compactOnLaunch()
+                .migration(QkRealmMigration())
+                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
+                .build())
 
-            AppComponentManager.init(this)
-            appComponent.inject(this)
+        AppComponentManager.init(this)
+        appComponent.inject(this)
 
-            packageManager.getInstallerPackageName(packageName)?.let { installer ->
-                analyticsManager.setUserProperty("Installer", installer)
-            }
-
-            nightModeManager.updateCurrentTheme()
-
-            val fontRequest = FontRequest(
-                    "com.google.android.gms.fonts",
-                    "com.google.android.gms",
-                    "Noto Color Emoji Compat",
-                    R.array.com_google_android_gms_fonts_certs)
-
-            EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
-
-            Timber.plant(Timber.DebugTree(), fileLoggingTree)
-
-            val uri = Settings.Secure.getUriFor("sms_default_application")
-            val context = applicationContext
-            context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
-
-            TopAppManager.getInstance().startPollingTask()
-
-            if (!Preferences.getDefault().contains("pref_key_install_time")) {
-                Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
-            }
-
-            SmsAnalytics.logEvent("Process_Start")
-
-            initKeepAlive()
-
-            val eventValue = HashMap<String, Any>()
-            eventValue["Usage_Request_Enabled"] = false
-            eventValue["Ad_Reply_Native_Admob_ID"] = "ca-app-pub-5061957740026229/1647450984"
-            eventValue["Ad_Detail_Interstitial_Admob_ID"] = "ca-app-pub-5061957740026229/6377033487"
-            eventValue["Ad_Detail_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/5188623637"
-            eventValue["Ad_Homepage_Banner_Admob_ID"] = "ca-app-pub-5061957740026229/6444358387"
-            FirebaseRemoteConfig.getInstance().setDefaults(eventValue)
-            FirebaseRemoteConfig.getInstance().setConfigSettings(
-                    FirebaseRemoteConfigSettings
-                            .Builder()
-                            .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                            .setMinimumFetchIntervalInSeconds(3600).build());
-            FirebaseRemoteConfig.getInstance().fetchAndActivate().addOnCompleteListener(
-                    OnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toasts.showToast("Fetch success " + task.getResult())
-                        } else {
-                            Toasts.showToast("Fetch failed")
-                        }
-                    })
-            FirebaseAuth.getInstance().signInAnonymously().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("auth", "login anonymously success!")
-                } else {
-                    Log.d("auth", "login anonymously failed!")
-                }
-            }
+        packageManager.getInstallerPackageName(packageName)?.let { installer ->
+            analyticsManager.setUserProperty("Installer", installer)
         }
-    }
 
-    private fun initKeepAlive() {
-        val keepAliveConfig = HSPermanentUtils.KeepAliveConfig.Builder()
-                .setOreoOptimizationEnabled(true)
-                .setJobScheduleEnabled(true, 15 * 60 * 1000L)
-                .build()
+        nightModeManager.updateCurrentTheme()
 
-        HSPermanentUtils.initKeepAlive(keepAliveConfig, object : PermanentService.PermanentServiceListener {
-            override fun getForegroundNotification(): Notification? {
-                return null
-            }
+        val fontRequest = FontRequest(
+                "com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "Noto Color Emoji Compat",
+                R.array.com_google_android_gms_fonts_certs)
 
-            override fun getNotificationID(): Int {
-                return 123
-            }
+        EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-            override fun onServiceCreate() {
-                HSAccountsKeepAliveUtils.start()
-                HSAccountsKeepAliveUtils.setSyncAccountPeriodic(30 * 60 * 1000L)
-            }
-        })
-        Threads.postOnMainThreadDelayed({ HSPermanentUtils.startKeepAlive() }, 10 * 1000)
+        Timber.plant(Timber.DebugTree(), fileLoggingTree)
+
+        val uri = Settings.Secure.getUriFor("sms_default_application")
+        val context = applicationContext
+        context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
+
+        TopAppManager.getInstance().startPollingTask()
+
+        if (!Preferences.getDefault().contains("pref_key_install_time")) {
+            Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
+        }
+
+        SmsAnalytics.logEvent("Process_Start")
+//        }
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

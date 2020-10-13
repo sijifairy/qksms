@@ -34,13 +34,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.appodeal.ads.Appodeal
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -62,7 +56,6 @@ import com.moez.QKSMS.feature.guide.UsageUtils
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
-import io.presage.finder.model.App
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
@@ -77,16 +70,22 @@ class MainActivity : QkThemedActivity(), MainView {
 
     @Inject
     lateinit var disposables: CompositeDisposable
+
     @Inject
     lateinit var navigator: Navigator
+
     @Inject
     lateinit var conversationsAdapter: ConversationsAdapter
+
     @Inject
     lateinit var drawerBadgesExperiment: DrawerBadgesExperiment
+
     @Inject
     lateinit var searchAdapter: SearchAdapter
+
     @Inject
     lateinit var itemTouchCallback: ConversationItemTouchCallback
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -145,8 +144,6 @@ class MainActivity : QkThemedActivity(), MainView {
         viewModel.bindView(this)
 
         SmsAnalytics.logEvent("Main_Create")
-        Appodeal.initialize(this, "69b85ac97d3b099a7f6ddb1cf6cd374cbcd5abe0b7441eee",
-                Appodeal.BANNER or Appodeal.INTERSTITIAL or Appodeal.NATIVE, true)
 
         (snackbar as? ViewStub)?.setOnInflateListener { _, _ ->
             snackbarButton.clicks().subscribe(snackbarButtonIntent)
@@ -244,8 +241,6 @@ class MainActivity : QkThemedActivity(), MainView {
 //            }
 //        }
 
-        Appodeal.setBannerViewId(R.id.adViewContainer)
-        Appodeal.show(this, Appodeal.BANNER_VIEW, "HomepageBanner")
     }
 
     override fun render(state: MainState) {
@@ -302,7 +297,9 @@ class MainActivity : QkThemedActivity(), MainView {
                 } else {
                     "Messages"
                 }
-                if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                if (recyclerView.adapter !== conversationsAdapter) {
+                    recyclerView.adapter = conversationsAdapter
+                }
                 conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(recyclerView)
                 empty.setText(R.string.inbox_empty_text)
@@ -322,7 +319,9 @@ class MainActivity : QkThemedActivity(), MainView {
                     true -> getString(R.string.main_title_selected, state.page.selected)
                     false -> getString(R.string.title_archived)
                 }
-                if (recyclerView.adapter !== conversationsAdapter) recyclerView.adapter = conversationsAdapter
+                if (recyclerView.adapter !== conversationsAdapter) {
+                    recyclerView.adapter = conversationsAdapter
+                }
                 conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(null)
                 empty.setText(R.string.archived_empty_text)
@@ -375,7 +374,6 @@ class MainActivity : QkThemedActivity(), MainView {
         super.onResume()
         activityResumedIntent.onNext(Unit)
 
-        Appodeal.onResume(this, Appodeal.BANNER_VIEW)
         SmsAnalytics.logEvent("Main_Resume", "nightmode", prefs.night.get().toString())
     }
 
@@ -383,7 +381,6 @@ class MainActivity : QkThemedActivity(), MainView {
         super.onDestroy()
         disposables.dispose()
 
-        Appodeal.destroy(Appodeal.BANNER_VIEW)
     }
 
     override fun showBackButton(show: Boolean) {
@@ -439,13 +436,13 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        if (FirebaseRemoteConfig.getInstance().getBoolean("Usage_Request_Enabled")
-                && Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 3
-                && !Permissions.isUsageAccessGranted()) {
-            showUsageDialog()
-            Preferences.getDefault().incrementAndGetInt("pref_key_usage_guide_times")
-            return
-        }
+//        if (FirebaseRemoteConfig.getInstance().getBoolean("Usage_Request_Enabled")
+//                && Preferences.getDefault().getInt("pref_key_usage_guide_times", 0) < 3
+//                && !Permissions.isUsageAccessGranted()) {
+//            showUsageDialog()
+//            Preferences.getDefault().incrementAndGetInt("pref_key_usage_guide_times")
+//            return
+//        }
 
         if (FiveStarRateDialog.showShowFiveStarRateDialogOnBackToDesktopIfNeed(this)) {
             return

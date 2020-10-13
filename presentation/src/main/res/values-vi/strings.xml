@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Cuộc trò chuyện mới</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Các cuộc trò chuyện đã lưu trữ của bạn sẽ xuất hiện ở đây</string>
     <string name="main_fab_cd">Bắt đầu cuộc trò chuyện</string>
     <string name="main_default_sms_title">Yêu thích nhắn tin ở đây</string>
-    <string name="main_default_sms_message">Đặt Infinity SMS là ứng dụng SMS mặc định</string>
+    <string name="main_default_sms_message">Đặt Joy SMS là ứng dụng SMS mặc định</string>
     <string name="main_default_sms_change">Thay đổi</string>
     <string name="main_permission_required">Yêu cầu quyền truy cập</string>
-    <string name="main_permission_sms">Infinity SMS cần cấp quyền để gửi và xem tin nhắn SMS</string>
-    <string name="main_permission_contacts">Infinity SMS cần cấp quyền để xem danh bạ</string>
+    <string name="main_permission_sms">Joy SMS cần cấp quyền để gửi và xem tin nhắn SMS</string>
+    <string name="main_permission_contacts">Joy SMS cần cấp quyền để xem danh bạ</string>
     <string name="main_permission_allow">Cho phép</string>
     <string name="drawer_inbox">Trò chuyện</string>
     <string name="drawer_archived">Lưu trữ</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Chặn liên hệ</string>
     <string name="drawer_more">Xem thêm</string>
     <string name="drawer_settings">Cài đặt</string>
-    <string name="drawer_plus">Infinity SMS+</string>
+    <string name="drawer_plus">Joy SMS+</string>
     <string name="drawer_help">Giúp đỡ và phản hồi</string>
     <string name="drawer_invite">Giới thiệu đến bạn bè</string>
-    <string name="drawer_plus_banner_title">Infinity SMS+</string>
+    <string name="drawer_plus_banner_title">Joy SMS+</string>
     <string name="drawer_plus_banner_summary">Mở khoá những tính năng đặc sắc và hỗ trợ cho nhà phát triển</string>
-    <string name="rate_title">Bạn có thích Infinity SMS không?</string>
+    <string name="rate_title">Bạn có thích Joy SMS không?</string>
     <string name="rate_summary">Chia sẻ và vote chúng tôi trên Google Play!</string>
     <string name="rate_okay">Đồng ý!</string>
     <string name="rate_dismiss">Bỏ qua</string>
@@ -91,7 +91,7 @@
     <string name="compose_vcard_label">Thẻ danh thiếp</string>
     <string name="compose_scheduled_for">Hẹn giờ cho</string>
     <string name="compose_scheduled_future">Thời gian chọn phải trong tương lai!</string>
-    <string name="compose_scheduled_plus">Bạn phải mở khoá Infinity SMS+ để dùng tính năng hẹn giờ</string>
+    <string name="compose_scheduled_plus">Bạn phải mở khoá Joy SMS+ để dùng tính năng hẹn giờ</string>
     <string name="compose_scheduled_toast">Đã hẹn giờ cho tin nhắn</string>
     <string name="compose_hint">Viết tin nhắn&#8230;</string>
     <string name="compose_menu_copy">Sao chép văn bản</string>
@@ -142,7 +142,7 @@
     <string name="backup_never">Chưa bao giờ</string>
     <string name="backup_restore_title">Khôi phục</string>
     <string name="backup_restore_summary">Chọn một bản sao lưu</string>
-    <string name="backup_restore_error_plus">Vui lòng mở khoá Infinity SMS+ để dùng tính năng sao lưu và khôi phục</string>
+    <string name="backup_restore_error_plus">Vui lòng mở khoá Joy SMS+ để dùng tính năng sao lưu và khôi phục</string>
     <string name="backup_restore_error_backup">Đang sao lưu&#8230;</string>
     <string name="backup_restore_error_restore">Đang khôi phục&#8230;</string>
     <string name="backup_restore_confirm_title">Khôi phục từ bản sao lưu này</string>
@@ -226,7 +226,7 @@
     <string name="settings_mms_size_title">Tự động nén các tệp đính kèm MMS</string>
     <string name="settings_sync_title">Đồng bộ tin nhắn</string>
     <string name="settings_sync_summary">Đồng bộ lại tin nhắn với thiết bị</string>
-    <string name="settings_about_title">Thông tin Infinity SMS</string>
+    <string name="settings_about_title">Thông tin Joy SMS</string>
     <string name="settings_version">Phiên bản: %s</string>
     <string name="settings_logging_enabled">Đã bật bản ghi gỡ lỗi</string>
     <string name="settings_logging_disabled">Đã tắt bản ghi gỡ lỗi</string>
@@ -247,9 +247,9 @@
     <string name="qksms_plus_description_summary">Bạn có thể ủng hộ chúng tôi chỉ với %s</string>
     <string name="qksms_plus_upgrade">Nâng cấp trọn đời với %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Mở khoá và tài trợ với %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Cảm ơn bạn đã ủng hộ Infinity SMS!</string>
-    <string name="qksms_plus_thanks_summary">Bây giờ bạn có thể sử dụng tất cả các chức năng của Infinity SMS+</string>
-    <string name="qksms_plus_free_title">Infinity SMS+ miễn phí cho người sử dụng F-Droid! Bạn có thể trả phí nếu muốn hỗ trợ phát triển.</string>
+    <string name="qksms_plus_thanks_title">Cảm ơn bạn đã ủng hộ Joy SMS!</string>
+    <string name="qksms_plus_thanks_summary">Bây giờ bạn có thể sử dụng tất cả các chức năng của Joy SMS+</string>
+    <string name="qksms_plus_free_title">Joy SMS+ miễn phí cho người sử dụng F-Droid! Bạn có thể trả phí nếu muốn hỗ trợ phát triển.</string>
     <string name="qksms_plus_donate">Tài trợ bằng PayPal</string>
     <string name="qksms_plus_coming_soon">Sắp có</string>
     <string name="qksms_plus_themes_title">Chủ đề đặc biệt</string>
@@ -271,7 +271,7 @@
     <string name="qksms_plus_respond_title">Tự động trả lời</string>
     <string name="qksms_plus_respond_summary">Tự động trả lời các tin nhắn với nội dung cài sẵn</string>
     <string name="qksms_plus_more_title">Nhiều tính năng khác</string>
-    <string name="qksms_plus_more_summary">Infinity SMS đang trong giai đoạn phát triển, và việc thanh toán của bạn sẽ bao gồm tất cả tính năng Infinity SMS+ tương lai!</string>
+    <string name="qksms_plus_more_summary">Joy SMS đang trong giai đoạn phát triển, và việc thanh toán của bạn sẽ bao gồm tất cả tính năng Joy SMS+ tương lai!</string>
     <string name="widget_loading">Đang tải&#8230;</string>
     <string name="widget_more">Xem thêm các cuộc trò chuyện</string>
     <string name="qkreply_menu_read">Đánh dấu đã đọc</string>
@@ -281,7 +281,7 @@
     <string name="qkreply_menu_collapse">Hiển thị ít hơn</string>
     <string name="qkreply_menu_view">Mở cuộc trò chuyện</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">Infinity SMS+</string>
+    <string name="theme_plus">Joy SMS+</string>
     <string name="theme_hex">Hệ 16</string>
     <string name="theme_apply">Áp dụng</string>
     <string-array name="notification_actions">
@@ -301,7 +301,7 @@
     <string name="button_undo">Undo</string>
     <string name="toast_copied">Đã sao chép</string>
     <string name="toast_archived">Cuộc trò chuyện đã được lưu trữ</string>
-    <string name="toast_qksms_plus">Bạn phải mở khóa Infinity SMS+ để sử dụng chức năng này</string>
+    <string name="toast_qksms_plus">Bạn phải mở khóa Joy SMS+ để sử dụng chức năng này</string>
     <plurals name="notification_new_messages">
         <item quantity="other">%s tin nhắn mới</item>
     </plurals>

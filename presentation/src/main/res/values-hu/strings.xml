@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Új beszélgetés</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Az archivált beszélgetéseid itt jelennek meg</string>
     <string name="main_fab_cd">Új beszélgetés kezdeményezése</string>
     <string name="main_default_sms_title">Szeresd újból az SMS-ezést</string>
-    <string name="main_default_sms_message">A Infinity SMS beállítása alapértelmezett SMS alkalmazásként</string>
+    <string name="main_default_sms_message">A Joy SMS beállítása alapértelmezett SMS alkalmazásként</string>
     <string name="main_default_sms_change">Módosít</string>
     <string name="main_permission_required">Engedély szükséges</string>
-    <string name="main_permission_sms">A Infinity SMS-nek engedélyt kell kapnia az SMS üzenetek küldésére és megtekintésére</string>
-    <string name="main_permission_contacts">A Infinity SMS-nek engedélyt kell kapnia a kapcsolatok megtekintésére</string>
+    <string name="main_permission_sms">A Joy SMS-nek engedélyt kell kapnia az SMS üzenetek küldésére és megtekintésére</string>
+    <string name="main_permission_contacts">A Joy SMS-nek engedélyt kell kapnia a kapcsolatok megtekintésére</string>
     <string name="main_permission_allow">Engedélyez</string>
     <string name="drawer_inbox">Bejövő üzenetek</string>
     <string name="drawer_archived">Archivált</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Blokkolás</string>
     <string name="drawer_more">Továbbiák</string>
     <string name="drawer_settings">Beállítások</string>
-    <string name="drawer_plus">Infinity SMS+</string>
+    <string name="drawer_plus">Joy SMS+</string>
     <string name="drawer_help">Súgó és visszajelzés</string>
     <string name="drawer_invite">Ismerősök meghívása</string>
-    <string name="drawer_plus_banner_title">Infinity SMS+</string>
+    <string name="drawer_plus_banner_title">Joy SMS+</string>
     <string name="drawer_plus_banner_summary">Juss érdekes, új lehetőségekhez és támogasd fejlesztést</string>
-    <string name="rate_title">Tetszik a Infinity SMS?</string>
+    <string name="rate_title">Tetszik a Joy SMS?</string>
     <string name="rate_summary">Oszd meg a szeretetet és értékelj minket a Google Playen!</string>
     <string name="rate_okay">OKÉ!</string>
     <string name="rate_dismiss">MELLŐZÉS</string>
@@ -92,7 +92,7 @@
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
     <string name="compose_scheduled_future">A kiválasztott időpontnak a jövőben kell lennie!</string>
-    <string name="compose_scheduled_plus">Aktiválnod kell a Infinity SMS+-t hogy időzített üzeneteteket tudj használni</string>
+    <string name="compose_scheduled_plus">Aktiválnod kell a Joy SMS+-t hogy időzített üzeneteteket tudj használni</string>
     <string name="compose_scheduled_toast">Hozzáadva az időzített üzenetekhez</string>
     <string name="compose_hint">Írj egy üzenetet&#8230;</string>
     <string name="compose_menu_copy">Szöveg másolás</string>
@@ -143,7 +143,7 @@
     <string name="backup_never">Soha</string>
     <string name="backup_restore_title">Visszaállítás</string>
     <string name="backup_restore_summary">Válassz egy mentést</string>
-    <string name="backup_restore_error_plus">Please unlock Infinity SMS+ to use backup and restore</string>
+    <string name="backup_restore_error_plus">Please unlock Joy SMS+ to use backup and restore</string>
     <string name="backup_restore_error_backup">Mentés folyamatban&#8230;</string>
     <string name="backup_restore_error_restore">Visszaállítás folyamatban&#8230;</string>
     <string name="backup_restore_confirm_title">Visszaállítás mentésből</string>
@@ -228,7 +228,7 @@
     <string name="settings_mms_size_title">MMS-mellékletek automatikus tömörítése</string>
     <string name="settings_sync_title">Üzenetek szinkronizálása</string>
     <string name="settings_sync_summary">Üzenetek szinkronizálása a natív Android SMS-adatbázisban</string>
-    <string name="settings_about_title">A Infinity SMS-ről</string>
+    <string name="settings_about_title">A Joy SMS-ről</string>
     <string name="settings_version">%s verzió</string>
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
@@ -249,9 +249,9 @@
     <string name="qksms_plus_description_summary">Csak %s hogy megmenthess egy éhező fejlesztőt</string>
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatot a Infinity SMS-t!</string>
-    <string name="qksms_plus_thanks_summary">MOst hozzáférsz minden Infinity SMS+ funkcióhoz</string>
-    <string name="qksms_plus_free_title">A Infinity SMS+ minden F-Droid felhasználónak ingyenes. Ha támogatni szeretnéd a fejlesztést az alábbi módon megteheted.</string>
+    <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatot a Joy SMS-t!</string>
+    <string name="qksms_plus_thanks_summary">MOst hozzáférsz minden Joy SMS+ funkcióhoz</string>
+    <string name="qksms_plus_free_title">A Joy SMS+ minden F-Droid felhasználónak ingyenes. Ha támogatni szeretnéd a fejlesztést az alábbi módon megteheted.</string>
     <string name="qksms_plus_donate">Támogatás PayPalon keresztül</string>
     <string name="qksms_plus_coming_soon">Hamarosan</string>
     <string name="qksms_plus_themes_title">Prémium témák</string>
@@ -273,7 +273,7 @@
     <string name="qksms_plus_respond_title">Auto-respond</string>
     <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
     <string name="qksms_plus_more_title">More</string>
-    <string name="qksms_plus_more_summary">Infinity SMS is under active development, and your purchase will include all future Infinity SMS+ features!</string>
+    <string name="qksms_plus_more_summary">Joy SMS is under active development, and your purchase will include all future Joy SMS+ features!</string>
     <string name="widget_loading">Loading&#8230;</string>
     <string name="widget_more">View more conversations</string>
     <string name="qkreply_menu_read">Mark read</string>
@@ -283,7 +283,7 @@
     <string name="qkreply_menu_collapse">Show less</string>
     <string name="qkreply_menu_view">Open conversation</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">Infinity SMS+</string>
+    <string name="theme_plus">Joy SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
     <string-array name="notification_actions">
@@ -303,7 +303,7 @@
     <string name="button_undo">Visszavonás</string>
     <string name="toast_copied">Átmásolva</string>
     <string name="toast_archived">Archivált beszélgetés</string>
-    <string name="toast_qksms_plus">You must unlock Infinity SMS+ to use this</string>
+    <string name="toast_qksms_plus">You must unlock Joy SMS+ to use this</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Új üzenet</item>
         <item quantity="other">%s új üzenet</item>

@@ -46,11 +46,11 @@ import javax.inject.Singleton
 
 @Singleton
 class Navigator @Inject constructor(
-    private val context: Context,
-    private val analyticsManager: AnalyticsManager,
-    private val billingManager: BillingManager,
-    private val notificationManager: NotificationManager,
-    private val permissions: PermissionManager
+        private val context: Context,
+        private val analyticsManager: AnalyticsManager,
+        private val billingManager: BillingManager,
+        private val notificationManager: NotificationManager,
+        private val permissions: PermissionManager
 ) {
 
     private fun startActivity(intent: Intent) {
@@ -168,7 +168,7 @@ class Navigator @Inject constructor(
 
 
     fun showRating() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.messenger.sms.infinity.theme"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.joyinsight.sms"))
                 .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
                         or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
                         or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
@@ -176,7 +176,7 @@ class Navigator @Inject constructor(
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.messenger.sms.infinity.theme")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.joyinsight.sms")))
         }
     }
 
@@ -193,7 +193,7 @@ class Navigator @Inject constructor(
 //        val intent = Intent(Intent.ACTION_SENDTO)
 //        intent.data = Uri.parse("mailto:")
 //        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("firsttapnews@gmail.com"))
-//        intent.putExtra(Intent.EXTRA_SUBJECT, "Infinity SMS Support")
+//        intent.putExtra(Intent.EXTRA_SUBJECT, "Joy SMS Support")
 //        intent.putExtra(Intent.EXTRA_TEXT, StringBuilder("\n\n")
 //                .append("\n\n--- Please write your message above this line ---\n\n")
 //                .append("Package: ${context.packageName}\n")

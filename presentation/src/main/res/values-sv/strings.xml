@@ -3,20 +3,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Infinity SMS.
+  ~ This file is part of Joy SMS.
   ~
-  ~ Infinity SMS is free software: you can redistribute it and/or modify
+  ~ Joy SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Infinity SMS is distributed in the hope that it will be useful,
+  ~ Joy SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Infinity SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
     <string name="shortcut_compose_long_label">Ny konversation</string>
@@ -53,11 +53,11 @@
     <string name="archived_empty_text">Dina arkiverade konversationer kommer att dyka upp här</string>
     <string name="main_fab_cd">Starta en ny konversation</string>
     <string name="main_default_sms_title">Älska att skicka SMS igen</string>
-    <string name="main_default_sms_message">Gör Infinity SMS till din standard-app för SMS</string>
+    <string name="main_default_sms_message">Gör Joy SMS till din standard-app för SMS</string>
     <string name="main_default_sms_change">Ändra</string>
     <string name="main_permission_required">Tillstånd krävs</string>
-    <string name="main_permission_sms">Infinity SMS behöver tillåtelse att skicka och visa SMS-meddelanden</string>
-    <string name="main_permission_contacts">Infinity SMS behöver tillåtelse för att kunna se dina kontakter</string>
+    <string name="main_permission_sms">Joy SMS behöver tillåtelse att skicka och visa SMS-meddelanden</string>
+    <string name="main_permission_contacts">Joy SMS behöver tillåtelse för att kunna se dina kontakter</string>
     <string name="main_permission_allow">Tillåt</string>
     <string name="drawer_inbox">Inkorg</string>
     <string name="drawer_archived">Arkiverat</string>
@@ -65,12 +65,12 @@
     <string name="drawer_blocking">Blockerar</string>
     <string name="drawer_more">Mer</string>
     <string name="drawer_settings">Inställningar</string>
-    <string name="drawer_plus">Infinity SMS+</string>
+    <string name="drawer_plus">Joy SMS+</string>
     <string name="drawer_help">Hjälp &amp; återgivning</string>
     <string name="drawer_invite">Bjud in vänner</string>
-    <string name="drawer_plus_banner_title">Infinity SMS+</string>
+    <string name="drawer_plus_banner_title">Joy SMS+</string>
     <string name="drawer_plus_banner_summary">Lås upp nya spännande funktioner och stötta utvecklingen</string>
-    <string name="rate_title">Tycker du om Infinity SMS?</string>
+    <string name="rate_title">Tycker du om Joy SMS?</string>
     <string name="rate_summary">Dela lite kärlek och betygsätt oss på Google Play!</string>
     <string name="rate_okay">OKEJ!</string>
     <string name="rate_dismiss">AVFÄRDA</string>
@@ -92,7 +92,7 @@
     <string name="compose_vcard_label">Kontaktkort</string>
     <string name="compose_scheduled_for">Schemalagd för</string>
     <string name="compose_scheduled_future">Den valda tiden måste vara i framtiden!</string>
-    <string name="compose_scheduled_plus">Du måste låsa upp Infinity SMS+ om du vill använda schemalagda meddelanden</string>
+    <string name="compose_scheduled_plus">Du måste låsa upp Joy SMS+ om du vill använda schemalagda meddelanden</string>
     <string name="compose_scheduled_toast">Lades till i schemalagda meddelanden</string>
     <string name="compose_hint">Skriv ett meddelande&#8230;</string>
     <string name="compose_menu_copy">Kopiera text</string>
@@ -143,7 +143,7 @@
     <string name="backup_never">Aldrig</string>
     <string name="backup_restore_title">Återställ</string>
     <string name="backup_restore_summary">Välj en säkerhetskopia</string>
-    <string name="backup_restore_error_plus">Vänligen lås upp Infinity SMS+ för att använda säkerhetskopiera och återställ</string>
+    <string name="backup_restore_error_plus">Vänligen lås upp Joy SMS+ för att använda säkerhetskopiera och återställ</string>
     <string name="backup_restore_error_backup">Säkerhetskopiering pågår&#8230;</string>
     <string name="backup_restore_error_restore">Återställning pågår&#8230;</string>
     <string name="backup_restore_confirm_title">Återställ från säkerhetskopia</string>
@@ -228,7 +228,7 @@
     <string name="settings_mms_size_title">Komprimera MMS-bilagor automatiskt</string>
     <string name="settings_sync_title">Synkronisera meddelanden</string>
     <string name="settings_sync_summary">Synkronisera dina meddelanden med telefonens SMS-databas</string>
-    <string name="settings_about_title">Om Infinity SMS</string>
+    <string name="settings_about_title">Om Joy SMS</string>
     <string name="settings_version">Version %s</string>
     <string name="settings_logging_enabled">Felsökningsloggning aktiverades</string>
     <string name="settings_logging_disabled">Felsökningsloggning inaktiverad</string>
@@ -249,9 +249,9 @@
     <string name="qksms_plus_description_summary">Du kan hjälpa en svältande utvecklare för bara %s</string>
     <string name="qksms_plus_upgrade">Livstidsuppgradering för %1$s %2$s</string>
     <string name="qksms_plus_upgrade_donate">Lås upp + donera för %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Tack för att du stöttar Infinity SMS!</string>
-    <string name="qksms_plus_thanks_summary">Du har nu tillgång till alla funktioner i Infinity SMS+</string>
-    <string name="qksms_plus_free_title">Infinity SMS + är gratis för F-Droid användare! Om du vill stödja utvecklingen, Så får du gärna donationera.</string>
+    <string name="qksms_plus_thanks_title">Tack för att du stöttar Joy SMS!</string>
+    <string name="qksms_plus_thanks_summary">Du har nu tillgång till alla funktioner i Joy SMS+</string>
+    <string name="qksms_plus_free_title">Joy SMS + är gratis för F-Droid användare! Om du vill stödja utvecklingen, Så får du gärna donationera.</string>
     <string name="qksms_plus_donate">Donera via PayPal</string>
     <string name="qksms_plus_coming_soon">Kommer snart</string>
     <string name="qksms_plus_themes_title">Högkvalitativa teman</string>
@@ -273,7 +273,7 @@
     <string name="qksms_plus_respond_title">Auto-svara</string>
     <string name="qksms_plus_respond_summary">Svara automatiskt på inkommande meddelanden med ett förinställt svar</string>
     <string name="qksms_plus_more_title">Mer</string>
-    <string name="qksms_plus_more_summary">Infinity SMS är under aktiv utveckling, och dina köp kommer att inkludera alla kommande Infinity SMS+-funktioner!</string>
+    <string name="qksms_plus_more_summary">Joy SMS är under aktiv utveckling, och dina köp kommer att inkludera alla kommande Joy SMS+-funktioner!</string>
     <string name="widget_loading">Laddar&#8230;</string>
     <string name="widget_more">Visa fler konversationer</string>
     <string name="qkreply_menu_read">Markera som läst</string>
@@ -283,7 +283,7 @@
     <string name="qkreply_menu_collapse">Visa färre</string>
     <string name="qkreply_menu_view">Öppna konversation</string>
     <string name="theme_material">Material</string>
-    <string name="theme_plus">Infinity SMS+</string>
+    <string name="theme_plus">Joy SMS+</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Verkställ</string>
     <string-array name="notification_actions">
@@ -303,7 +303,7 @@
     <string name="button_undo">Ångra</string>
     <string name="toast_copied">Kopierad</string>
     <string name="toast_archived">Arkiverade konversationer</string>
-    <string name="toast_qksms_plus">Du måste låsa upp Infinity SMS+ för att använda det här</string>
+    <string name="toast_qksms_plus">Du måste låsa upp Joy SMS+ för att använda det här</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Nytt meddelande</item>
         <item quantity="other">%s nya meddelanden</item>
