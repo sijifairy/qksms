@@ -19,10 +19,13 @@
 package com.moez.QKSMS.common
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.os.Process
 import android.provider.Settings
+import android.text.TextUtils
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
@@ -41,6 +44,9 @@ import dagger.android.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 import javax.inject.Inject
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
@@ -81,50 +87,50 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
 
         FlurryAgent.Builder()
                 .withLogEnabled(true)
-                .build(this, "63DH56Z7X2568JSZBDPS")
+                .build(this, "Z6WVFVX93P2TK2WKYXY4")
 
-//        val packageName = packageName
-//        val processName = HSApplication.getProcessName()
-//        val isOnMainProcess = TextUtils.equals(processName, packageName)
-//        if (isOnMainProcess) {
-        Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-                .compactOnLaunch()
-                .migration(QkRealmMigration())
-                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
-                .build())
+        val packageName = packageName
+        val processName = getCurrentProcessName(this)
+        val isOnMainProcess = TextUtils.equals(processName, packageName)
+        if (isOnMainProcess) {
+            Realm.init(this)
+            Realm.setDefaultConfiguration(RealmConfiguration.Builder()
+                    .compactOnLaunch()
+                    .migration(QkRealmMigration())
+                    .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
+                    .build())
 
-        AppComponentManager.init(this)
-        appComponent.inject(this)
+            AppComponentManager.init(this)
+            appComponent.inject(this)
 
-        packageManager.getInstallerPackageName(packageName)?.let { installer ->
-            analyticsManager.setUserProperty("Installer", installer)
+            packageManager.getInstallerPackageName(packageName)?.let { installer ->
+                analyticsManager.setUserProperty("Installer", installer)
+            }
+
+            nightModeManager.updateCurrentTheme()
+
+            val fontRequest = FontRequest(
+                    "com.google.android.gms.fonts",
+                    "com.google.android.gms",
+                    "Noto Color Emoji Compat",
+                    R.array.com_google_android_gms_fonts_certs)
+
+            EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
+
+            Timber.plant(Timber.DebugTree(), fileLoggingTree)
+
+            val uri = Settings.Secure.getUriFor("sms_default_application")
+            val context = applicationContext
+            context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
+
+            TopAppManager.getInstance().startPollingTask()
+
+            if (!Preferences.getDefault().contains("pref_key_install_time")) {
+                Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
+            }
+
+            SmsAnalytics.logEvent("Process_Start")
         }
-
-        nightModeManager.updateCurrentTheme()
-
-        val fontRequest = FontRequest(
-                "com.google.android.gms.fonts",
-                "com.google.android.gms",
-                "Noto Color Emoji Compat",
-                R.array.com_google_android_gms_fonts_certs)
-
-        EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
-
-        Timber.plant(Timber.DebugTree(), fileLoggingTree)
-
-        val uri = Settings.Secure.getUriFor("sms_default_application")
-        val context = applicationContext
-        context.contentResolver.registerContentObserver(uri, false, DefaultSmsAppChangeObserver(null))
-
-        TopAppManager.getInstance().startPollingTask()
-
-        if (!Preferences.getDefault().contains("pref_key_install_time")) {
-            Preferences.getDefault().putLong("pref_key_install_time", System.currentTimeMillis())
-        }
-
-        SmsAnalytics.logEvent("Process_Start")
-//        }
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {
@@ -139,4 +145,35 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         return dispatchingServiceInjector
     }
 
+    fun getCurrentProcessName(context: Context): String? {
+        var processName: String? = null
+
+        try {
+            val file = File("/proc/" + Process.myPid() + "/cmdline")
+            val bufferedReader = BufferedReader(FileReader(file))
+            processName = bufferedReader.readLine().trim { it <= ' ' }
+            bufferedReader.close()
+        } catch (var6: Exception) {
+            var6.printStackTrace()
+        }
+
+        if (TextUtils.isEmpty(processName)) {
+            val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+            val processInfos = activityManager.runningAppProcesses
+            if (processInfos != null) {
+                val pid = Process.myPid()
+                val var4 = processInfos.iterator()
+
+                while (var4.hasNext()) {
+                    val appProcess = var4.next() as ActivityManager.RunningAppProcessInfo
+                    if (appProcess.pid == pid) {
+                        processName = appProcess.processName
+                        break
+                    }
+                }
+            }
+        }
+
+        return processName
+    }
 }

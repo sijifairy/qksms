@@ -35,7 +35,7 @@ import javax.inject.Inject
 class ImageRepostoryImpl @Inject constructor(private val context: Context) : ImageRepository {
 
     override fun loadImage(uri: Uri): Bitmap? {
-        val exif = ExifInterface(context.contentResolver.openInputStream(uri))
+        val exif = ExifInterface(context.contentResolver.openInputStream(uri)!!)
         val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
         val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
@@ -67,9 +67,9 @@ class ImageRepostoryImpl @Inject constructor(private val context: Context) : Ima
             val outputStream = FileOutputStream(file)
             val inputStream = context.contentResolver.openInputStream(uri)
 
-            inputStream.copyTo(outputStream, 1024)
+            inputStream!!.copyTo(outputStream, 1024)
 
-            inputStream.close()
+            inputStream!!.close()
             outputStream.close()
         } catch (e: FileNotFoundException) {
             e.printStackTrace()

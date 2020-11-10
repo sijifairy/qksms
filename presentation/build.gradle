@@ -23,16 +23,16 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "28.0.3"
     flavorDimensions "analytics"
 
     defaultConfig {
         applicationId "com.joyinsight.sms"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 12
-        versionName "1.0.7"
+        targetSdkVersion 29
+        versionCode 1010
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -168,7 +168,7 @@ dependencies {
     implementation project(":common")
     implementation project(':data')
     implementation project(':domain')
-    implementation 'com.flurry.android:analytics:11.4.0@aar'
+    implementation 'com.flurry.android:analytics:12.7.0@aar'
 
     withAnalyticsImplementation 'com.google.firebase:firebase-core:17.2.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-config:18.0.0'
@@ -176,21 +176,12 @@ dependencies {
     withAnalyticsImplementation 'com.google.firebase:firebase-database:19.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-auth:19.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-messaging:19.0.1'
-//    implementation "com.ihandy.appframework:libAppframework.gm:4.13.0.gm"
-//    implementation "com.ihandy.permanent:permanent.gm:4.0.0.gm"
-//    implementation "com.ihandy.permanent:accounts-keep-alive.gm:4.0.0.gm"
 
     implementation 'com.airbnb.android:lottie:2.7.0'
 
-//    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-//    implementation 'com.facebook.android:audience-network-sdk:5.+'
-//    implementation 'com.google.ads.mediation:facebook:5.5.0.0'
-//    implementation 'com.google.android.gms:play-services-ads:15.0.0'
     implementation 'com.google.android.gms:play-services-location:15.0.0'
     implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'
-
-//    implementation 'com.appsflyer:af-android-sdk:4.10.0'
     implementation 'com.android.installreferrer:installreferrer:1.0'
 
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')

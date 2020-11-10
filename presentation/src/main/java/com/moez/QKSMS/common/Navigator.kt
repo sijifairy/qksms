@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.common
 
+import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -33,6 +34,7 @@ import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
+import com.moez.QKSMS.feature.guide.SetAsDefaultGuideActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.plus.PlusActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
@@ -82,6 +84,27 @@ class Navigator @Inject constructor(
             intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.packageName)
         }
         startActivity(intent)
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val roleManager: RoleManager = context.getSystemService<RoleManager>(RoleManager::class.java)
+            // check if the app is having permission to be as default SMS app
+            val isRoleAvailable = roleManager.isRoleAvailable(RoleManager.ROLE_SMS)
+            if (isRoleAvailable) {
+                // check whether your app is already holding the default SMS app role.
+                val isRoleHeld = roleManager.isRoleHeld(RoleManager.ROLE_SMS)
+                if (!isRoleHeld) {
+                    val roleRequestIntent = roleManager.createRequestRoleIntent(RoleManager.ROLE_SMS)
+                    startActivity(roleRequestIntent)
+                }
+            }
+        } else {
+            val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
+            intent.putExtra(
+                    Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                    context.packageName)
+            startActivity(intent)
+        }
     }
 
     fun showCompose(body: String? = null, images: List<Uri>? = null) {

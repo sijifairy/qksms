@@ -35,11 +35,13 @@ class ComposeActivityModule {
 
     @Provides
     @Named("query")
-    fun provideQuery(activity: ComposeActivity): String = activity.intent.extras?.getString("query") ?: ""
+    fun provideQuery(activity: ComposeActivity): String = activity.intent.extras?.getString("query")
+            ?: ""
 
     @Provides
     @Named("threadId")
-    fun provideThreadId(activity: ComposeActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
+    fun provideThreadId(activity: ComposeActivity): Long = activity.intent.extras?.getLong("threadId")
+            ?: 0L
 
     @Provides
     @Named("address")
@@ -49,10 +51,10 @@ class ComposeActivityModule {
         activity.intent.data?.let {
             val data = it.toString()
             address = when {
-                it.scheme.startsWith("smsto") -> data.replace("smsto:", "")
-                it.scheme.startsWith("mmsto") -> data.replace("mmsto:", "")
-                it.scheme.startsWith("sms") -> data.replace("sms:", "")
-                it.scheme.startsWith("mms") -> data.replace("mms:", "")
+                it.scheme!!.startsWith("smsto") -> data.replace("smsto:", "")
+                it.scheme!!.startsWith("mmsto") -> data.replace("mmsto:", "")
+                it.scheme!!.startsWith("sms") -> data.replace("sms:", "")
+                it.scheme!!.startsWith("mms") -> data.replace("mms:", "")
                 else -> ""
             }
 

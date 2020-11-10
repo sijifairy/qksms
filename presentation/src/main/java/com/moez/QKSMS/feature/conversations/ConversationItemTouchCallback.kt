@@ -42,10 +42,10 @@ import javax.inject.Inject
 
 
 class ConversationItemTouchCallback @Inject constructor(
-    colors: Colors,
-    disposables: CompositeDisposable,
-    prefs: Preferences,
-    private val context: Context
+        colors: Colors,
+        disposables: CompositeDisposable,
+        prefs: Preferences,
+        private val context: Context
 ) : ItemTouchHelper.SimpleCallback(0, 0) {
 
     val swipes: Subject<Pair<Long, Int>> = PublishSubject.create()
@@ -92,12 +92,13 @@ class ConversationItemTouchCallback @Inject constructor(
 
             if (dX > 0) {
                 c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(), dX, itemView.bottom.toFloat(), paint)
-                c.drawBitmap(rightIcon, itemView.left.toFloat() + iconLength,
+                c.drawBitmap(rightIcon!!, itemView.left.toFloat() + iconLength,
                         itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - (rightIcon?.height
                                 ?: 0)) / 2, paint)
             } else if (dX < 0) {
                 c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(), itemView.right.toFloat(), itemView.bottom.toFloat(), paint)
-                c.drawBitmap(leftIcon, itemView.right.toFloat() - iconLength - (leftIcon?.width ?: 0),
+                c.drawBitmap(leftIcon!!, itemView.right.toFloat() - iconLength - (leftIcon?.width
+                        ?: 0),
                         itemView.top.toFloat() + (itemView.bottom.toFloat() - itemView.top.toFloat() - (leftIcon?.height
                                 ?: 0)) / 2, paint)
             }

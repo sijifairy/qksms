@@ -29,8 +29,11 @@ import javax.inject.Inject
 
 class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
 
-    @Inject lateinit var conversationRepo: ConversationRepository
-    @Inject lateinit var sendMessage: SendMessage
+    @Inject
+    lateinit var conversationRepo: ConversationRepository
+
+    @Inject
+    lateinit var sendMessage: SendMessage
 
     override fun onHandleIntent(intent: Intent?) {
         if (intent?.action != TelephonyManager.ACTION_RESPOND_VIA_MESSAGE) return
@@ -38,7 +41,7 @@ class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
         AndroidInjection.inject(this)
         intent.extras?.getString(Intent.EXTRA_TEXT)?.takeIf { it.isNotBlank() }?.let { body ->
             val intentUri = intent.data
-            val recipients = getRecipients(intentUri).split(";")
+            val recipients = getRecipients(intentUri!!).split(";")
             val threadId = conversationRepo.getOrCreateConversation(recipients)?.id ?: 0L
             sendMessage.execute(SendMessage.Params(-1, threadId, recipients, body))
         }

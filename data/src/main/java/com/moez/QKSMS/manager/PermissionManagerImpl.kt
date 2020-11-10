@@ -19,8 +19,10 @@
 package com.moez.QKSMS.manager
 
 import android.Manifest
+import android.app.role.RoleManager
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
 import android.provider.Telephony
 import androidx.core.content.ContextCompat
 import javax.inject.Inject
@@ -28,6 +30,16 @@ import javax.inject.Inject
 class PermissionManagerImpl @Inject constructor(private val context: Context) : PermissionManager {
 
     override fun isDefaultSms(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val roleManager: RoleManager = context.getSystemService<RoleManager>(RoleManager::class.java)
+            // check if the app is having permission to be as default SMS app
+            val isRoleAvailable: Boolean = roleManager.isRoleAvailable(RoleManager.ROLE_SMS)
+            if (isRoleAvailable) {
+                // check whether your app is already holding the default SMS app role.
+                return roleManager.isRoleHeld(RoleManager.ROLE_SMS)
+            }
+        }
+
         return Telephony.Sms.getDefaultSmsPackage(context) == context.packageName
     }
 
