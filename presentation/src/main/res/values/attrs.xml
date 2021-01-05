@@ -37,14 +37,22 @@
         <enum name="dialog" value="4" />
     </attr>
 
+    <attr name="font_family" format="enum">
+        <enum name="regular" value="0" />
+        <enum name="medium" value="1" />
+        <enum name="bold" value="2" />
+    </attr>
+
     <declare-styleable name="QkTextView">
         <attr name="textColor" />
         <attr name="textSize" />
+        <attr name="font_family" />
     </declare-styleable>
 
     <declare-styleable name="QkEditText">
         <attr name="textColor" />
         <attr name="textSize" />
+        <attr name="font_family" />
     </declare-styleable>
 
     <declare-styleable name="PreferenceView">

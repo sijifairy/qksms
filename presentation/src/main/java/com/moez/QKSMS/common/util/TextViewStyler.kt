@@ -54,6 +54,10 @@ class TextViewStyler @Inject constructor(
         const val SIZE_TOOLBAR = 3
         const val SIZE_DIALOG = 4
 
+        const val FONT_REGULAR = 0
+        const val FONT_MEDIUM = 1
+        const val FONT_BOLD = 2
+
         fun applyEditModeAttributes(textView: TextView, attrs: AttributeSet?) {
             textView.run {
                 var colorAttr = 0
@@ -101,24 +105,26 @@ class TextViewStyler @Inject constructor(
         textView.run {
             var colorAttr = 0
             var textSizeAttr = 0
+            var fontStyle = 0
 
 //            if (!prefs.systemFont.get()) {
 //                fontProvider.getLato { lato ->
 //                    setTypeface(lato, typeface?.style ?: Typeface.NORMAL)
 //                }
 //            }
-            typeface = Typeface.createFromAsset(context.assets, "fonts/Custom-Regular.ttf")
 
             when (this) {
                 is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
                     colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
                     textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+                    fontStyle = getInt(R.styleable.QkTextView_font_family, -1)
                     recycle()
                 }
 
                 is QkEditText -> context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
                     colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
                     textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+                    fontStyle = getInt(R.styleable.QkEditText_font_family, -1)
                     recycle()
                 }
 
@@ -137,8 +143,33 @@ class TextViewStyler @Inject constructor(
             })
 
             setTextSize(textView, textSizeAttr)
+            setFontFamily(textView, fontStyle)
         }
     }
+
+    /**
+     * @see FONT_REGULAR
+     * @see FONT_MEDIUM
+     * @see FONT_BOLD
+     */
+    fun setFontFamily(textView: TextView, fontFamilyAttr: Int) {
+        val path = when (fontFamilyAttr) {
+            FONT_REGULAR -> {
+                "fonts/Custom-Regular.ttf"
+            }
+            FONT_MEDIUM -> {
+                "fonts/Custom-Medium.ttf"
+            }
+            FONT_BOLD -> {
+                "fonts/Custom-Bold.ttf"
+            }
+            else -> {
+                "fonts/Custom-Regular.ttf"
+            }
+        }
+        textView.typeface = Typeface.createFromAsset(textView.context.assets, path)
+    }
+
 
     /**
      * @see SIZE_PRIMARY
