@@ -86,7 +86,9 @@ abstract class QkThemedActivity : QkActivity() {
         Observable.merge(
                 listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont).map { it.asObservable().skip(1) })
                 .autoDisposable(scope())
-                .subscribe { recreate() }
+                .subscribe {
+                    recreate()
+                }
 
         // Set the color for the status bar icons
         // If night mode, or no dark icons supported, use light icons

@@ -34,15 +34,15 @@
     <color name="toolbarSearchBackgroundLight">#0D000000</color>
     <color name="toolbarSearchBackgroundDark">#26000000</color>
 
-    <color name="backgroundLight">#ECEFF1</color>
-    <color name="backgroundDark">#192025</color>
+    <color name="backgroundLight">#FFF</color>
+    <color name="backgroundDark">#181F25</color>
 
-    <color name="textPrimary">#49555F</color>
-    <color name="textSecondary">#70808D</color>
+    <color name="textPrimary">#04122F</color>
+    <color name="textSecondary">#686F7C</color>
     <color name="textTertiary">#B7B9C0</color>
 
     <color name="textPrimaryDark">#FFFFFFFF</color>
-    <color name="textSecondaryDark">#ccffffff</color>
+    <color name="textSecondaryDark">#C2C5CB</color>
     <color name="textTertiaryDark">#80ffffff</color>
 
     <color name="bubbleLight">#FFFFFF</color>

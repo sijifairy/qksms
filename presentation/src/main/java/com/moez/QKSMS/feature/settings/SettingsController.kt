@@ -84,7 +84,9 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
         colors.themeObservable()
                 .autoDisposable(scope())
-                .subscribe { activity?.recreate() }
+                .subscribe {
+                    activity?.recreate()
+                }
     }
 
     override fun onViewCreated() {

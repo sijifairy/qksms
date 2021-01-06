@@ -56,7 +56,9 @@ class SettingsPresenter @Inject constructor(
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
                 .subscribe { nightMode ->
-                    newState { copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
+                    newState {
+                        copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode)
+                    }
                 }
 
         disposables += prefs.nightStart.asObservable()
