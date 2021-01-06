@@ -23,6 +23,8 @@ import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -159,6 +161,7 @@ class MainActivity : QkThemedActivity(), MainView {
             dismissKeyboard()
             homeIntent.onNext(Unit)
         }
+        toolbar.setNavigationIcon(R.drawable.ic_navigagion)
 
 //        supportActionBar?.setHomeButtonEnabled(true)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -385,10 +388,12 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun showBackButton(show: Boolean) {
         toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
+        toolbar.setNavigationIcon(if (show) R.drawable.ic_arrow_left else R.drawable.ic_navigagion)
         toggle.drawerArrowDrawable.color = when (show) {
             true -> resolveThemeColor(android.R.attr.textColorSecondary)
             false -> resolveThemeColor(android.R.attr.textColorPrimary)
         }
+        toolbar.navigationIcon?.colorFilter = PorterDuffColorFilter(toggle.drawerArrowDrawable.color, PorterDuff.Mode.SRC_IN)
     }
 
     override fun requestPermissions() {
