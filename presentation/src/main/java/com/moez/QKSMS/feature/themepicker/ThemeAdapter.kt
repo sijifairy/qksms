@@ -73,18 +73,18 @@ class ThemeAdapter @Inject constructor(
         val view = holder.containerView
 
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
-        val minPadding = (16 * 6).dpToPx(context)
-        val size = if (screenWidth - minPadding > (56 * 5).dpToPx(context)) {
-            56.dpToPx(context)
+        val minPadding = (10 * 9).dpToPx(context)
+        val size = if (screenWidth - minPadding > (32 * 8).dpToPx(context)) {
+            32.dpToPx(context)
         } else {
-            (screenWidth - minPadding) / 5
+            (screenWidth - minPadding) / 8
         }
-        val swatchPadding = (screenWidth - size * 5) / 12
+        val swatchPadding = (screenWidth - size * 8) / 18
 
         view.palette.removeAllViews()
         view.palette.setPadding(swatchPadding, swatchPadding, swatchPadding, swatchPadding)
 
-        (palette.subList(0, 5) + palette.subList(5, 10).reversed())
+        (palette.subList(0, 5) + palette.subList(5, 8).reversed())
                 .mapIndexed { index, color ->
                     LayoutInflater.from(context).inflate(R.layout.theme_list_item, view.palette, false).apply {
 
@@ -102,7 +102,7 @@ class ThemeAdapter @Inject constructor(
                         layoutParams = (layoutParams as FlexboxLayout.LayoutParams).apply {
                             height = size
                             width = size
-                            isWrapBefore = index % 5 == 0
+                            isWrapBefore = index % 8 == 0
                             setMargins(swatchPadding, swatchPadding, swatchPadding, swatchPadding)
                         }
                     }
