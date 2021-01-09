@@ -46,6 +46,7 @@
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
+                app:font_family="medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"

@@ -20,11 +20,13 @@
 <androidx.appcompat.widget.Toolbar android:id="@+id/toolbar"
     style="@style/Toolbar"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/toolbarTitle"
         style="@style/ToolbarText"
+        app:font_family="medium"
         tools:text="Conversations" />
 
 </androidx.appcompat.widget.Toolbar>

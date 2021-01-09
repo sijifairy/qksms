@@ -41,7 +41,20 @@ class ConversationInfoActivity : QkThemedActivity() {
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    toolbar.setBackgroundColor(theme.theme)
+                    val toolbarColor =
+                            when {
+                                prefs.black.get() -> resources.getColor(R.color.black)
+                                prefs.night.get() -> resources.getColor(R.color.backgroundDark)
+                                else -> resources.getColor(R.color.backgroundLight)
+                            }
+                    toolbar.setBackgroundColor(toolbarColor)
+                    val toolbarTextColor =
+                            when {
+                                prefs.black.get() -> resources.getColor(R.color.textPrimaryDark)
+                                prefs.night.get() -> resources.getColor(R.color.textPrimaryDark)
+                                else -> resources.getColor(R.color.textPrimary)
+                            }
+                    toolbarTitle.setTextColor(toolbarTextColor)
                 }
 
         router = Conductor.attachRouter(this, container, savedInstanceState)

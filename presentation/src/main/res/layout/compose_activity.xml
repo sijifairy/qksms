@@ -360,6 +360,7 @@
 
                 <com.moez.QKSMS.common.widget.QkTextView
                     android:id="@+id/toolbarTitle"
+                    app:font_family="medium"
                     style="@style/ToolbarText"
                     android:layout_height="wrap_content"
                     tools:text="Moez Bhatti" />

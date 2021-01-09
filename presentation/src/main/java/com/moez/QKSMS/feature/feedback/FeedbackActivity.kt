@@ -19,6 +19,8 @@ import com.moez.QKSMS.common.util.Toasts
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.blocked_activity.*
+import kotlinx.android.synthetic.main.blocked_activity.toolbar
+import kotlinx.android.synthetic.main.container_activity.*
 import java.util.*
 
 class FeedbackActivity : QkThemedActivity() {
@@ -40,7 +42,20 @@ class FeedbackActivity : QkThemedActivity() {
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    toolbar.setBackgroundColor(theme.theme)
+                    val toolbarColor =
+                            when {
+                                prefs.black.get() -> resources.getColor(R.color.black)
+                                prefs.night.get() -> resources.getColor(R.color.backgroundDark)
+                                else -> resources.getColor(R.color.backgroundLight)
+                            }
+                    toolbar.setBackgroundColor(toolbarColor)
+                    val toolbarTextColor =
+                            when {
+                                prefs.black.get() -> resources.getColor(R.color.textPrimaryDark)
+                                prefs.night.get() -> resources.getColor(R.color.textPrimaryDark)
+                                else -> resources.getColor(R.color.textPrimary)
+                            }
+                    toolbarTitle.setTextColor(toolbarTextColor)
                 }
 
         userEmail = getEmail(this)
