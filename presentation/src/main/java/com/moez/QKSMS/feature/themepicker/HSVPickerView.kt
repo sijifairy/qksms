@@ -127,7 +127,7 @@ class HSVPickerView @JvmOverloads constructor(context: Context, attrs: Attribute
         val hsv = floatArrayOf(hue, (swatch.x - min) / range, 1 - (swatch.y - min) / range)
         val color = Color.HSVToColor(hsv)
 
-        swatch.setTint(color)
+        //swatch.setTint(color)
         selectedColor.onNext(color)
     }
 
