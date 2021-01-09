@@ -32,6 +32,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.common.util.setSystemButtonsTheme
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
@@ -75,12 +76,14 @@ abstract class QkThemedActivity : QkActivity() {
         setTheme(getActivityThemeRes(night, black))
 
         super.onCreate(savedInstanceState)
-
-        theme
-                .autoDisposable(scope())
-                .subscribe { theme ->
-                    setStatusBarColor(getColorDark(theme.theme))
+        val statusBarColor =
+                when {
+                    prefs.black.get() -> resources.getColor(R.color.black)
+                    prefs.night.get() -> resources.getColor(R.color.backgroundDark)
+                    else -> resources.getColor(R.color.backgroundLight)
                 }
+        setStatusBarColor(statusBarColor)
+        setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
 
         // When certain preferences change, we need to recreate the activity
         Observable.merge(
@@ -94,7 +97,7 @@ abstract class QkThemedActivity : QkActivity() {
         // If night mode, or no dark icons supported, use light icons
         // If night mode and only dark status icons supported, use dark status icons
         // If night mode and all dark icons supported, use all dark icons
-        window.decorView.systemUiVisibility = 0
+        // window.decorView.systemUiVisibility = 0
 
         // Some devices don't let you modify android.R.attr.navigationBarColor
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -155,7 +158,7 @@ abstract class QkThemedActivity : QkActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 val decor = window.decorView
                 if (color == Color.WHITE) {
-                    decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    //decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                 } else {
                     // We want to change tint color to white again.
                     // You can also record the flags in advance so that you can turn UI back completely if
