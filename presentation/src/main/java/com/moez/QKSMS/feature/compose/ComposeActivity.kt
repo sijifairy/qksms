@@ -170,8 +170,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         theme
                 .doOnNext { loading.setTint(it.theme) }
-                .doOnNext { attach.setBackgroundTint(it.theme) }
-                .doOnNext { attach.setTint(it.textPrimary) }
                 .doOnNext { messageAdapter.theme = it }
                 .autoDisposable(scope())
                 .subscribe { messageList.scrapViews() }

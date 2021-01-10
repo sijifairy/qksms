@@ -40,6 +40,12 @@
     <color name="inMessageBackgroundLight">#F2F4F7</color>
     <color name="inMessageBackgroundDark">#2B3640</color>
 
+    <color name="messageAddTintLight">#686F7C</color>
+    <color name="messageAddTintDark">#FFF</color>
+
+    <color name="messageAddBackgroundTintLight">#F2F4F7</color>
+    <color name="messageAddBackgroundTintDark">#686F7C</color>
+
     <color name="textPrimary">#04122F</color>
     <color name="textSecondary">#686F7C</color>
     <color name="textTertiary">#B7B9C0</color>
