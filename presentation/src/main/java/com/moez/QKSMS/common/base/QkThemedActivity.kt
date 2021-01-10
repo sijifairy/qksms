@@ -76,12 +76,7 @@ abstract class QkThemedActivity : QkActivity() {
         setTheme(getActivityThemeRes(night, black))
 
         super.onCreate(savedInstanceState)
-        val statusBarColor =
-                when {
-                    prefs.black.get() -> resources.getColor(R.color.black)
-                    prefs.night.get() -> resources.getColor(R.color.backgroundDark)
-                    else -> resources.getColor(R.color.backgroundLight)
-                }
+        val statusBarColor = resolveThemeColor(android.R.attr.windowBackground)
         setStatusBarColor(statusBarColor)
         setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
 
@@ -115,15 +110,15 @@ abstract class QkThemedActivity : QkActivity() {
         super.onPostCreate(savedInstanceState)
 
         // Set the color for the overflow and navigation icon
-        val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
-        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
+        val textColorPrimary = resolveThemeColor(android.R.attr.textColorPrimary)
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textColorPrimary) }
 
         // Update the colours of the menu items
         Observables.combineLatest(menu, theme) { menu, theme ->
             menu.iterator().forEach { menuItem ->
                 val tint = when (menuItem.itemId) {
                     in getColoredMenuItems() -> theme.theme
-                    else -> textSecondary
+                    else -> textColorPrimary
                 }
 
                 menuItem.icon = menuItem.icon?.apply { setTint(tint) }

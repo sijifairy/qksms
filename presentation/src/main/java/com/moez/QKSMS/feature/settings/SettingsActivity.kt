@@ -25,9 +25,13 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.container_activity.*
+import kotlinx.android.synthetic.main.container_activity.toolbar
+import kotlinx.android.synthetic.main.container_activity.toolbarTitle
+import kotlinx.android.synthetic.main.main_activity.*
 
 class SettingsActivity : QkThemedActivity() {
 
@@ -37,23 +41,14 @@ class SettingsActivity : QkThemedActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_activity)
+        showBackButton(true)
 
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    val toolbarColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.black)
-                                prefs.night.get() -> resources.getColor(R.color.backgroundDark)
-                                else -> resources.getColor(R.color.backgroundLight)
-                            }
+                    val toolbarColor = resolveThemeColor(android.R.attr.windowBackground)
                     toolbar.setBackgroundColor(toolbarColor)
-                    val toolbarTextColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.textPrimaryDark)
-                                prefs.night.get() -> resources.getColor(R.color.textPrimaryDark)
-                                else -> resources.getColor(R.color.textPrimary)
-                            }
+                    val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
                 }
 

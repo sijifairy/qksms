@@ -19,13 +19,20 @@
 package com.moez.QKSMS.common.base
 
 import android.annotation.SuppressLint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar.toolbarTitle
 
 abstract class QkActivity : AppCompatActivity() {
 
@@ -72,6 +79,8 @@ abstract class QkActivity : AppCompatActivity() {
 
     protected open fun showBackButton(show: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
+        toolbar?.setNavigationIcon(if (show) R.drawable.ic_arrow_left else R.drawable.ic_navigagion)
+        toolbar?.navigationIcon?.colorFilter = PorterDuffColorFilter(resolveThemeColor(android.R.attr.textColorPrimary), PorterDuff.Mode.SRC_IN)
     }
 
 }

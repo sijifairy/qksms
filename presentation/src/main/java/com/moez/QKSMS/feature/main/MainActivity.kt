@@ -198,19 +198,9 @@ class MainActivity : QkThemedActivity(), MainView {
                     rateIcon.setTint(theme.theme)
                     compose.setBackgroundTint(theme.theme)
 
-                    val toolbarColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.black)
-                                prefs.night.get() -> resources.getColor(R.color.backgroundDark)
-                                else -> resources.getColor(R.color.backgroundLight)
-                            }
+                    val toolbarColor = resolveThemeColor(android.R.attr.windowBackground)
                     toolbar.setBackgroundColor(toolbarColor)
-                    val toolbarTextColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.textPrimaryDark)
-                                prefs.night.get() -> resources.getColor(R.color.textPrimaryDark)
-                                else -> resources.getColor(R.color.textPrimary)
-                            }
+                    val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
 
                     // Set the FAB compose icon color
@@ -402,10 +392,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun showBackButton(show: Boolean) {
         toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
         toolbar.setNavigationIcon(if (show) R.drawable.ic_arrow_left else R.drawable.ic_navigagion)
-        toggle.drawerArrowDrawable.color = when (show) {
-            true -> resolveThemeColor(android.R.attr.textColorSecondary)
-            false -> resolveThemeColor(android.R.attr.textColorPrimary)
-        }
+        toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorPrimary)
         toolbar.navigationIcon?.colorFilter = PorterDuffColorFilter(toggle.drawerArrowDrawable.color, PorterDuff.Mode.SRC_IN)
     }
 

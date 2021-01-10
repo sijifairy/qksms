@@ -33,6 +33,7 @@ import com.moez.QKSMS.common.QkDialog
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.uber.autodispose.kotlin.autoDisposable
@@ -41,6 +42,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.container_activity.*
+import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.notification_prefs_activity.*
 import kotlinx.android.synthetic.main.notification_prefs_activity.toolbar
 import kotlinx.android.synthetic.main.notification_prefs_activity.toolbarTitle
@@ -71,19 +73,9 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    val toolbarColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.black)
-                                prefs.night.get() -> resources.getColor(R.color.backgroundDark)
-                                else -> resources.getColor(R.color.backgroundLight)
-                            }
+                    val toolbarColor = resolveThemeColor(android.R.attr.windowBackground)
                     toolbar.setBackgroundColor(toolbarColor)
-                    val toolbarTextColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.textPrimaryDark)
-                                prefs.night.get() -> resources.getColor(R.color.textPrimaryDark)
-                                else -> resources.getColor(R.color.textPrimary)
-                            }
+                    val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
                 }
 

@@ -139,19 +139,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    val toolbarColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.black)
-                                prefs.night.get() -> resources.getColor(R.color.backgroundDark)
-                                else -> resources.getColor(R.color.backgroundLight)
-                            }
+                    val toolbarColor = resolveThemeColor(android.R.attr.windowBackground)
                     toolbar.setBackgroundColor(toolbarColor)
-                    val toolbarTextColor =
-                            when {
-                                prefs.black.get() -> resources.getColor(R.color.textPrimaryDark)
-                                prefs.night.get() -> resources.getColor(R.color.textPrimaryDark)
-                                else -> resources.getColor(R.color.textPrimary)
-                            }
+                    val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
                 }
 
