@@ -40,12 +40,7 @@ import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.extensions.dpToPx
-import com.moez.QKSMS.common.util.extensions.forwardTouches
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setPadding
-import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVCard
@@ -134,11 +129,13 @@ class MessagesAdapter @Inject constructor(
             view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
             view.findViewById<ImageView>(R.id.cancelIcon).setTint(theme.theme)
             view.findViewById<ProgressBar>(R.id.cancel).setTint(theme.theme)
+            view.body.setBackgroundTint(theme.theme)
+            view.body.setTextColor(theme.textPrimary)
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
             view.avatar.threadId = conversation?.id ?: 0
-            view.body.setTextColor(theme.textPrimary)
-            view.body.setBackgroundTint(theme.theme)
+            view.body.setTextColor(parent.context.resolveThemeColor(android.R.attr.textColorPrimary))
+            view.body.setBackgroundTint(parent.context.resolveThemeColor(R.attr.inMessageBackground))
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

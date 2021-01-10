@@ -21,6 +21,7 @@
 
     <attr name="bubbleColor" format="reference" />
     <attr name="composeBackground" format="reference" />
+    <attr name="inMessageBackground" format="reference" />
 
     <style name="AppThemeLight" parent="AppBaseThemeLight" />
 
@@ -37,6 +38,7 @@
         <item name="bubbleColor">@color/bubbleLight</item>
         <item name="colorPrimary">@color/toolbarLight</item>
         <item name="composeBackground">@color/backgroundLight</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -74,6 +76,7 @@
         <item name="colorPrimary">@color/toolbarDark</item>
         <item name="colorAccent">#288ec7</item>
         <item name="composeBackground">@color/backgroundDark</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
         <item name="selectableItemBackground">@drawable/ripple_dark</item>
         <item name="windowActionBar">false</item>
     </style>
