@@ -143,6 +143,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     toolbar.setBackgroundColor(toolbarColor)
                     val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
+
+                    send?.setTint(theme.textPrimary)
+                    send?.setBackgroundTint(theme.theme)
                 }
 
         showBackButton(true)
@@ -344,7 +347,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
 
         send.isEnabled = state.canSend
-        send.imageAlpha = if (state.canSend) 255 else 128
+        // TODO: alpha?
+        //send.imageAlpha = if (state.canSend) 255 else 128
     }
 
     override fun clearSelection() = messageAdapter.clearSelection()
