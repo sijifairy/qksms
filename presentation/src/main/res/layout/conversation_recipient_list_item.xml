@@ -45,6 +45,7 @@
         app:layout_constraintBottom_toTopOf="@id/address"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="parent"
+        app:font_family="medium"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Moez Bhatti" />
 

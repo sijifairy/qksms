@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="24dp"
         android:visibility="invisible" />
 
@@ -46,6 +46,7 @@
             style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="14dp"
             tools:text="Default SMS App" />
 
         <com.moez.QKSMS.common.widget.QkTextView
@@ -54,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:textSize="12dp"
             tools:text="QKSMS is your default SMS app" />
 
     </LinearLayout>

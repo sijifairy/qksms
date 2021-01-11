@@ -71,9 +71,6 @@ class PreferenceView @JvmOverloads constructor(context: Context, attrs: Attribut
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 
-        val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
-        icon.setTint(textSecondary)
-
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView)?.run {
             title = getString(R.styleable.PreferenceView_title)
             summary = getString(R.styleable.PreferenceView_summary)
