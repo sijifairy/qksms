@@ -120,6 +120,7 @@
         <item name="android:textStyle">bold</item>
         <item name="textColor">primary</item>
         <item name="textSize">secondary</item>
+        <item name="font_family">medium</item>
     </style>
 
     <style name="DrawerIcon">

@@ -180,12 +180,6 @@ class MainActivity : QkThemedActivity(), MainView {
                 .subscribe { theme ->
                     // Set the color for the drawer icons
                     val states = arrayOf(intArrayOf(android.R.attr.state_activated), intArrayOf(-android.R.attr.state_activated))
-                    resolveThemeColor(android.R.attr.textColorSecondary)
-                            .let { textSecondary -> ColorStateList(states, intArrayOf(theme.theme, textSecondary)) }
-                            .let { tintList ->
-                                inboxIcon.imageTintList = tintList
-                                archivedIcon.imageTintList = tintList
-                            }
 
                     // Miscellaneous views
                     listOf(plusBadge1, plusBadge2).forEach { badge ->
