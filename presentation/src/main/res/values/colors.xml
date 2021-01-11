@@ -54,8 +54,8 @@
     <color name="textSecondaryDark">#C2C5CB</color>
     <color name="textTertiaryDark">#80ffffff</color>
 
-    <color name="bubbleLight">#FFFFFF</color>
-    <color name="bubbleDark">#242a2f</color>
+    <color name="bubbleLight">#F2F4F7</color>
+    <color name="bubbleDark">#2B3640</color>
 
     <color name="separatorLight">#0C000000</color>
     <color name="separatorDark">#1AFFFFFF</color>
