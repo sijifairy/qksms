@@ -53,6 +53,13 @@ class SettingsPresenter @Inject constructor(
     init {
         newState { copy(theme = colors.theme().theme) }
 
+        disposables += colors.themeObservable()
+                .subscribe {
+                    newState {
+                        copy(theme = colors.theme().theme)
+                    }
+                }
+
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
                 .subscribe { nightMode ->
