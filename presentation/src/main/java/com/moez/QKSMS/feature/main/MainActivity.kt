@@ -385,7 +385,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun showBackButton(show: Boolean) {
         toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
-        toolbar.setNavigationIcon(if (show) R.drawable.ic_arrow_left else R.drawable.ic_navigagion)
+        toolbar.setNavigationIcon(if (show) R.drawable.ic_arrow_left else R.drawable.ic_navigation_new)
         toggle.drawerArrowDrawable.color = resolveThemeColor(android.R.attr.textColorPrimary)
         toolbar.navigationIcon?.colorFilter = PorterDuffColorFilter(toggle.drawerArrowDrawable.color, PorterDuff.Mode.SRC_IN)
     }
