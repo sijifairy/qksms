@@ -26,6 +26,7 @@
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/toolbarTitle"
         style="@style/ToolbarText"
+        app:contentInsetStartWithNavigation="0dp"
         app:font_family="medium"
         tools:text="Conversations" />
 
