@@ -29,7 +29,7 @@
     <color name="ripples_ripple_color">#FFCCCCCC</color>
 
     <color name="toolbarLight">#FFFFFF</color>
-    <color name="toolbarDark">#1d262b</color>
+    <color name="toolbarDark">#212A32</color>
     <color name="toolbarTranslucent">#88000000</color>
     <color name="toolbarSearchBackgroundLight">#0D000000</color>
     <color name="toolbarSearchBackgroundDark">#26000000</color>

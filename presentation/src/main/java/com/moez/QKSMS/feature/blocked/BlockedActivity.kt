@@ -59,7 +59,7 @@ class BlockedActivity : QkThemedActivity(), BlockedView {
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    val toolbarColor = resolveThemeColor(android.R.attr.windowBackground)
+                    val toolbarColor = resolveThemeColor(R.attr.toolbarBg)
                     toolbar.setBackgroundColor(toolbarColor)
                     val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)

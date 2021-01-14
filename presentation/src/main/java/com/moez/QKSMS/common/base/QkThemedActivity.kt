@@ -76,7 +76,7 @@ abstract class QkThemedActivity : QkActivity() {
         setTheme(getActivityThemeRes(night, black))
 
         super.onCreate(savedInstanceState)
-        val statusBarColor = resolveThemeColor(android.R.attr.windowBackground)
+        val statusBarColor = resolveThemeColor(R.attr.toolbarBg)
         setStatusBarColor(statusBarColor)
         setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
 
