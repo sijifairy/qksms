@@ -65,8 +65,7 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/icon_inbox"
-                tools:tint="@color/tools_theme" />
+                android:src="@drawable/icon_inbox" />
 
             <com.moez.QKSMS.common.widget.QkTextView
                 style="@style/DrawerText"

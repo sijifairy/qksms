@@ -328,8 +328,8 @@ class MainActivity : QkThemedActivity(), MainView {
             }
         }
 
-        inbox.isActivated = state.page is Inbox
-        archived.isActivated = state.page is Archived
+        //inbox.isActivated = state.page is Inbox
+        //archived.isActivated = state.page is Archived
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START) && !state.drawerOpen) drawerLayout.closeDrawer(GravityCompat.START)
         else if (!drawerLayout.isDrawerVisible(GravityCompat.START) && state.drawerOpen) drawerLayout.openDrawer(GravityCompat.START)
