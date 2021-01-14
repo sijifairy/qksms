@@ -99,7 +99,6 @@
             android:layout_margin="16dp"
             android:background="@drawable/circle_ripple"
             android:contentDescription="@string/main_fab_cd"
-            android:elevation="8dp"
             android:padding="12dp"
             android:src="@drawable/ic_edit_sms"
             android:tint="@color/white"
