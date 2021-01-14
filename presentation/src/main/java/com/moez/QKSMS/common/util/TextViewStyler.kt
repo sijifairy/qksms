@@ -143,7 +143,9 @@ class TextViewStyler @Inject constructor(
             })
 
             setTextSize(textView, textSizeAttr)
-            setFontFamily(textView, fontStyle)
+            if (!prefs.systemFont.get()) {
+                setFontFamily(textView, fontStyle)
+            }
         }
     }
 
