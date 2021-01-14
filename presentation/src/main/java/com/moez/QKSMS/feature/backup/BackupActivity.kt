@@ -42,6 +42,7 @@ class BackupActivity : QkThemedActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_activity)
+        showBackButton(true)
 
         theme
                 .autoDisposable(scope())
