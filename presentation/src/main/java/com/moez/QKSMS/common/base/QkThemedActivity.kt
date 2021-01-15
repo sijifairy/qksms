@@ -20,6 +20,7 @@ package com.moez.QKSMS.common.base
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
@@ -28,11 +29,14 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
+import com.klinker.android.send_message.Utils
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.BaseApplication
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.setSystemButtonsTheme
+import com.moez.QKSMS.feature.guide.SetAsDefaultActivity
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
 import io.reactivex.Observable
@@ -171,6 +175,14 @@ abstract class QkThemedActivity : QkActivity() {
                     window.statusBarColor = color
                 }
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (this !is SetAsDefaultActivity && !Utils.isDefaultSmsApp(this)) {
+            val intent = Intent(this, SetAsDefaultActivity::class.java)
+            startActivity(intent)
         }
     }
 }
