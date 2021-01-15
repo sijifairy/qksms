@@ -129,13 +129,13 @@ class MessagesAdapter @Inject constructor(
             view = layoutInflater.inflate(R.layout.message_list_item_out, parent, false)
             view.findViewById<ImageView>(R.id.cancelIcon).setTint(theme.theme)
             view.findViewById<ProgressBar>(R.id.cancel).setTint(theme.theme)
-            view.body.setBackgroundTint(theme.theme)
-            view.body.setTextColor(theme.textPrimary)
+            view.body.setTextColor(parent.context.resolveThemeColor(android.R.attr.textColorPrimary))
+            view.body.setBackgroundTint(parent.context.resolveThemeColor(R.attr.inMessageBackground))
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
             view.avatar.threadId = conversation?.id ?: 0
-            view.body.setTextColor(parent.context.resolveThemeColor(android.R.attr.textColorPrimary))
-            view.body.setBackgroundTint(parent.context.resolveThemeColor(R.attr.inMessageBackground))
+            view.body.setBackgroundTint(theme.theme)
+            view.body.setTextColor(theme.textPrimary)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
