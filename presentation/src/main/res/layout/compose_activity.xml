@@ -530,7 +530,8 @@
             android:src="@drawable/ic_add_black_24dp"
             android:tint="?attr/messageAddTint"
             android:backgroundTint="?attr/messageAddBackgroundTint"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/message"
+            app:layout_constraintBottom_toBottomOf="@id/message"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
