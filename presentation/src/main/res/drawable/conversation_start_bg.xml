@@ -2,12 +2,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#ff1e6ee7"/>
+            <solid android:color="#fff"/>
         </shape>
     </item>
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_launcher_small"/>
+            android:src="@drawable/ic_launcher"/>
     </item>
 </layer-list>
