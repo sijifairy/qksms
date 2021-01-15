@@ -53,7 +53,7 @@ class SetAsDefaultActivity : QkThemedActivity() {
             findViewById<TextView>(R.id.title1).setTextColor(resources.getColor(R.color.textPrimary))
             findViewById<TextView>(R.id.title2).setTextColor(resources.getColor(R.color.textSecondary))
         }
-        findViewById<View>(R.id.btn_start).background = BackgroundDrawables.createBackgroundDrawable(-0xc48816, Dimensions.pxFromDp(16f).toFloat(), true)
+        findViewById<View>(R.id.btn_start).background = BackgroundDrawables.createBackgroundDrawable(-0xc48816, Dimensions.pxFromDp(8f).toFloat(), true)
         findViewById<View>(R.id.btn_start)
                 .setOnClickListener {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -91,6 +91,10 @@ class SetAsDefaultActivity : QkThemedActivity() {
                 SmsAnalytics.logEvent("Start_Page_SetAsDefault_Failed")
             }
         }
+    }
+
+    override fun onBackPressed() {
+
     }
 
     companion object {

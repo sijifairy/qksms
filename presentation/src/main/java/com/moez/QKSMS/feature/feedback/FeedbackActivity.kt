@@ -15,15 +15,18 @@ import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.BackgroundDrawables
 import com.moez.QKSMS.common.util.Dimensions
+import com.moez.QKSMS.common.util.Threads
 import com.moez.QKSMS.common.util.Toasts
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.blocked_activity.*
 import kotlinx.android.synthetic.main.blocked_activity.toolbar
 import kotlinx.android.synthetic.main.container_activity.*
-import kotlinx.android.synthetic.main.container_activity.toolbarTitle
-import kotlinx.android.synthetic.main.main_activity.*
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
 import java.util.*
 
 class FeedbackActivity : QkThemedActivity() {
@@ -66,10 +69,36 @@ class FeedbackActivity : QkThemedActivity() {
         sendButton = findViewById(R.id.feedback_send)
         sendButton!!.setOnClickListener(View.OnClickListener {
             if (!feedbackContent!!.text.toString().trim { it <= ' ' }.isEmpty()) {
-                val content = getFeedbackContent()
-                try {
-                } catch (e: Exception) {
-                }
+                Threads.postOnThreadPoolExecutor(Runnable {
+                    val content = getFeedbackContent()
+                    try {
+                        var reqParam = URLEncoder.encode("content", "UTF-8") + "=" + URLEncoder.encode(content, "UTF-8")
+
+                        val mURL = URL("http://161.117.227.134:8080/feedback?$reqParam")
+
+                        with(mURL.openConnection() as HttpURLConnection) {
+                            // optional default is GET
+                            requestMethod = "GET"
+
+                            println("URL : $url")
+                            println("Response Code : $responseCode")
+
+                            BufferedReader(InputStreamReader(inputStream)).use {
+                                val response = StringBuffer()
+
+                                var inputLine = it.readLine()
+                                while (inputLine != null) {
+                                    response.append(inputLine)
+                                    inputLine = it.readLine()
+                                }
+                                it.close()
+                                println("Response : $response")
+                            }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                })
 
                 finish()
             } else {
@@ -81,10 +110,10 @@ class FeedbackActivity : QkThemedActivity() {
         })
     }
 
-    private fun getFeedbackContent(): HashMap<String, Any> {
-        val content = HashMap<String, Any>()
-        content["Content"] = feedbackContent!!.text.toString()
-        content["Email"] = feedbackEmail!!.text.toString()
+    private fun getFeedbackContent(): String {
+        val response = StringBuffer()
+        response.append("content:").append(feedbackContent!!.text.toString()).append(";")
+        response.append("email:").append(feedbackEmail!!.text.toString()).append(";")
 
         val pm = packageManager
         var appVersionName = ""
@@ -94,14 +123,14 @@ class FeedbackActivity : QkThemedActivity() {
         } catch (var2: PackageManager.NameNotFoundException) {
             var2.printStackTrace()
         }
+        response.append("version_name:").append(appVersionName).append(";")
+        response.append("os_version:").append(Build.VERSION.RELEASE).append(";")
+        response.append("device_model:").append(if (Build.MODEL == null) "" else Build.MODEL).append(";")
+        response.append("country:").append(Locale.getDefault().country).append(";")
+        response.append("language:").append(Locale.getDefault().language).append(";")
+        response.append("timestamp:").append(System.currentTimeMillis()).append(";")
 
-        content["version_name"] = appVersionName
-        content["os_version"] = Build.VERSION.RELEASE
-        content["device_model"] = if (Build.MODEL == null) "" else Build.MODEL
-        content["country"] = Locale.getDefault().country
-        content["language"] = Locale.getDefault().language
-        content["timestamp"] = System.currentTimeMillis()
-        return content
+        return response.toString()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
