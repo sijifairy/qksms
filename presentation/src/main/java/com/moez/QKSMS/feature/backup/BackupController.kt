@@ -30,7 +30,9 @@ import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
+import com.moez.QKSMS.common.util.BackgroundDrawables
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.Dimensions
 import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setPositiveButton
@@ -100,6 +102,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
     override fun onViewCreated() {
         super.onViewCreated()
 
+        fab.background = BackgroundDrawables.createBackgroundDrawable(-0xc48816, Dimensions.pxFromDp(16f).toFloat(), true)
         themedActivity?.colors?.theme()?.let { theme ->
             progressBar.indeterminateTintList = ColorStateList.valueOf(theme.theme)
             progressBar.progressTintList = ColorStateList.valueOf(theme.theme)
@@ -161,16 +164,6 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
         backup.summary = state.lastBackup
 
         adapter.data = state.backups
-
-        fabIcon.setImageResource(when (state.upgraded) {
-            true -> R.drawable.ic_file_upload_black_24dp
-            false -> R.drawable.ic_star_black_24dp
-        })
-
-        fabLabel.setText(when (state.upgraded) {
-            true -> R.string.backup_now
-            false -> R.string.title_qksms_plus
-        })
     }
 
     override fun activityVisible(): Observable<*> = activityVisibleSubject
