@@ -37,16 +37,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="?android:attr/divider"/>
+        android:background="?attr/toolbarBottomLineColor"/>
 
     <com.bluelinelabs.conductor.ChangeHandlerFrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/divider"/>
 </LinearLayout>

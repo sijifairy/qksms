@@ -37,6 +37,9 @@
     <color name="backgroundLight">#FFF</color>
     <color name="backgroundDark">#181F25</color>
 
+    <color name="toolbarBottomLineColorLight">#33D8D8D8</color>
+    <color name="toolbarBottomLineColorDark">@color/backgroundDark</color>
+
     <color name="inMessageBackgroundLight">#F2F4F7</color>
     <color name="inMessageBackgroundDark">#2B3640</color>
 
