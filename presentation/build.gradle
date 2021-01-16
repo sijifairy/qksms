@@ -31,7 +31,7 @@ android {
         applicationId "com.joyinsight.sms"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1020
+        versionCode 1021
         versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
