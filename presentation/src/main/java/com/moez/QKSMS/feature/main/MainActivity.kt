@@ -163,10 +163,6 @@ class MainActivity : QkThemedActivity(), MainView {
         }
         toolbar.setNavigationIcon(R.drawable.ic_navigagion)
 
-//        supportActionBar?.setHomeButtonEnabled(true)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setHomeAsUpIndicator(resources.getDrawable(R.drawable.ic_navigation_drawer))
-
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -202,45 +198,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 }
 
         itemTouchCallback.adapter = conversationsAdapter
-//        conversationsAdapter.autoScrollToStart(recyclerView)
-
-//        mAdView = AdView(this)
-//        mAdView.adSize = AdSize.BANNER
-//        mAdView.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Homepage_Banner_Admob_ID");
-//        adViewContainer.addView(mAdView)
-//        val adRequest = AdRequest.Builder().addTestDevice("023989BFBFB4293AF9F7F96F1DDBFC65").build()
-//        mAdView.loadAd(adRequest)
         SmsAnalytics.logEvent("Main_Banner_Chance")
-//        mAdView.adListener = object : AdListener() {
-//            override fun onAdLoaded() {
-//                // Code to be executed when an ad finishes loading.
-//                SmsAnalytics.logEvent("Main_Banner_Show")
-//            }
-//
-//            override fun onAdFailedToLoad(errorCode: Int) {
-//                // Code to be executed when an ad request fails.
-//            }
-//
-//            override fun onAdOpened() {
-//                // Code to be executed when an ad opens an overlay that
-//                // covers the screen.
-//            }
-//
-//            override fun onAdClicked() {
-//                // Code to be executed when the user clicks on an ad.
-//                SmsAnalytics.logEvent("Main_Banner_Click")
-//            }
-//
-//            override fun onAdLeftApplication() {
-//                // Code to be executed when the user has left the app.
-//            }
-//
-//            override fun onAdClosed() {
-//                // Code to be executed when the user is about to return
-//                // to the app after tapping on an ad.
-//            }
-//        }
-
     }
 
     override fun render(state: MainState) {

@@ -42,6 +42,7 @@ class SetAsDefaultActivity : QkThemedActivity() {
             Navigations.startActivitySafely(this, Intent(this, MainActivity::class.java))
             overridePendingTransition(0, 0)
             finish()
+            return
         }
         setContentView(R.layout.activity_set_as_default)
         if (prefs.night.get()) {
