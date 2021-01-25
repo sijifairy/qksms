@@ -31,8 +31,8 @@ android {
         applicationId "com.joyinsight.sms"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1021
-        versionName "1.0.2"
+        versionCode 1030
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -169,6 +169,7 @@ dependencies {
     implementation project(':data')
     implementation project(':domain')
     implementation 'com.flurry.android:analytics:12.7.0@aar'
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
 
     withAnalyticsImplementation 'com.google.firebase:firebase-core:17.2.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-config:18.0.0'
@@ -177,9 +178,10 @@ dependencies {
     withAnalyticsImplementation 'com.google.firebase:firebase-auth:19.0.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-messaging:19.0.1'
 
+
     implementation 'com.airbnb.android:lottie:2.7.0'
 
-    implementation 'com.google.android.gms:play-services-location:15.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'
     implementation 'com.android.installreferrer:installreferrer:1.0'

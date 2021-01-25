@@ -538,7 +538,7 @@ public class FiveStarRateDialog extends DefaultButtonDialog2 implements View.OnC
         && isShowFiveStarRateMoreThenInterval()
         && System.currentTimeMillis()
                 - Preferences.getDefault().getLong("pref_key_install_time", -1)
-            > 10 * DateUtils.MINUTE_IN_MILLIS;
+            > 5 * DateUtils.MINUTE_IN_MILLIS;
   }
 
   public static boolean showShowFiveStarRateDialogOnBackToDesktopIfNeed(Activity context) {

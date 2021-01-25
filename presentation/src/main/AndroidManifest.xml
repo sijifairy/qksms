@@ -55,6 +55,10 @@
       android:name="org.apache.http.legacy"
       android:required="false" />
 
+    <meta-data
+      android:name="com.google.android.gms.ads.APPLICATION_ID"
+      android:value="ca-app-pub-9729300831038244~5045850490"/>
+
     <activity
       android:name=".feature.main.MainActivity"
       android:launchMode="singleTask"></activity>

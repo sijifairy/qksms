@@ -48,6 +48,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import javax.inject.Inject
+import com.google.android.gms.ads.MobileAds;
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
@@ -88,6 +89,8 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         FlurryAgent.Builder()
                 .withLogEnabled(true)
                 .build(this, "Z6WVFVX93P2TK2WKYXY4")
+
+        MobileAds.initialize(this) {}
 
         val packageName = packageName
         val processName = getCurrentProcessName(this)

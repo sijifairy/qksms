@@ -34,16 +34,19 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
+import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
@@ -60,10 +63,6 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.compose_activity.*
-import kotlinx.android.synthetic.main.compose_activity.toolbar
-import kotlinx.android.synthetic.main.compose_activity.toolbarTitle
-import kotlinx.android.synthetic.main.container_activity.*
-import kotlinx.android.synthetic.main.main_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -94,7 +93,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-//    private lateinit var mInterstitialAd: InterstitialAd
+    private lateinit var mInterstitialAd: InterstitialAd
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
@@ -185,35 +184,41 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
 
-//        mInterstitialAd = InterstitialAd(this)
-//        mInterstitialAd.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Interstitial_Admob_ID")
-//        mInterstitialAd.loadAd(AdRequest.Builder().build())
-//        mInterstitialAd.adListener = object : AdListener() {
-//            override fun onAdLoaded() {
-//                // Code to be executed when an ad finishes loading.
-//            }
-//
-//            override fun onAdFailedToLoad(errorCode: Int) {
-//                // Code to be executed when an ad request fails.
-//            }
-//
-//            override fun onAdOpened() {
-//                // Code to be executed when the ad is displayed.
-//            }
-//
-//            override fun onAdClicked() {
-//                // Code to be executed when the user clicks on an ad.
-//                SmsAnalytics.logEvent("Detail_Wire_Click")
-//            }
-//
-//            override fun onAdLeftApplication() {
-//                // Code to be executed when the user has left the app.
-//            }
-//
-//            override fun onAdClosed() {
-//                // Code to be executed when the interstitial ad is closed.
-//            }
-//        }
+        mInterstitialAd = InterstitialAd(this)
+        mInterstitialAd.adUnitId = if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/1033173712" else "ca-app-pub-9729300831038244/6544785911"
+        if (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
+                > DateUtils.MINUTE_IN_MILLIS * 30
+                && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
+                > DateUtils.MINUTE_IN_MILLIS * 5) {
+            mInterstitialAd.loadAd(AdRequest.Builder().build())
+            mInterstitialAd.adListener = object : AdListener() {
+                override fun onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                }
+
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    // Code to be executed when an ad request fails.
+                }
+
+                override fun onAdOpened() {
+                    // Code to be executed when the ad is displayed.
+                }
+
+                override fun onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                    SmsAnalytics.logEvent("Detail_Wire_Click")
+                    Preferences.getDefault().putLong("pref_detail_wire_click_time", System.currentTimeMillis())
+                }
+
+                override fun onAdLeftApplication() {
+                    // Code to be executed when the user has left the app.
+                }
+
+                override fun onAdClosed() {
+                    // Code to be executed when the interstitial ad is closed.
+                }
+            }
+        }
 
         SmsAnalytics.logEvent("Compose_Create")
 
@@ -457,12 +462,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         SmsAnalytics.logEvent("Compose_Back")
 
         if (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
-                < DateUtils.MINUTE_IN_MILLIS * 5
-                || System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
-                < DateUtils.MINUTE_IN_MILLIS * 3) {
-            return
-        }
+                > DateUtils.MINUTE_IN_MILLIS * 30
+                && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
+                > DateUtils.MINUTE_IN_MILLIS * 5) {
+            if (mInterstitialAd.isLoaded) {
+                mInterstitialAd.show()
+                Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
 
-        SmsAnalytics.logEvent("Detail_Wire_Chance")
+                SmsAnalytics.logEvent("Detail_Wire_Show")
+            }
+
+            SmsAnalytics.logEvent("Detail_Wire_Chance")
+        }
     }
 }
