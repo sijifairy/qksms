@@ -50,10 +50,12 @@ import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.Calendars
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.Preferences
 import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.*
+import com.moez.QKSMS.feature.plus.PlusManager
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Message
@@ -186,10 +188,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.adUnitId = if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/1033173712" else "ca-app-pub-9729300831038244/6544785911"
-        if (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
-                > DateUtils.MINUTE_IN_MILLIS * 30
-                && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
-                > DateUtils.MINUTE_IN_MILLIS * 5) {
+        if (fulfillAdLimitation()) {
             mInterstitialAd.loadAd(AdRequest.Builder().build())
             mInterstitialAd.adListener = object : AdListener() {
                 override fun onAdLoaded() {
@@ -259,6 +258,24 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 //            }
 //        }
 
+    }
+
+    private fun fulfillAdLimitation(): Boolean {
+        return if (!BuildConfig.DEBUG)
+            (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
+                    > DateUtils.MINUTE_IN_MILLIS * 30
+                    && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
+                    > DateUtils.MINUTE_IN_MILLIS * 5
+                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_wire_click_time", -1))
+                    && isAdCountry()
+                    && !PlusManager.isPremiumUser())
+        else
+            true
+    }
+
+    private fun isAdCountry(): Boolean {
+        return "US".equals(Locale.getDefault().country, ignoreCase = true)
+                || "FR".equals(Locale.getDefault().country, ignoreCase = true)
     }
 
     override fun onResume() {
@@ -461,10 +478,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     private fun tryShowInterstitialAd() {
         SmsAnalytics.logEvent("Compose_Back")
 
-        if (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
-                > DateUtils.MINUTE_IN_MILLIS * 30
-                && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
-                > DateUtils.MINUTE_IN_MILLIS * 5) {
+        if (fulfillAdLimitation()) {
             if (mInterstitialAd.isLoaded) {
                 mInterstitialAd.show()
                 Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())

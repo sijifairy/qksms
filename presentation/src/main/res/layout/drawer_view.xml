@@ -187,12 +187,11 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_star_black_24dp"
-                android:tint="?android:attr/textColorSecondary" />
+                android:src="@drawable/icon_removeads"/>
 
             <com.moez.QKSMS.common.widget.QkTextView
                 style="@style/DrawerText"
-                android:text="@string/drawer_plus" />
+                android:text="Remove Ads" />
 
         </LinearLayout>
 

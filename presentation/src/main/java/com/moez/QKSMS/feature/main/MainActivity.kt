@@ -55,6 +55,7 @@ import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
 import com.moez.QKSMS.feature.guide.SettingLauncherPadActivity
 import com.moez.QKSMS.feature.guide.UsageUtils
+import com.moez.QKSMS.feature.plus.PlusManager
 import com.moez.QKSMS.repository.SyncRepository
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
@@ -238,9 +239,9 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbar.menu.findItem(R.id.block)?.isVisible = selectedConversations != 0
 
         listOf(plusBadge1, plusBadge2).forEach { badge ->
-            badge.isVisible = drawerBadgesExperiment.variant && !state.upgraded
+            badge.isVisible = false
         }
-        plus.isVisible = false
+        plus.isVisible = !PlusManager.isPremiumUser()
         plusBanner.isVisible = false
         rateLayout.setVisible(false)
 

@@ -27,16 +27,14 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.feature.backup.BackupActivity
 import com.moez.QKSMS.feature.blocked.BlockedActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
-import com.moez.QKSMS.feature.guide.SetAsDefaultGuideActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
-import com.moez.QKSMS.feature.plus.PlusActivity
+import com.moez.QKSMS.feature.plus.BillingActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.settings.SettingsActivity
 import com.moez.QKSMS.manager.AnalyticsManager
@@ -50,7 +48,6 @@ import javax.inject.Singleton
 class Navigator @Inject constructor(
         private val context: Context,
         private val analyticsManager: AnalyticsManager,
-        private val billingManager: BillingManager,
         private val notificationManager: NotificationManager,
         private val permissions: PermissionManager
 ) {
@@ -74,8 +71,7 @@ class Navigator @Inject constructor(
      */
     fun showQksmsPlusActivity(source: String) {
         analyticsManager.track("Viewed QKSMS+", Pair("source", source))
-        val intent = Intent(context, PlusActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(context, BillingActivity::class.java))
     }
 
     fun showDefaultSmsDialog() {
@@ -213,21 +209,6 @@ class Navigator @Inject constructor(
     }
 
     fun showSupport() {
-//        val intent = Intent(Intent.ACTION_SENDTO)
-//        intent.data = Uri.parse("mailto:")
-//        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("firsttapnews@gmail.com"))
-//        intent.putExtra(Intent.EXTRA_SUBJECT, "Joy SMS Support")
-//        intent.putExtra(Intent.EXTRA_TEXT, StringBuilder("\n\n")
-//                .append("\n\n--- Please write your message above this line ---\n\n")
-//                .append("Package: ${context.packageName}\n")
-//                .append("Version: ${BuildConfig.VERSION_NAME}\n")
-//                .append("Device: ${Build.BRAND} ${Build.MODEL}\n")
-//                .append("SDK: ${Build.VERSION.SDK_INT}\n")
-//                .append("Upgraded"
-//                        .takeIf { BuildConfig.FLAVOR != "noAnalytics" }
-//                        .takeIf { billingManager.upgradeStatus.blockingFirst() } ?: "")
-//                .toString())
-//        startActivityExternal(intent)
         startActivity(Intent(context, FeedbackActivity::class.java))
     }
 

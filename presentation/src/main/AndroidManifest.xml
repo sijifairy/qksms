@@ -101,7 +101,8 @@
         android:value=".common.util.QkChooserTargetService" />
     </activity>
     <activity android:name=".feature.settings.SettingsActivity" />
-    <activity android:name=".feature.plus.PlusActivity" />
+    <activity android:name=".feature.plus.BillingActivity"
+      android:theme="@style/Theme.AppCompat.Translucent"/>
     <activity
       android:name=".feature.feedback.FeedbackActivity"
       android:launchMode="singleTop"
