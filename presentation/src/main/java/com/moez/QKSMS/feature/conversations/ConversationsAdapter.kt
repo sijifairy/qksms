@@ -22,7 +22,11 @@ import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.isVisible
+import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkRealmAdapter
@@ -30,81 +34,134 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.model.Conversation
+import kotlinx.android.synthetic.main.conversation_list_ad_container.*
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
-    private val colors: Colors,
-    private val context: Context,
-    private val dateFormatter: DateFormatter,
-    private val navigator: Navigator
+        private val colors: Colors,
+        private val context: Context,
+        private val dateFormatter: DateFormatter,
+        private val navigator: Navigator
 ) : QkRealmAdapter<Conversation>() {
 
     init {
         setHasStableIds(true)
     }
 
+    lateinit var ad: UnifiedNativeAd
+    var hasAd: Boolean = false
+
+    fun onAdLoaded(unifiedNativeAd: UnifiedNativeAd) {
+        hasAd = true
+        ad = unifiedNativeAd
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
+        if (viewType == 0 || viewType == 1) {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
 
-        if (viewType == 1) {
-            val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
+            if (viewType == 1) {
+                val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
 
-            view.title.setTypeface(view.title.typeface, Typeface.BOLD)
+                view.title.setTypeface(view.title.typeface, Typeface.BOLD)
 
-            view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
-            view.snippet.setTextColor(textColorPrimary)
-            view.snippet.maxLines = 5
+                view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
+                view.snippet.setTextColor(textColorPrimary)
+                view.snippet.maxLines = 5
 
-            view.unread.isVisible = true
-            view.unread.setTint(colors.theme().theme)
+                view.unread.isVisible = true
+//                view.unread.setTint(colors.theme().theme)
 
-            view.date.setTypeface(view.date.typeface, Typeface.BOLD)
-            view.date.setTextColor(textColorPrimary)
-        }
+                view.date.setTypeface(view.date.typeface, Typeface.BOLD)
+                view.date.setTextColor(textColorPrimary)
+            }
 
-        return QkViewHolder(view).apply {
-            view.setOnClickListener {
-                val conversation = getItem(adapterPosition) ?: return@setOnClickListener
-                when (toggleSelection(conversation.id, false)) {
-                    true -> view.isActivated = isSelected(conversation.id)
-                    false -> navigator.showConversation(conversation.id)
+            return QkViewHolder(view).apply {
+                view.setOnClickListener {
+                    val conversation = getItem(if (hasAd) adapterPosition - 1 else adapterPosition)
+                            ?: return@setOnClickListener
+                    when (toggleSelection(conversation.id, false)) {
+                        true -> view.isActivated = isSelected(conversation.id)
+                        false -> navigator.showConversation(conversation.id)
+                    }
+                }
+                view.setOnLongClickListener {
+                    val conversation = getItem(if (hasAd) adapterPosition - 1 else adapterPosition)
+                            ?: return@setOnLongClickListener true
+                    toggleSelection(conversation.id)
+                    view.isActivated = isSelected(conversation.id)
+                    true
                 }
             }
-            view.setOnLongClickListener {
-                val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
-                toggleSelection(conversation.id)
-                view.isActivated = isSelected(conversation.id)
-                true
-            }
+        } else {
+            return QkViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.conversation_list_ad_container, parent, false))
         }
     }
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
-        val conversation = getItem(position) ?: return
-        val view = viewHolder.containerView
+        if (hasAd && position == 0) {
+            val adView = LayoutInflater.from(viewHolder.containerView.context)
+                    .inflate(R.layout.conversation_list_ad, null) as UnifiedNativeAdView
+            val headlineView = adView.findViewById<TextView>(R.id.title)
+            headlineView.text = ad.headline
+            adView.headlineView = headlineView
+            val subtitle = adView.findViewById<TextView>(R.id.snippet)
+            subtitle.text = ad.body
+            adView.bodyView = subtitle
+            val icon = adView.findViewById<ImageView>(R.id.avatars)
+            if (ad.icon != null && ad.icon.drawable != null) {
+                icon.setImageDrawable(ad.icon.drawable)
+            }
+            adView.iconView = icon
+            var cta = adView.findViewById<TextView>(R.id.cta)
+            cta.text = ad.callToAction
+            adView.callToActionView = cta
 
-        view.isActivated = isSelected(conversation.id)
+            adView.setNativeAd(ad)
 
-        view.avatars.contacts = conversation.recipients
-        view.title.collapseEnabled = conversation.recipients.size > 1
-        view.title.text = conversation.getTitle()
-        view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
-        view.snippet.text = when (conversation.me) {
-            true -> context.getString(R.string.main_sender_you, conversation.snippet)
-            false -> conversation.snippet
+            viewHolder.container.removeAllViews()
+            viewHolder.container.addView(adView)
+        } else {
+            val conversation = getItem(position - if (hasAd) 1 else 0) ?: return
+            val view = viewHolder.containerView
+
+            view.isActivated = isSelected(conversation.id)
+
+            view.avatars.contacts = conversation.recipients
+            view.title.collapseEnabled = conversation.recipients.size > 1
+            view.title.text = conversation.getTitle()
+            view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
+            view.snippet.text = when (conversation.me) {
+                true -> context.getString(R.string.main_sender_you, conversation.snippet)
+                false -> conversation.snippet
+            }
+            view.pinned.isVisible = conversation.pinned
         }
-        view.pinned.isVisible = conversation.pinned
     }
 
     override fun getItemId(index: Int): Long {
-        return getItem(index)!!.id
+        if (hasAd) {
+            if (index == 0) return 32323411118989223L
+            return getItem(index - 1)!!.id
+        } else {
+            return getItem(index)!!.id
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return super.getItemCount() + if (hasAd) 1 else 0
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position)?.read == true) 0 else 1
+        if (hasAd) {
+            if (position == 0) return 2
+            return if (getItem(position - 1)?.read == true) 0 else 1
+        } else {
+            return if (getItem(position)?.read == true) 0 else 1
+        }
     }
 }

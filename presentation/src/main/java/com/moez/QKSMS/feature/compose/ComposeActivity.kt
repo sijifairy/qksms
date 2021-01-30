@@ -32,17 +32,24 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.ads.mediation.facebook.FacebookAdapter
+import com.google.ads.mediation.facebook.FacebookExtras
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -50,10 +57,7 @@ import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
-import com.moez.QKSMS.common.util.Calendars
-import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.Preferences
-import com.moez.QKSMS.common.util.SmsAnalytics
+import com.moez.QKSMS.common.util.*
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.feature.plus.PlusManager
 import com.moez.QKSMS.model.Attachment
@@ -221,43 +225,71 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         SmsAnalytics.logEvent("Compose_Create")
 
-//        mAdView = AdView(this)
-//        mAdView.adSize = AdSize.BANNER
-//        mAdView.adUnitId = FirebaseRemoteConfig.getInstance().getString("Ad_Detail_Banner_Admob_ID");
-//        adViewContainer.addView(mAdView)
-//        val adRequest = AdRequest.Builder().build()
-//        mAdView.loadAd(adRequest)
-        SmsAnalytics.logEvent("Detail_Banner_Chance")
-//        mAdView.adListener = object : AdListener() {
-//            override fun onAdLoaded() {
-//                // Code to be executed when an ad finishes loading.
-//                SmsAnalytics.logEvent("Detail_Banner_Show")
-//            }
-//
-//            override fun onAdFailedToLoad(errorCode: Int) {
-//                // Code to be executed when an ad request fails.
-//            }
-//
-//            override fun onAdOpened() {
-//                // Code to be executed when an ad opens an overlay that
-//                // covers the screen.
-//            }
-//
-//            override fun onAdClicked() {
-//                // Code to be executed when the user clicks on an ad.
-//                SmsAnalytics.logEvent("Main_Banner_Click")
-//            }
-//
-//            override fun onAdLeftApplication() {
-//                // Code to be executed when the user has left the app.
-//            }
-//
-//            override fun onAdClosed() {
-//                // Code to be executed when the user is about to return
-//                // to the app after tapping on an ad.
-//            }
-//        }
+        if (fulfillAdLimitationNative()) {
+            loadNativeAd()
+        }
+    }
 
+    private fun loadNativeAd() {
+        val adLoader = AdLoader.Builder(this,
+                if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/2247696110"
+                else "ca-app-pub-9729300831038244/8596497510")
+                .forUnifiedNativeAd { ad: UnifiedNativeAd ->
+                    // If this callback occurs after the activity is destroyed, you
+                    // must call destroy and return or you may get a memory leak.
+                    // Note `isDestroyed` is a method on Activity.
+                    if (isDestroyed) {
+                        ad.destroy()
+                        return@forUnifiedNativeAd
+                    }
+
+                    adContainer.visibility = View.VISIBLE
+
+                    val adView = layoutInflater.inflate(R.layout.conversation_list_ad, null) as UnifiedNativeAdView
+                    val headlineView = adView.findViewById<TextView>(R.id.title)
+                    headlineView.text = ad.headline
+                    adView.headlineView = headlineView
+                    val subtitle = adView.findViewById<TextView>(R.id.snippet)
+                    subtitle.text = ad.body
+                    adView.bodyView = subtitle
+                    val icon = adView.findViewById<ImageView>(R.id.avatars)
+                    if (ad.icon != null && ad.icon.drawable != null) {
+                        icon.setImageDrawable(ad.icon.drawable)
+                    }
+                    adView.iconView = icon
+                    var cta = adView.findViewById<TextView>(R.id.cta)
+                    cta.text = ad.callToAction
+                    adView.callToActionView = cta
+
+                    adView.setNativeAd(ad)
+
+                    adContainer.removeAllViews()
+                    adContainer.addView(adView)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        // Handle the failure by logging, altering the UI, and so on.
+                        Log.d("MainActivity", "failed to load native ad")
+                    }
+
+                    override fun onAdClicked() {
+                        Preferences.getDefault().putLong("pref_detail_native_click_time", System.currentTimeMillis())
+                    }
+                })
+                .withNativeAdOptions(NativeAdOptions.Builder()
+                        // Methods in the NativeAdOptions.Builder class can be
+                        // used here to specify individual options settings.
+                        .build())
+                .build()
+
+        var extras = FacebookExtras()
+                .setNativeBanner(true)
+                .build()
+
+        var adrequest = AdRequest.Builder()
+                .addNetworkExtrasBundle(FacebookAdapter::class.java, extras)
+                .build()
+        adLoader.loadAd(adrequest)
     }
 
     private fun fulfillAdLimitation(): Boolean {
@@ -267,15 +299,21 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
                     > DateUtils.MINUTE_IN_MILLIS * 5
                     && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_wire_click_time", -1))
-                    && isAdCountry()
-                    && !PlusManager.isPremiumUser())
+                    && !PlusManager.isPremiumUser()
+                    && RemoteConfig.instance.getBoolean("AdComposeInterstitialEnabled"))
         else
             true
     }
 
-    private fun isAdCountry(): Boolean {
-        return "US".equals(Locale.getDefault().country, ignoreCase = true)
-                || "FR".equals(Locale.getDefault().country, ignoreCase = true)
+    private fun fulfillAdLimitationNative(): Boolean {
+        return if (!BuildConfig.DEBUG)
+            (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
+                    > DateUtils.MINUTE_IN_MILLIS * 10
+                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_native_click_time", -1))
+                    && !PlusManager.isPremiumUser()
+                    && RemoteConfig.instance.getBoolean("AdComposeNativeEnabled"))
+        else
+            true
     }
 
     override fun onResume() {
@@ -300,8 +338,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun render(state: ComposeState) {
         if (state.hasError) {
-            tryShowInterstitialAd()
-
             finish()
             return
         }

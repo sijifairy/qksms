@@ -49,6 +49,7 @@ import java.io.File
 import java.io.FileReader
 import javax.inject.Inject
 import com.google.android.gms.ads.MobileAds;
+import com.moez.QKSMS.common.util.RemoteConfig
 import com.moez.QKSMS.feature.plus.PlusManager
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
@@ -94,6 +95,8 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
         MobileAds.initialize(this) {}
 
         PlusManager.getInstance()
+
+        RemoteConfig.instance
 
         val packageName = packageName
         val processName = getCurrentProcessName(this)

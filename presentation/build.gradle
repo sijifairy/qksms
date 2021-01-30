@@ -21,6 +21,7 @@ apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build wi
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -31,8 +32,8 @@ android {
         applicationId "com.joyinsight.sms"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1031
-        versionName "1.0.3"
+        versionCode 1040
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
@@ -170,6 +171,7 @@ dependencies {
     implementation project(':domain')
     implementation 'com.flurry.android:analytics:12.7.0@aar'
     implementation 'com.google.android.gms:play-services-ads:19.7.0'
+    implementation 'com.google.ads.mediation:facebook:6.2.0.1'
 
     withAnalyticsImplementation 'com.google.firebase:firebase-core:17.2.0'
     withAnalyticsImplementation 'com.google.firebase:firebase-config:18.0.0'
@@ -185,6 +187,10 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'
     implementation 'com.android.installreferrer:installreferrer:1.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.4.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-config'
 
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
     noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')

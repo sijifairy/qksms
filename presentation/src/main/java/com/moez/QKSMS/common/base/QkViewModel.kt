@@ -37,7 +37,11 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
         state
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
-                .subscribe { view.render(it) }
+                .subscribe(fun(it: State) {
+                    view.render(it)
+                }, fun(e: Throwable) {
+                    e.printStackTrace()
+                })
     }
 
     protected fun newState(reducer: State.() -> State) {
@@ -48,5 +52,4 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
         super.onCleared()
         disposables.dispose()
     }
-
 }

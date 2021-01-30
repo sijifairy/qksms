@@ -41,11 +41,11 @@ abstract class QkRealmAdapter<T : RealmModel> : RealmRecyclerViewAdapter<T, QkVi
             if (field === value) return
 
             field = value
-            value?.setVisible(data?.isLoaded == true && data?.isEmpty() == true)
+            value?.setVisible(false)
         }
 
     private val emptyListener: (OrderedRealmCollection<T>) -> Unit = { data ->
-        emptyView?.setVisible(data.isLoaded && data.isEmpty())
+        emptyView?.setVisible(false)
     }
 
     val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()

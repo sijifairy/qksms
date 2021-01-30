@@ -26,6 +26,8 @@ import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.text.format.DateUtils
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
@@ -35,20 +37,25 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.ads.mediation.facebook.FacebookAdapter
+import com.google.ads.mediation.facebook.FacebookExtras
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
+import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.dialog.FiveStarRateDialog
-import com.moez.QKSMS.common.util.Navigations
-import com.moez.QKSMS.common.util.Permissions
-import com.moez.QKSMS.common.util.Preferences
-import com.moez.QKSMS.common.util.SmsAnalytics
+import com.moez.QKSMS.common.util.*
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.feature.changelog.ChangelogDialog
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
@@ -165,7 +172,7 @@ class MainActivity : QkThemedActivity(), MainView {
         toolbar.setNavigationIcon(R.drawable.ic_navigagion)
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = NpaLinearLayoutManager(this)
 
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().subscribe()
@@ -200,6 +207,62 @@ class MainActivity : QkThemedActivity(), MainView {
 
         itemTouchCallback.adapter = conversationsAdapter
         SmsAnalytics.logEvent("Main_Banner_Chance")
+
+        if (fulfillAdLimitation()) {
+            loadNativeAd()
+        }
+    }
+
+    private fun fulfillAdLimitation(): Boolean {
+        return if (!BuildConfig.DEBUG)
+            (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
+                    > DateUtils.MINUTE_IN_MILLIS * 10
+                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_home_native_click_time", -1))
+                    && !PlusManager.isPremiumUser()
+                    && RemoteConfig.instance.getBoolean("AdHomeNativeEnabled"))
+        else
+            true
+    }
+
+    private fun loadNativeAd() {
+        val adLoader = AdLoader.Builder(this,
+                if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/2247696110"
+                else "ca-app-pub-9729300831038244/7265080455")
+                .forUnifiedNativeAd { ad: UnifiedNativeAd ->
+                    // If this callback occurs after the activity is destroyed, you
+                    // must call destroy and return or you may get a memory leak.
+                    // Note `isDestroyed` is a method on Activity.
+                    if (isDestroyed) {
+                        ad.destroy()
+                        return@forUnifiedNativeAd
+                    }
+
+                    conversationsAdapter.onAdLoaded(ad)
+                }
+                .withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        // Handle the failure by logging, altering the UI, and so on.
+                        Log.d("MainActivity", "failed to load native ad")
+                    }
+
+                    override fun onAdClicked() {
+                        Preferences.getDefault().putLong("pref_home_native_click_time", System.currentTimeMillis())
+                    }
+                })
+                .withNativeAdOptions(NativeAdOptions.Builder()
+                        // Methods in the NativeAdOptions.Builder class can be
+                        // used here to specify individual options settings.
+                        .build())
+                .build()
+
+        var extras = FacebookExtras()
+                .setNativeBanner(true)
+                .build()
+
+        var adrequest = AdRequest.Builder()
+                .addNetworkExtrasBundle(FacebookAdapter::class.java, extras)
+                .build()
+        adLoader.loadAd(adrequest)
     }
 
     override fun render(state: MainState) {
