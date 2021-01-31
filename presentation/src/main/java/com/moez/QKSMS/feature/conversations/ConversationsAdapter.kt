@@ -125,6 +125,7 @@ class ConversationsAdapter @Inject constructor(
 
             viewHolder.container.removeAllViews()
             viewHolder.container.addView(adView)
+            viewHolder.itemView.tag = 2
         } else {
             val conversation = getItem(position - if (hasAd) 1 else 0) ?: return
             val view = viewHolder.containerView
@@ -140,6 +141,7 @@ class ConversationsAdapter @Inject constructor(
                 false -> conversation.snippet
             }
             view.pinned.isVisible = conversation.pinned
+            viewHolder.itemView.tag = 0
         }
     }
 
