@@ -26,7 +26,7 @@
             android:layout_marginTop="40dp"
             android:text="Set Joy SMS as your default"
             android:textColor="@color/textPrimary"
-            android:textSize="20dp"
+            android:textSize="18dp"
             app:font_family="medium" />
 
         <com.moez.QKSMS.common.widget.QkTextView
@@ -46,15 +46,15 @@
 
         <com.moez.QKSMS.common.widget.QkTextView
             android:id="@+id/btn_start"
-            android:layout_width="240dp"
+            android:layout_width="180dp"
             app:font_family="medium"
-            android:layout_height="54dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="108dp"
+            android:layout_marginTop="138dp"
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="START"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 </FrameLayout>

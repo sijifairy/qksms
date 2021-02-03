@@ -26,6 +26,7 @@ import android.provider.Telephony
 import androidx.annotation.RequiresApi
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.util.Preferences
+import com.moez.QKSMS.util.Threads
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -39,8 +40,7 @@ class DefaultSmsChangedReceiver : BroadcastReceiver() {
         AndroidInjection.inject(this, context)
 
         if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
-            val pendingResult = goAsync()
-            syncMessages.execute(Unit) { pendingResult.finish() }
+            Threads.postOnThreadPoolExecutor { syncMessages.execute(Unit) {} }
         }
     }
 

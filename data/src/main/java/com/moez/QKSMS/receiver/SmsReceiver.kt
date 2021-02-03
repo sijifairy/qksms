@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Telephony.Sms
 import com.moez.QKSMS.interactor.ReceiveSms
+import com.moez.QKSMS.util.Threads
 import dagger.android.AndroidInjection
 import timber.log.Timber
 import javax.inject.Inject
@@ -38,8 +39,7 @@ class SmsReceiver : BroadcastReceiver() {
         Sms.Intents.getMessagesFromIntent(intent)?.let { messages ->
             val subId = intent.extras?.getInt("subscription", -1) ?: -1
 
-            val pendingResult = goAsync()
-            receiveMessage.execute(ReceiveSms.Params(subId, messages)) { pendingResult.finish() }
+            Threads.postOnThreadPoolExecutor { receiveMessage.execute(ReceiveSms.Params(subId, messages)) {} }
         }
     }
 
