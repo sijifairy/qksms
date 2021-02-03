@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import com.flurry.android.FlurryAgent;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.moez.QKSMS.BuildConfig;
+import com.moez.QKSMS.common.QKApplication;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +20,11 @@ public class SmsAnalytics {
 
   private static final String TAG = SmsAnalytics.class.getSimpleName();
 
-  //    private static FirebaseAnalytics sFirebaseAnalytics;
-  //
-  //    static {
-  //        sFirebaseAnalytics = FirebaseAnalytics.getInstance(QKApplication.context);
-  //    }
+  private static FirebaseAnalytics sFirebaseAnalytics;
+
+  static {
+    sFirebaseAnalytics = FirebaseAnalytics.getInstance(QKApplication.context);
+  }
 
   private static HashMap<String, List<String>> sDebugEventMap = null;
 
@@ -97,7 +99,7 @@ public class SmsAnalytics {
           params.putString(key, value);
         }
       }
-      //            sFirebaseAnalytics.logEvent(eventID, params);
+      sFirebaseAnalytics.logEvent(eventID, params);
       onLogEvent(eventID, alsoLogToFlurry, eventValues);
     } catch (Exception e) {
       e.printStackTrace();
