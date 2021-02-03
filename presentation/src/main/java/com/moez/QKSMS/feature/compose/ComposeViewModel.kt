@@ -576,7 +576,11 @@ class ComposeViewModel @Inject constructor(
                 }
                 .distinctUntilChanged()
                 .autoDisposable(view.scope())
-                .subscribe { remaining -> newState { copy(remaining = remaining) } }
+                .subscribe(fun(it: String) {
+                    newState { copy(remaining = it) }
+                }, fun(e: Throwable) {
+                    e.printStackTrace()
+                })
 
         // Cancel the scheduled time
         view.scheduleCancelIntent
