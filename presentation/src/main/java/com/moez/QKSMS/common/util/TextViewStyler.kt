@@ -19,6 +19,7 @@
 package com.moez.QKSMS.common.util
 
 import android.graphics.Typeface
+import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.TextView
 import com.moez.QKSMS.R
@@ -30,13 +31,14 @@ import com.moez.QKSMS.common.util.extensions.getColorCompat
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.common.widget.QkTextView
+import com.moez.QKSMS.customize.Fonts
 import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 
 class TextViewStyler @Inject constructor(
-    private val prefs: Preferences,
-    private val colors: Colors,
-    private val fontProvider: FontProvider
+        private val prefs: Preferences,
+        private val colors: Colors,
+        private val fontProvider: FontProvider
 ) {
 
     companion object {
@@ -106,6 +108,7 @@ class TextViewStyler @Inject constructor(
             var colorAttr = 0
             var textSizeAttr = 0
             var fontStyle = 0
+            var fontFamilyChangeable = true
 
 //            if (!prefs.systemFont.get()) {
 //                fontProvider.getLato { lato ->
@@ -118,6 +121,7 @@ class TextViewStyler @Inject constructor(
                     colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
                     textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
                     fontStyle = getInt(R.styleable.QkTextView_font_family, -1)
+                    fontFamilyChangeable = getBoolean(R.styleable.QkTextView_font_family_changeable, true)
                     recycle()
                 }
 
@@ -143,7 +147,7 @@ class TextViewStyler @Inject constructor(
             })
 
             setTextSize(textView, textSizeAttr)
-            if (!prefs.systemFont.get()) {
+            if (!prefs.systemFont.get() && fontFamilyChangeable) {
                 setFontFamily(textView, fontStyle)
             }
         }
@@ -154,22 +158,96 @@ class TextViewStyler @Inject constructor(
      * @see FONT_MEDIUM
      * @see FONT_BOLD
      */
-    fun setFontFamily(textView: TextView, fontFamilyAttr: Int) {
-        val path = when (fontFamilyAttr) {
-            FONT_REGULAR -> {
-                "fonts/Custom-Regular.ttf"
+    fun setFontFamily(textView: TextView, fontStyleParam: Int) {
+        if (TextUtils.equals(prefs.fontFamily.get(), Fonts.FONT_DEFAULT)) {
+            val path = when (fontStyleParam) {
+                FONT_REGULAR -> {
+                    "fonts/Custom-Regular.ttf"
+                }
+                FONT_MEDIUM -> {
+                    "fonts/Custom-Medium.ttf"
+                }
+                FONT_BOLD -> {
+                    "fonts/Custom-Bold.ttf"
+                }
+                else -> {
+                    "fonts/Custom-Regular.ttf"
+                }
             }
-            FONT_MEDIUM -> {
-                "fonts/Custom-Medium.ttf"
+            textView.typeface = Typeface.createFromAsset(textView.context.assets, path)
+        } else {
+            val path = when (fontStyleParam) {
+                FONT_REGULAR -> {
+                    "fonts/" + prefs.fontFamily.get() + "/Regular.ttf"
+                }
+                FONT_MEDIUM -> {
+                    "fonts/" + prefs.fontFamily.get() + "/Medium.ttf"
+                }
+                FONT_BOLD -> {
+                    "fonts/" + prefs.fontFamily.get() + "/SemiBold.ttf"
+                }
+                else -> {
+                    "fonts/" + prefs.fontFamily.get() + "/Regular.ttf"
+                }
             }
-            FONT_BOLD -> {
-                "fonts/Custom-Bold.ttf"
+            var typeface: Typeface? = null
+            try {
+                typeface = Typeface.createFromAsset(textView.context.assets, path)
+            } catch (e: Exception) {
             }
-            else -> {
-                "fonts/Custom-Regular.ttf"
+            if (typeface != null) {
+                textView.typeface = typeface
+            } else {
+                textView.typeface = Typeface.createFromAsset(textView.context.assets,
+                        "fonts/" + prefs.fontFamily.get() + "/Regular.ttf")
             }
         }
-        textView.typeface = Typeface.createFromAsset(textView.context.assets, path)
+    }
+
+    fun setFontFamily(textView: TextView, fontFamily: String, fontStyle: Int) {
+        if (TextUtils.equals(fontFamily, Fonts.FONT_DEFAULT)) {
+            val path = when (fontStyle) {
+                FONT_REGULAR -> {
+                    "fonts/Custom-Regular.ttf"
+                }
+                FONT_MEDIUM -> {
+                    "fonts/Custom-Medium.ttf"
+                }
+                FONT_BOLD -> {
+                    "fonts/Custom-Bold.ttf"
+                }
+                else -> {
+                    "fonts/Custom-Regular.ttf"
+                }
+            }
+            textView.typeface = Typeface.createFromAsset(textView.context.assets, path)
+        } else {
+            val path = when (fontStyle) {
+                FONT_REGULAR -> {
+                    "fonts/$fontFamily/Regular.ttf"
+                }
+                FONT_MEDIUM -> {
+                    "fonts/$fontFamily/Medium.ttf"
+                }
+                FONT_BOLD -> {
+                    "fonts/$fontFamily/SemiBold.ttf"
+                }
+                else -> {
+                    "fonts/$fontFamily/Regular.ttf"
+                }
+            }
+            var typeface: Typeface? = null
+            try {
+                typeface = Typeface.createFromAsset(textView.context.assets, path)
+            } catch (e: Exception) {
+            }
+            if (typeface != null) {
+                textView.typeface = typeface
+            } else {
+                textView.typeface = Typeface.createFromAsset(textView.context.assets,
+                        "fonts/$fontFamily/Regular.ttf")
+            }
+        }
     }
 
 
@@ -183,7 +261,7 @@ class TextViewStyler @Inject constructor(
         val textSizePref = prefs.textSize.get()
         when (textSizeAttr) {
             SIZE_PRIMARY -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 14f
+                Preferences.TEXT_SIZE_SMALL -> 13.3f
                 Preferences.TEXT_SIZE_NORMAL -> 16f
                 Preferences.TEXT_SIZE_LARGE -> 18f
                 Preferences.TEXT_SIZE_LARGER -> 20f
@@ -191,9 +269,9 @@ class TextViewStyler @Inject constructor(
             }
 
             SIZE_SECONDARY -> textView.textSize = when (textSizePref) {
-                Preferences.TEXT_SIZE_SMALL -> 12f
-                Preferences.TEXT_SIZE_NORMAL -> 14f
-                Preferences.TEXT_SIZE_LARGE -> 16f
+                Preferences.TEXT_SIZE_SMALL -> 11f
+                Preferences.TEXT_SIZE_NORMAL -> 13.3f
+                Preferences.TEXT_SIZE_LARGE -> 15f
                 Preferences.TEXT_SIZE_LARGER -> 18f
                 else -> 14f
             }

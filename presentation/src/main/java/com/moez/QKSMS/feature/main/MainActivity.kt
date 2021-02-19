@@ -120,7 +120,9 @@ class MainActivity : QkThemedActivity(), MainView {
                 settings.clicks().map { DrawerItem.SETTINGS },
                 plus.clicks().map { DrawerItem.PLUS },
                 help.clicks().map { DrawerItem.HELP },
-                invite.clicks().map { DrawerItem.INVITE }))
+                invite.clicks().map { DrawerItem.INVITE },
+                fonts.clicks().map { DrawerItem.FONTS },
+                themeColor.clicks().map { DrawerItem.THEME_COLOR }))
     }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
     override val plusBannerIntent by lazy { plusBanner.clicks() }

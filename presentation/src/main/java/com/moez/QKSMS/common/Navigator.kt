@@ -32,11 +32,13 @@ import com.moez.QKSMS.feature.blocked.BlockedActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
+import com.moez.QKSMS.feature.fonts.CustomizeFontAct
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.plus.BillingActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.settings.SettingsActivity
+import com.moez.QKSMS.feature.settings.ThemeColorActivity
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.PermissionManager
@@ -219,6 +221,16 @@ class Navigator @Inject constructor(
                 .putExtra(Intent.EXTRA_TEXT, "http://qklabs.com/download")
                 .let { Intent.createChooser(it, null) }
                 .let(this::startActivityExternal)
+    }
+
+    fun showFonts() {
+        analyticsManager.track("Clicked Fonts")
+        startActivity(Intent(context, CustomizeFontAct::class.java))
+    }
+
+    fun showThemeColor() {
+        analyticsManager.track("Clicked Theme Color")
+        startActivity(Intent(context, ThemeColorActivity::class.java))
     }
 
     fun addContact(address: String) {

@@ -25,6 +25,7 @@ import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
+import com.moez.QKSMS.feature.fonts.CustomizeFontAct
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
 import com.moez.QKSMS.feature.guide.SetAsDefaultActivity
@@ -37,6 +38,7 @@ import com.moez.QKSMS.feature.qkreply.QkReplyActivityModule
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
 import com.moez.QKSMS.feature.scheduled.ScheduledActivityModule
 import com.moez.QKSMS.feature.settings.SettingsActivity
+import com.moez.QKSMS.feature.settings.ThemeColorActivity
 import com.moez.QKSMS.injection.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -91,5 +93,13 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [])
     abstract fun bindSetAsDefaultActivity(): SetAsDefaultActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindFontsActivity(): CustomizeFontAct
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindThemeColorActivity(): ThemeColorActivity
 
 }

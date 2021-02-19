@@ -21,15 +21,19 @@ package com.moez.QKSMS.common.widget
 import android.content.Context
 import android.util.AttributeSet
 import androidx.emoji.widget.EmojiAppCompatTextView
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.TextViewStyler
 import com.moez.QKSMS.injection.appComponent
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+        context: Context, attrs: AttributeSet? = null
 ) : EmojiAppCompatTextView(context, attrs) {
 
-    @Inject lateinit var textViewStyler: TextViewStyler
+    @Inject
+    lateinit var textViewStyler: TextViewStyler
+    private var fontStyle: Int = 0
+
 
     /**
      * Collapse a multiline list of strings into a single line
@@ -48,7 +52,14 @@ open class QkTextView @JvmOverloads constructor(
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
+
+            context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
+                fontStyle = getInt(R.styleable.QkTextView_font_family, -1)
+                recycle()
+            }
+
             textViewStyler.applyAttributes(this, attrs)
+            includeFontPadding = false
         } else {
             TextViewStyler.applyEditModeAttributes(this, attrs)
         }
@@ -76,4 +87,7 @@ open class QkTextView @JvmOverloads constructor(
         setLinkTextColor(color)
     }
 
+    fun setFontFamily(fontFamily: String) {
+        textViewStyler.setFontFamily(this, fontFamily, fontStyle)
+    }
 }

@@ -21,6 +21,7 @@ package com.moez.QKSMS.util
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
+import com.moez.QKSMS.customize.Fonts
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -71,6 +72,7 @@ class Preferences @Inject constructor(private val rxPrefs: RxSharedPreferences) 
     val black = rxPrefs.getBoolean("black", false)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
+    val fontFamily = rxPrefs.getString("fontFamily", Fonts.FONT_DEFAULT)
     val sia = rxPrefs.getBoolean("sia", false)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
     val notifAction2 = rxPrefs.getInteger("notifAction2", NOTIFICATION_ACTION_REPLY)

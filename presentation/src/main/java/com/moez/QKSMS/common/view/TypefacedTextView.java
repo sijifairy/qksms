@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.moez.QKSMS.R;
-import com.moez.QKSMS.common.util.Fonts;
 
 public class TypefacedTextView extends DebuggableTextView {
 
@@ -41,7 +40,7 @@ public class TypefacedTextView extends DebuggableTextView {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && fontType == R.string.roboto_black) {
             fontType = R.string.roboto_medium;
         }
-        Typeface typeface = Fonts.getTypeface(fontType);
+        Typeface typeface = null;
         if (typeface != null) {
             setTypeface(typeface);
         }
