@@ -188,6 +188,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-core:2.8.4'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.8.4'
     implementation 'com.android.installreferrer:installreferrer:1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
 
     implementation platform('com.google.firebase:firebase-bom:26.4.0')
     implementation 'com.google.firebase:firebase-analytics'

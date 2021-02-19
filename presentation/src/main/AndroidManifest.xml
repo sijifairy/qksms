@@ -58,6 +58,15 @@
       android:name="com.google.android.gms.ads.APPLICATION_ID"
       android:value="ca-app-pub-9729300831038244~5045850490" />
 
+    <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
+      android:value="@string/facebook_app_id" />
+
+    <activity
+      android:name="com.facebook.FacebookActivity"
+      android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+      android:label="@string/app_name" />
+
     <activity
       android:name=".feature.main.MainActivity"
       android:launchMode="singleTask"></activity>
