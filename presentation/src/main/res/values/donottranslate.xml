@@ -1,63 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Joy SMS.
+  ~ This file is part of Bling SMS.
   ~
-  ~ Joy SMS is free software: you can redistribute it and/or modify
+  ~ Bling SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Joy SMS is distributed in the hope that it will be useful,
+  ~ Bling SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Bling SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
 
-    <string name="qksms_plus_upgrade_b">Unlock for %1$s %2$s</string>
-    <string name="qksms_plus_upgrade_c">Unlock forever for %1$s %2$s</string>
-    <string name="qksms_plus_upgrade_d">One-time purchase of %1$s %2$s</string>
+  <string name="qksms_plus_upgrade_b">Unlock for %1$s %2$s</string>
+  <string name="qksms_plus_upgrade_c">Unlock forever for %1$s %2$s</string>
+  <string name="qksms_plus_upgrade_d">One-time purchase of %1$s %2$s</string>
 
-    <string name="about_developer">Moez Bhatti</string>
-    <string name="about_source">https://github.com/moezbhatti/qksms</string>
-    <string name="about_changelog">https://github.com/moezbhatti/qksms/releases</string>
-    <string name="about_contact">team@qklabs.com</string>
-    <string name="about_license">GNU General Public License v3.0</string>
-    <string name="about_copyright">© 2014–2018</string>
+  <string name="about_developer">Moez Bhatti</string>
+  <string name="about_source">https://github.com/moezbhatti/qksms</string>
+  <string name="about_changelog">https://github.com/moezbhatti/qksms/releases</string>
+  <string name="about_contact">team@qklabs.com</string>
+  <string name="about_license">GNU General Public License v3.0</string>
+  <string name="about_copyright">© 2014–2018</string>
 
-    <string name="changelog_title">New in Joy SMS</string>
-    <string name="changelog_version">Version %s</string>
-    <string-array name="changelog_keywords">
-        <item>Added</item>
-        <item>Improved</item>
-        <item>Fixed</item>
-    </string-array>
-    <string-array name="changelog">
-        <item>Added</item>
-        <item>- Support for latest version of Should I Answer</item>
-        <item>- New swipe action to mark a conversation unread</item>
-        <item>- Updates will now show a changelog!</item>
-        <item></item>
-        <item>Improved</item>
-        <item>- Added unread indicator to make those conversations easier to spot</item>
-        <item>- Better support for sharing text from other apps</item>
-        <item>- Should I Answer integration will respect numbers that you have manually blocked</item>
-        <item>- Status bar for dark theme will match toolbar</item>
-        <item>- Joy SMS will ask to be default SMS app instead if trying to perform actions that it doesn\'t have permission to do</item>
-        <item>- Features on Joy SMS+ page will now link to their respective parts of the app</item>
-        <item>- Long list of names for group chat will be shortened</item>
-        <item></item>
-        <item>Fixed</item>
-        <item>- Messages sometimes get stuck "Sending…"</item>
-        <item>- Popup Reply window glitches when it\'s too big</item>
-        <item>- Crash in compose screen when a contact has no numbers</item>
-    </string-array>
-    <string name="changelog_more">More</string>
-    <string name="changelog_dismiss">Dismiss</string>
+  <string name="changelog_title">New in Bling SMS</string>
+  <string name="changelog_version">Version %s</string>
+  <string-array name="changelog_keywords">
+    <item>Added</item>
+    <item>Improved</item>
+    <item>Fixed</item>
+  </string-array>
+  <string-array name="changelog">
+    <item>Added</item>
+    <item>- Support for latest version of Should I Answer</item>
+    <item>- New swipe action to mark a conversation unread</item>
+    <item>- Updates will now show a changelog!</item>
+    <item></item>
+    <item>Improved</item>
+    <item>- Added unread indicator to make those conversations easier to spot</item>
+    <item>- Better support for sharing text from other apps</item>
+    <item>- Should I Answer integration will respect numbers that you have manually blocked</item>
+    <item>- Status bar for dark theme will match toolbar</item>
+    <item>- Bling SMS will ask to be default SMS app instead if trying to perform actions that it doesn\'t have permission to do</item>
+    <item>- Features on Bling SMS+ page will now link to their respective parts of the app</item>
+    <item>- Long list of names for group chat will be shortened</item>
+    <item></item>
+    <item>Fixed</item>
+    <item>- Messages sometimes get stuck "Sending…"</item>
+    <item>- Popup Reply window glitches when it\'s too big</item>
+    <item>- Crash in compose screen when a contact has no numbers</item>
+  </string-array>
+  <string name="changelog_more">More</string>
+  <string name="changelog_dismiss">Dismiss</string>
 
 </resources>

@@ -1,26 +1,26 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of Joy SMS.
+  ~ This file is part of Bling SMS.
   ~
-  ~ Joy SMS is free software: you can redistribute it and/or modify
+  ~ Bling SMS is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ Joy SMS is distributed in the hope that it will be useful,
+  ~ Bling SMS is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with Joy SMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Bling SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
   <string name="facebook_app_id" translatable="false">416459182335779</string>
   <string name="fb_login_protocol_scheme" translatable="false">fb416459182335779</string>
 
-  <string name="app_name" translatable="false">Joy SMS</string>
+  <string name="app_name" translatable="false">Bling SMS</string>
   <string name="sync_account_type" translatable="false">com.joyinsight.sms.sync_account</string>
 
   <string name="shortcut_compose_long_label">New conversation</string>
@@ -33,7 +33,7 @@
   <string name="title_theme">Theme Color</string>
   <string name="title_conversations">Search inbox…</string>
   <string name="title_compose">Type a name or number</string>
-  <string name="title_qksms_plus" translatable="false">Joy SMS+</string>
+  <string name="title_qksms_plus" translatable="false">Bling SMS+</string>
 
   <string name="setup_skip">Skip</string>
   <string name="setup_next">Continue</string>
@@ -62,11 +62,11 @@
   <string name="archived_empty_text">Your archived conversations will appear here</string>
   <string name="main_fab_cd">Start new conversation</string>
   <string name="main_default_sms_title">Love texting again</string>
-  <string name="main_default_sms_message">Make Joy SMS your default SMS app</string>
+  <string name="main_default_sms_message">Make Bling SMS your default SMS app</string>
   <string name="main_default_sms_change">Change</string>
   <string name="main_permission_required">Permission required</string>
-  <string name="main_permission_sms">Joy SMS needs permission to send and view SMS messages</string>
-  <string name="main_permission_contacts">Joy SMS needs permission to view your contacts</string>
+  <string name="main_permission_sms">Bling SMS needs permission to send and view SMS messages</string>
+  <string name="main_permission_contacts">Bling SMS needs permission to view your contacts</string>
   <string name="main_permission_allow">Allow</string>
 
   <string name="drawer_inbox">Inbox</string>
@@ -75,13 +75,13 @@
   <string name="drawer_blocking">Blocking</string>
   <string name="drawer_more">More</string>
   <string name="drawer_settings">Settings</string>
-  <string name="drawer_plus">Joy SMS+</string>
+  <string name="drawer_plus">Bling SMS+</string>
   <string name="drawer_help">Help &amp; feedback</string>
   <string name="drawer_invite">Invite friends</string>
-  <string name="drawer_plus_banner_title">Joy SMS+</string>
+  <string name="drawer_plus_banner_title">Bling SMS+</string>
   <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
 
-  <string name="rate_title">Enjoying Joy SMS?</string>
+  <string name="rate_title">Enjoying Bling SMS?</string>
   <string name="rate_summary">Share some love and rate us on Google Play!</string>
   <string name="rate_okay">OKAY!</string>
   <string name="rate_dismiss">DISMISS</string>
@@ -92,9 +92,9 @@
     <item quantity="other">Are you sure you would like to delete %d conversations?</item>
   </plurals>
 
-  <string name="dialog_usage_title">Want to start Joy SMS when click desktop icon?</string>
+  <string name="dialog_usage_title">Want to start Bling SMS when click desktop icon?</string>
   <string name="dialog_usage_message">Grant usage access permission to enable this function.</string>
-  <string name="permission_guide_description">Enable now and enjoy Joy SMS.</string>
+  <string name="permission_guide_description">Enable now and enjoy Bling SMS.</string>
   <string name="got_it">Got it</string>
   <string name="promotion_enable_btn">ENABLE</string>
 
@@ -112,7 +112,7 @@
   <string name="compose_vcard_label">Contact card</string>
   <string name="compose_scheduled_for">Scheduled for</string>
   <string name="compose_scheduled_future">Selected time must be in the future!</string>
-  <string name="compose_scheduled_plus">You must unlock Joy SMS+ to use scheduled messaging</string>
+  <string name="compose_scheduled_plus">You must unlock Bling SMS+ to use scheduled messaging</string>
   <string name="compose_scheduled_toast">Added to scheduled messages</string>
   <string name="compose_hint">Write a message…</string>
   <string name="compose_menu_copy">Copy text</string>
@@ -166,7 +166,7 @@
   <string name="backup_never">Never</string>
   <string name="backup_restore_title">Restore</string>
   <string name="backup_restore_summary">Select a backup</string>
-  <string name="backup_restore_error_plus">Please unlock Joy SMS+ to use backup and restore</string>
+  <string name="backup_restore_error_plus">Please unlock Bling SMS+ to use backup and restore</string>
   <string name="backup_restore_error_backup">Backup in progress…</string>
   <string name="backup_restore_error_restore">Restore in progress…</string>
   <string name="backup_restore_confirm_title">Restore from backup</string>
@@ -174,7 +174,7 @@
   <string name="backup_restore_stop_title">Stop restore</string>
   <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
   <string name="backup_restore_dialog_title">Backups</string>
-  <string name="backup_restore_dialog_summary" translatable="false">/Joy SMS/Backups</string>
+  <string name="backup_restore_dialog_summary" translatable="false">/Bling SMS/Backups</string>
   <string name="backup_restore_dialog_empty">No backups found</string>
   <plurals name="backup_message_count">
     <item quantity="zero">No messages</item>
@@ -257,7 +257,7 @@
   <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
   <string name="settings_sync_title">Sync messages</string>
   <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-  <string name="settings_about_title">About Joy SMS</string>
+  <string name="settings_about_title">About Bling SMS</string>
   <string name="settings_version">Version %s</string>
   <string name="settings_logging_enabled">Debug logging enabled</string>
   <string name="settings_logging_disabled">Debug logging disabled</string>
@@ -282,9 +282,9 @@
   <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
   <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
   <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
-  <string name="qksms_plus_thanks_title">Thank you for supporting Joy SMS!</string>
-  <string name="qksms_plus_thanks_summary">You now have access to all Joy SMS+ features</string>
-  <string name="qksms_plus_free_title">Joy SMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
+  <string name="qksms_plus_thanks_title">Thank you for supporting Bling SMS!</string>
+  <string name="qksms_plus_thanks_summary">You now have access to all Bling SMS+ features</string>
+  <string name="qksms_plus_free_title">Bling SMS+ is free for F-Droid users! If you\'d like to support development, feel free to make a donation.</string>
   <string name="qksms_plus_donate">Donate via PayPal</string>
   <string name="qksms_plus_coming_soon">Coming soon</string>
   <string name="qksms_plus_themes_title">Premium themes</string>
@@ -306,7 +306,7 @@
   <string name="qksms_plus_respond_title">Auto-respond</string>
   <string name="qksms_plus_respond_summary">Automatically respond to incoming messages with a preset response</string>
   <string name="qksms_plus_more_title">More</string>
-  <string name="qksms_plus_more_summary">Joy SMS is under active development, and your purchase will include all future Joy SMS+ features!</string>
+  <string name="qksms_plus_more_summary">Bling SMS is under active development, and your purchase will include all future Bling SMS+ features!</string>
 
   <string name="widget_loading">Loading…</string>
   <string name="widget_more">View more conversations</string>
@@ -319,7 +319,7 @@
   <string name="qkreply_menu_view">Open conversation</string>
 
   <string name="theme_material">Material</string>
-  <string name="theme_plus">Joy SMS+</string>
+  <string name="theme_plus">Bling SMS+</string>
   <string name="theme_hex">HEX</string>
   <string name="theme_apply">Apply</string>
 
@@ -342,7 +342,7 @@
 
   <string name="toast_copied">Copied</string>
   <string name="toast_archived">Archived conversation</string>
-  <string name="toast_qksms_plus">You must unlock Joy SMS+ to use this</string>
+  <string name="toast_qksms_plus">You must unlock Bling SMS+ to use this</string>
 
   <plurals name="notification_new_messages">
     <item quantity="one">New message</item>
@@ -426,15 +426,15 @@
   <string name="sms_five_star_rate">Scroll up to rate 5 stars.</string>
 
   <string name="set_as_default_dialog_title_default_change">Default SMS Cleared</string>
-  <string name="set_as_default_dialog_description_default_change">Joy SMS can\'t work properly without being set as default.</string>
+  <string name="set_as_default_dialog_description_default_change">Bling SMS can\'t work properly without being set as default.</string>
   <string name="set_as_default_dialog_button_ok_default_change">Set Now</string>
-  <string name="set_as_default_dialog_title_user_present">Set Joy SMS as Default</string>
+  <string name="set_as_default_dialog_title_user_present">Set Bling SMS as Default</string>
   <string name="set_as_default_dialog_description_user_present">Send funny emojis, stickers and GIFs to friends via Color SMS.</string>
   <string name="set_as_default_dialog_button_ok_user_present">OK</string>
   <string name="sms_got_it">Got it</string>
-  <string name="drag_hotseat_content">Easier for you to send funny emojis and stickers via Joy SMS.</string>
+  <string name="drag_hotseat_content">Easier for you to send funny emojis and stickers via Bling SMS.</string>
   <string name="drag_hotseat_title">Drag Color SMS to the Hotseat</string>
-  <string name="welcome_set_default_failed_toast">Joy SMS was not set up properly</string>
+  <string name="welcome_set_default_failed_toast">Bling SMS was not set up properly</string>
 
   <string name="font_title">Font &amp; Font Size</string>
 </resources>

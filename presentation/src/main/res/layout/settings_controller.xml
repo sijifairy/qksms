@@ -42,6 +42,7 @@
       android:id="@+id/theme"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       app:icon="@drawable/icon_theme"
       app:title="@string/settings_theme_title"
       app:widget="@layout/settings_theme_widget" />
