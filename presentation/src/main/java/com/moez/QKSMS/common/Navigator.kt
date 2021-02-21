@@ -32,6 +32,7 @@ import com.moez.QKSMS.feature.blocked.BlockedActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
+import com.moez.QKSMS.feature.fonts.CustomizeBubbleAct
 import com.moez.QKSMS.feature.fonts.CustomizeFontAct
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
@@ -226,6 +227,11 @@ class Navigator @Inject constructor(
     fun showFonts() {
         analyticsManager.track("Clicked Fonts")
         startActivity(Intent(context, CustomizeFontAct::class.java))
+    }
+
+    fun showBubble() {
+        analyticsManager.track("Clicked Bubble")
+        startActivity(Intent(context, CustomizeBubbleAct::class.java))
     }
 
     fun showThemeColor() {

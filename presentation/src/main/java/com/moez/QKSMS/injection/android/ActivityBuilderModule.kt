@@ -25,6 +25,7 @@ import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
+import com.moez.QKSMS.feature.fonts.CustomizeBubbleAct
 import com.moez.QKSMS.feature.fonts.CustomizeFontAct
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
@@ -97,6 +98,10 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [])
     abstract fun bindFontsActivity(): CustomizeFontAct
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindBubbleActivity(): CustomizeBubbleAct
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [])

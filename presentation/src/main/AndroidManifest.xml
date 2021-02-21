@@ -164,6 +164,9 @@
     <activity
       android:name=".feature.fonts.CustomizeFontAct"
       android:screenOrientation="portrait" />
+    <activity
+      android:name=".feature.fonts.CustomizeBubbleAct"
+      android:screenOrientation="portrait" />
 
     <receiver android:name=".receiver.BootReceiver">
       <intent-filter>

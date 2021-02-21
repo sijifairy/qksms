@@ -18,13 +18,21 @@
  */
 package com.moez.QKSMS.feature.compose
 
+import androidx.annotation.DrawableRes
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.BaseApplication
+import com.moez.QKSMS.common.util.Preferences
+import com.moez.QKSMS.customize.BubbleInfo
 import com.moez.QKSMS.model.Message
 import java.util.concurrent.TimeUnit
 
 object BubbleUtils {
 
     const val TIMESTAMP_THRESHOLD = 10
+
+    const val DEFAULT_BUBBLE_INDEX = "default"
+
+    const val PREF_KEY_BUBBLE_INDEX = "pref_key_bubble_index"
 
     fun canGroup(message: Message, other: Message?): Boolean {
         if (other == null) return false
@@ -33,12 +41,62 @@ object BubbleUtils {
     }
 
     fun getBubble(canGroupWithPrevious: Boolean, canGroupWithNext: Boolean, isMe: Boolean): Int {
-        return when {
-            !canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_first else R.drawable.message_in_first
-            canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_middle else R.drawable.message_in_middle
-            canGroupWithPrevious && !canGroupWithNext -> if (isMe) R.drawable.message_out_last else R.drawable.message_in_last
-            else -> R.drawable.message_only
+        return if (!hasCustomBubble()) {
+            when {
+                !canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_first else R.drawable.message_in_first
+                canGroupWithPrevious && canGroupWithNext -> if (isMe) R.drawable.message_out_middle else R.drawable.message_in_middle
+                canGroupWithPrevious && !canGroupWithNext -> if (isMe) R.drawable.message_out_last else R.drawable.message_in_last
+                else -> R.drawable.message_only
+            }
+        } else {
+            getSelectedDrawable(Preferences.getDefault().getString(PREF_KEY_BUBBLE_INDEX, DEFAULT_BUBBLE_INDEX), !isMe)
         }
     }
 
+    fun hasCustomBubble(): Boolean {
+        return Preferences.getDefault().getString(PREF_KEY_BUBBLE_INDEX, DEFAULT_BUBBLE_INDEX) != DEFAULT_BUBBLE_INDEX
+    }
+
+    fun getCustomBubbleInfo(): BubbleInfo? {
+        for (info in BUBBLE_INFOS) {
+            if (info.id == Preferences.getDefault().getString(PREF_KEY_BUBBLE_INDEX, DEFAULT_BUBBLE_INDEX)) {
+                return info
+            }
+        }
+
+        return null
+    }
+
+    val BUBBLE_INFOS = arrayOf(
+            BubbleInfo("travel", "Travel", 0xffffffff.toInt()),
+            BubbleInfo("cheese", "Cheese", 0xffFA6120.toInt()),
+            BubbleInfo("neon", "Neon", 0xffffffff.toInt()),
+            BubbleInfo("vegan", "Vegan", 0xff1fa949.toInt()),
+            BubbleInfo("quill", "Quill", 0xffffffff.toInt()),
+            BubbleInfo("grin", "Grin", 0xff000000.toInt()),
+            BubbleInfo("sea", "Sea", 0xffffffff.toInt()),
+            BubbleInfo("glass", "Glass", 0xff000000.toInt()),
+            BubbleInfo("christmas", "Christmas", 0xffffffff.toInt()),
+            BubbleInfo("basketball", "Basketball", 0xffffffff.toInt()),
+            BubbleInfo("nature", "Nature", 0xffffffff.toInt()),
+            BubbleInfo("football", "Football", 0xffffffff.toInt()),
+            BubbleInfo("love", "Love", 0xffffffff.toInt()),
+            BubbleInfo("snow", "Snow", 0xff0B64B0.toInt()),
+            BubbleInfo("cat", "Cat", 0xffffffff.toInt()),
+            BubbleInfo("cat_rainbow", "Cat Rainbow", 0xffffffff.toInt())
+    )
+
+    @DrawableRes
+    fun getSelectedDrawable(id: String, incoming: Boolean): Int {
+        return if (incoming) {
+            BaseApplication.getContext().resources.getIdentifier("bubble_" + id + "_incoming", "drawable", BaseApplication.getContext().packageName);
+        } else {
+            BaseApplication.getContext().resources.getIdentifier("bubble_" + id + "_outgoing", "drawable", BaseApplication.getContext().packageName);
+        }
+    }
+
+    @DrawableRes
+    fun getPreviewDrawable(id: String): Int {
+        return BaseApplication.getContext().resources.getIdentifier("bubble_" + id + "_preview", "drawable", BaseApplication.getContext().packageName);
+    }
 }

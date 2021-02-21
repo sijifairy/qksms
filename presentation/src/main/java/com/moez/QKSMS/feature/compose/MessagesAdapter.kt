@@ -61,12 +61,12 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MessagesAdapter @Inject constructor(
-    private val context: Context,
-    private val colors: Colors,
-    private val dateFormatter: DateFormatter,
-    private val navigator: Navigator,
-    private val prefs: Preferences,
-    private val subscriptionManager: SubscriptionManagerCompat
+        private val context: Context,
+        private val colors: Colors,
+        private val dateFormatter: DateFormatter,
+        private val navigator: Navigator,
+        private val prefs: Preferences,
+        private val subscriptionManager: SubscriptionManagerCompat
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -206,8 +206,10 @@ class MessagesAdapter @Inject constructor(
 
 
         // Bind the timestamp
-        val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
-        val simIndex = subs.takeIf { it.size > 1 }?.indexOfFirst { it.subscriptionId == message.subId } ?: -1
+        val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date
+                ?: 0))
+        val simIndex = subs.takeIf { it.size > 1 }?.indexOfFirst { it.subscriptionId == message.subId }
+                ?: -1
 
         view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
         view.simIndex.text = "${simIndex + 1}"
@@ -256,7 +258,12 @@ class MessagesAdapter @Inject constructor(
                 canGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty(),
                 canGroupWithNext = canGroup(message, next),
                 isMe = message.isMe()))
-
+        if (BubbleUtils.hasCustomBubble()) {
+            view.body.backgroundTintList = null
+            view.body.setTextColor(BubbleUtils.getCustomBubbleInfo()!!.color)
+        } else {
+            view.body.setPadding(12.dpToPx(context), 8.dpToPx(context), 12.dpToPx(context), 8.dpToPx(context))
+        }
 
         // Bind the attachments
         val partsAdapter = view.attachments.adapter as PartsAdapter

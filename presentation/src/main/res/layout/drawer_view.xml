@@ -108,6 +108,19 @@
     </LinearLayout>
 
     <LinearLayout
+      android:id="@+id/bubble"
+      style="@style/DrawerRow">
+
+      <ImageView
+        style="@style/DrawerIcon"
+        android:src="@drawable/icon_bubble" />
+
+      <com.moez.QKSMS.common.widget.QkTextView
+        style="@style/DrawerText"
+        android:text="@string/bubble_title" />
+    </LinearLayout>
+
+    <LinearLayout
       android:id="@+id/themeColor"
       style="@style/DrawerRow">
 

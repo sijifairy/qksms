@@ -437,4 +437,5 @@
   <string name="welcome_set_default_failed_toast">Bling SMS was not set up properly</string>
 
   <string name="font_title">Font &amp; Font Size</string>
+  <string name="bubble_title">Chat Bubbles</string>
 </resources>

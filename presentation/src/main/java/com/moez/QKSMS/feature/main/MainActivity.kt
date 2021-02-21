@@ -122,6 +122,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 help.clicks().map { DrawerItem.HELP },
                 invite.clicks().map { DrawerItem.INVITE },
                 fonts.clicks().map { DrawerItem.FONTS },
+                bubble.clicks().map { DrawerItem.BUBBLE },
                 themeColor.clicks().map { DrawerItem.THEME_COLOR }))
     }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()

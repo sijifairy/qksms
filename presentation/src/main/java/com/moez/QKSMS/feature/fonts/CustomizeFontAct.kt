@@ -45,11 +45,8 @@ class CustomizeFontAct : QkThemedActivity() {
                     toolbar.setBackgroundColor(toolbarColor)
                     val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
-
-                    message_out.setTextColor(resolveThemeColor(android.R.attr.textColorPrimary))
-                    message_out.setBackgroundTint(resolveThemeColor(R.attr.inMessageBackground))
-                    message_in.setBackgroundTint(theme.theme)
-                    message_in.setTextColor(theme.textPrimary)
+                    val layoutPreview = findViewById<CustomizePreviewView>(R.id.layout_preview)
+                    layoutPreview.init(theme)
                 }
 
         textSizeDialog.adapter.setData(R.array.text_sizes)
@@ -91,10 +88,6 @@ class CustomizeFontAct : QkThemedActivity() {
                     .findViewById<View>(R.id.content)
                     .setOnClickListener { v: View? ->
                         prefs.fontFamily.set(fonts.get(position).fontId)
-//                FontStyleManager.getInstance().setFontFamily(fonts.get(position).fontId);
-//                FontUtils.onFontTypefaceChanged();
-//                loadAndChangeFontTypeface(PageFont.this, fonts.get(position).fontId);
-//                EventBus.getDefault().post(new ThemeEvent());
                         notifyDataSetChanged()
                     }
         }

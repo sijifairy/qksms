@@ -217,6 +217,7 @@ class MainViewModel @Inject constructor(
                 }
                 .doOnNext { if (it == DrawerItem.INVITE) navigator.showInvite() }
                 .doOnNext { if (it == DrawerItem.FONTS) navigator.showFonts() }
+                .doOnNext { if (it == DrawerItem.BUBBLE) navigator.showBubble() }
                 .doOnNext { if (it == DrawerItem.THEME_COLOR) navigator.showThemeColor() }
                 .distinctUntilChanged()
                 .doOnNext {
