@@ -83,6 +83,10 @@ object BubbleUtils {
             BubbleInfo("love", "Love", 0xffffffff.toInt()),
             BubbleInfo("snow", "Snow", 0xff0B64B0.toInt()),
             BubbleInfo("cat", "Cat", 0xffffffff.toInt()),
+            BubbleInfo("color_ball", "Color Ball", 0xffffffff.toInt()),
+            BubbleInfo("elegant_rose", "Elegant Rose", 0xffffffff.toInt()),
+            BubbleInfo("honey", "Honey Park", 0xffffffff.toInt()),
+            BubbleInfo("rose_dream", "Rose Dream", 0xffffffff.toInt()),
             BubbleInfo("cat_rainbow", "Cat Rainbow", 0xffffffff.toInt())
     )
 

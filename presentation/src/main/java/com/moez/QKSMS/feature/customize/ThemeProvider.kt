@@ -38,6 +38,39 @@ object ThemeProvider {
             themeInfo.listSubtitleColor = -0x1
             themeInfos.add(themeInfo)
 
+            themeInfo = ThemeInfo()
+            themeInfo.themeId = "honey"
+            themeInfo.primaryColor = -0xf8a1ab
+            themeInfo.title = "Elegant Rose"
+            themeInfo.baseDark = false
+            themeInfo.description = "Fancy theme!"
+            themeInfo.fontName = "mali"
+            themeInfo.listTitleColor = -0x1
+            themeInfo.listSubtitleColor = -0x1
+            themeInfos.add(themeInfo)
+
+            themeInfo = ThemeInfo()
+            themeInfo.themeId = "rose_dream"
+            themeInfo.primaryColor = -0xf8a1ab
+            themeInfo.title = "Elegant Rose"
+            themeInfo.baseDark = false
+            themeInfo.description = "Fancy theme!"
+            themeInfo.fontName = "mali"
+            themeInfo.listTitleColor = -0x1
+            themeInfo.listSubtitleColor = -0x1
+            themeInfos.add(themeInfo)
+
+            themeInfo = ThemeInfo()
+            themeInfo.themeId = "color_ball"
+            themeInfo.primaryColor = -0xf8a1ab
+            themeInfo.title = "Elegant Rose"
+            themeInfo.baseDark = false
+            themeInfo.description = "Fancy theme!"
+            themeInfo.fontName = "mali"
+            themeInfo.listTitleColor = -0x1
+            themeInfo.listSubtitleColor = -0x1
+            themeInfos.add(themeInfo)
+
             return themeInfos
         }
 }

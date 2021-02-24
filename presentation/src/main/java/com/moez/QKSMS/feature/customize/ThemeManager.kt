@@ -1,6 +1,7 @@
 package com.moez.QKSMS.feature.customize
 
 import android.content.Context
+import com.moez.QKSMS.feature.compose.BubbleUtils
 import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -20,6 +21,7 @@ class ThemeManager @Inject constructor(
     fun applyTheme(themeInfo: ThemeInfo) {
         prefs.themeId.set(themeInfo.themeId!!)
         prefs.fontFamily.set(themeInfo.fontName!!)
+        com.moez.QKSMS.common.util.Preferences.getDefault().putString(BubbleUtils.PREF_KEY_BUBBLE_INDEX, themeInfo.themeId)
     }
 
     fun getColor(type: ColorType?): Int {

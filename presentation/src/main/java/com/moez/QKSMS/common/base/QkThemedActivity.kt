@@ -93,7 +93,7 @@ abstract class QkThemedActivity : QkActivity() {
 
         // When certain preferences change, we need to recreate the activity
         Observable.merge(
-                listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont, prefs.fontFamily).map { it.asObservable().skip(1) })
+                listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont, prefs.fontFamily, prefs.themeId).map { it.asObservable().skip(1) })
                 .autoDisposable(scope())
                 .subscribe {
                     recreate()
