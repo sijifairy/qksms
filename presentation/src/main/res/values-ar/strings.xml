@@ -25,6 +25,7 @@
   <string name="title_settings">الإعدادات</string>
   <string name="title_notification_prefs">الإشعارات</string>
   <string name="title_theme">السمة</string>
+  <string name="title_theme_color">لون الموضوع</string>
   <string name="title_conversations">البحث في علبة الوارد&#8230;</string>
   <string name="title_compose">أكتب اسماً أو رقماً</string>
   <string name="setup_skip">تخطي</string>

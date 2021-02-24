@@ -132,4 +132,29 @@
     <item name="android:textColor">@color/textPrimaryDark</item>
   </style>
 
+  <!-- Customize theme -->
+  <style name="AppThemeCustomize" parent="AppThemeDark">
+    <item name="android:divider">@color/separatorDark</item>
+    <item name="android:navigationBarColor">@color/backgroundDark</item>
+    <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+    <item name="android:textColorPrimary">@color/textPrimaryDark</item>
+    <item name="android:textColorSecondary">@color/textSecondaryDark</item>
+    <item name="android:textColorTertiary">@color/textTertiaryDark</item>
+    <item name="android:windowBackground">@color/backgroundCustomize</item>
+    <item name="android:windowContentTransitions">true</item>
+    <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+    <item name="bubbleColor">@color/bubbleDark</item>
+    <item name="colorPrimary">@color/toolbarDark</item>
+    <item name="colorAccent">#288ec7</item>
+    <item name="composeBackground">@color/backgroundCustomize</item>
+    <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
+    <item name="messageAddTint">@color/messageAddTintDark</item>
+    <item name="messageAddBackgroundTint">@color/messageAddBackgroundTintDark</item>
+    <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
+    <item name="toolbarBg">@color/toolbarCustomize</item>
+    <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
+    <item name="selectableItemBackground">@drawable/ripple_dark</item>
+    <item name="windowActionBar">false</item>
+  </style>
+
 </resources>

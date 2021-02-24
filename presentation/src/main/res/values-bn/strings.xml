@@ -25,6 +25,7 @@
   <string name="title_settings">সেটিংস</string>
   <string name="title_notification_prefs">নোটিফিকেশন</string>
   <string name="title_theme">থিম</string>
+  <string name="title_theme_color">থিম রঙ</string>
   <string name="title_conversations">ইনবক্সে খুঁজুন&#8230;</string>
   <string name="title_compose">নাম বা নম্বর টাইপ করুন</string>
   <string name="setup_skip">এড়িয়ে যান</string>

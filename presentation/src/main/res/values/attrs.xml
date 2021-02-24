@@ -94,4 +94,13 @@
   <declare-styleable name="FixedRatioLayout">
     <attr name="aspectRatio" format="float" />
   </declare-styleable>
+
+  <declare-styleable name="RatioRoundAttr">
+    <attr name="super_apps_base" format="enum">
+      <enum name="width" value="0"></enum>
+      <enum name="height" value="1"></enum>
+    </attr>
+    <attr name="super_apps_ratio" format="float"></attr>
+  </declare-styleable>
+
 </resources>

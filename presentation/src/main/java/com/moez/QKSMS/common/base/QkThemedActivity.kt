@@ -25,6 +25,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.view.iterator
@@ -36,6 +37,7 @@ import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.setSystemButtonsTheme
+import com.moez.QKSMS.feature.customize.ThemeManager
 import com.moez.QKSMS.feature.guide.SetAsDefaultActivity
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.kotlin.autoDisposable
@@ -56,6 +58,7 @@ abstract class QkThemedActivity : QkActivity() {
 
     @Inject
     lateinit var colors: Colors
+
     @Inject
     lateinit var prefs: Preferences
 
@@ -79,9 +82,13 @@ abstract class QkThemedActivity : QkActivity() {
         val black = prefs.black.get()
         setTheme(getActivityThemeRes(night, black))
 
+        setTransparentStatusBar()
+
         super.onCreate(savedInstanceState)
-        val statusBarColor = resolveThemeColor(R.attr.toolbarBg)
-        setStatusBarColor(statusBarColor)
+        if (!themeManager.isThemeApplied) {
+            val statusBarColor = resolveThemeColor(R.attr.toolbarBg)
+            setStatusBarColor(statusBarColor)
+        }
         setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
 
         // When certain preferences change, we need to recreate the activity
@@ -138,6 +145,7 @@ abstract class QkThemedActivity : QkActivity() {
      * This can be overridden in case an activity does not want to use the default themes
      */
     open fun getActivityThemeRes(night: Boolean, black: Boolean) = when {
+        themeManager.isThemeApplied -> R.style.AppThemeCustomize
         night && black -> R.style.AppThemeBlack
         night && !black -> R.style.AppThemeDark
         else -> R.style.AppThemeLight

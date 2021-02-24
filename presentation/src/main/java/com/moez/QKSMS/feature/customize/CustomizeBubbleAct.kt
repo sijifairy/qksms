@@ -1,4 +1,4 @@
-package com.moez.QKSMS.feature.fonts
+package com.moez.QKSMS.feature.customize
 
 import android.os.Bundle
 import android.view.LayoutInflater

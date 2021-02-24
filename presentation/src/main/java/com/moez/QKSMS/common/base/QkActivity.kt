@@ -19,22 +19,29 @@
 package com.moez.QKSMS.common.base
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.Dimensions
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.feature.customize.ThemeManager
+import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.toolbar.toolbarTitle
+import javax.inject.Inject
 
 abstract class QkActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var themeManager: ThemeManager
 
     protected val menu: Subject<Menu> = BehaviorSubject.create()
 
@@ -55,7 +62,23 @@ abstract class QkActivity : AppCompatActivity() {
     }
 
     override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
+        if (themeManager.isThemeApplied) {
+            var root = layoutInflater.inflate(layoutResID, null)
+            var rootFrame = FrameLayout(this)
+            var bg = ImageView(this)
+            rootFrame.addView(bg,
+                    FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
+            bg.setImageResource(resources.getIdentifier("theme_" + themeManager.currentThemeName + "_wallpaper", "drawable", packageName))
+            bg.scaleType = ImageView.ScaleType.CENTER_CROP
+            var param = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+            param.topMargin = Dimensions.getStatusBarHeight(this)
+            rootFrame.addView(root, param)
+            super.setContentView(rootFrame)
+        } else {
+            super.setContentView(layoutResID)
+        }
+
+
         setSupportActionBar(toolbar)
         title = title // The title may have been set before layout inflation
     }
@@ -81,6 +104,20 @@ abstract class QkActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
         toolbar?.setNavigationIcon(if (show) R.drawable.ic_arrow_left else R.drawable.ic_navigagion)
         toolbar?.navigationIcon?.colorFilter = PorterDuffColorFilter(resolveThemeColor(android.R.attr.textColorPrimary), PorterDuff.Mode.SRC_IN)
+    }
+
+
+    open fun setTransparentStatusBar() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return
+        }
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = Color.TRANSPARENT
+        if (supportActionBar != null) {
+            supportActionBar!!.elevation = 0f
+        }
     }
 
 }

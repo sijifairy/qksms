@@ -32,8 +32,9 @@ import com.moez.QKSMS.feature.blocked.BlockedActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
-import com.moez.QKSMS.feature.fonts.CustomizeBubbleAct
-import com.moez.QKSMS.feature.fonts.CustomizeFontAct
+import com.moez.QKSMS.feature.customize.CustomizeBubbleAct
+import com.moez.QKSMS.feature.customize.CustomizeFontAct
+import com.moez.QKSMS.feature.customize.CustomizeThemeAct
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.plus.BillingActivity
@@ -232,6 +233,11 @@ class Navigator @Inject constructor(
     fun showBubble() {
         analyticsManager.track("Clicked Bubble")
         startActivity(Intent(context, CustomizeBubbleAct::class.java))
+    }
+
+    fun showTheme() {
+        analyticsManager.track("Clicked Theme")
+        startActivity(Intent(context, CustomizeThemeAct::class.java))
     }
 
     fun showThemeColor() {

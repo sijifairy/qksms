@@ -95,6 +95,19 @@
       android:background="?android:attr/divider" />
 
     <LinearLayout
+      android:id="@+id/themes"
+      style="@style/DrawerRow">
+
+      <ImageView
+        style="@style/DrawerIcon"
+        android:src="@drawable/icon_font" />
+
+      <com.moez.QKSMS.common.widget.QkTextView
+        style="@style/DrawerText"
+        android:text="@string/title_theme" />
+    </LinearLayout>
+
+    <LinearLayout
       android:id="@+id/fonts"
       style="@style/DrawerRow">
 
@@ -130,7 +143,7 @@
 
       <com.moez.QKSMS.common.widget.QkTextView
         style="@style/DrawerText"
-        android:text="@string/title_theme" />
+        android:text="@string/title_theme_color" />
     </LinearLayout>
 
 

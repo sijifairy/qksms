@@ -1,4 +1,4 @@
-package com.moez.QKSMS.feature.fonts
+package com.moez.QKSMS.feature.customize
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,7 +10,6 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.compose.BubbleUtils
-import kotlinx.android.synthetic.main.message_list_item_in.view.*
 
 class CustomizePreviewView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyle: Int = 0) : ConstraintLayout(context, attrs, defStyle) {
     private var messageOut: QkTextView? = null

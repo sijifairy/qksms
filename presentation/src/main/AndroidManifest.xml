@@ -162,10 +162,13 @@
         android:resource="@xml/shortcuts" />
     </activity>
     <activity
-      android:name=".feature.fonts.CustomizeFontAct"
+      android:name=".feature.customize.CustomizeFontAct"
       android:screenOrientation="portrait" />
     <activity
-      android:name=".feature.fonts.CustomizeBubbleAct"
+      android:name=".feature.customize.CustomizeBubbleAct"
+      android:screenOrientation="portrait" />
+    <activity
+      android:name=".feature.customize.CustomizeThemeAct"
       android:screenOrientation="portrait" />
 
     <receiver android:name=".receiver.BootReceiver">

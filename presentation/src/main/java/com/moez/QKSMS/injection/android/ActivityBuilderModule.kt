@@ -25,8 +25,9 @@ import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.feedback.FeedbackActivity
-import com.moez.QKSMS.feature.fonts.CustomizeBubbleAct
-import com.moez.QKSMS.feature.fonts.CustomizeFontAct
+import com.moez.QKSMS.feature.customize.CustomizeBubbleAct
+import com.moez.QKSMS.feature.customize.CustomizeFontAct
+import com.moez.QKSMS.feature.customize.CustomizeThemeAct
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
 import com.moez.QKSMS.feature.guide.SetAsDefaultActivity
@@ -106,5 +107,9 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [])
     abstract fun bindThemeColorActivity(): ThemeColorActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [])
+    abstract fun bindThemeActivity(): CustomizeThemeAct
 
 }

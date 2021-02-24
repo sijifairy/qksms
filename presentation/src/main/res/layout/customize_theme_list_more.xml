@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical">
+
+  <com.moez.QKSMS.common.widget.QkTextView
+    android:id="@+id/tv_title"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="15dp"
+    android:gravity="center"
+    android:text="We're trying our best to bring out more themes.\n Please wait patiently..."
+    android:textColor="#80000000"
+    android:textSize="12sp" />
+</LinearLayout>

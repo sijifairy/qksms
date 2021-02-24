@@ -1,4 +1,4 @@
-package com.moez.QKSMS.feature.fonts
+package com.moez.QKSMS.feature.customize
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,6 @@ import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.BackgroundDrawables
 import com.moez.QKSMS.common.util.Dimensions
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.customize.Fonts
 import com.uber.autodispose.kotlin.autoDisposable

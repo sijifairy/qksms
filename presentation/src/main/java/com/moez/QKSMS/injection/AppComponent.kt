@@ -30,6 +30,7 @@ import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.feature.backup.BackupController
 import com.moez.QKSMS.feature.compose.DetailedChipView
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
+import com.moez.QKSMS.feature.customize.ThemeAdapter
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController
 import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
@@ -63,6 +64,7 @@ interface AppComponent {
     fun inject(controller: SwipeActionsController)
 
     fun inject(dialog: QkDialog)
+    fun inject(adapter: ThemeAdapter)
 
     fun inject(fetcher: ContactImageLoader.ContactImageFetcher)
 
