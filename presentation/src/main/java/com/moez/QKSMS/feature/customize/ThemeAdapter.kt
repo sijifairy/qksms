@@ -56,7 +56,7 @@ class ThemeAdapter @Inject constructor(
                             .context
                             .resources
                             .getIdentifier(
-                                    "theme_" + themeManager.currentThemeName + "_preview",
+                                    "theme_" + theme.themeId + "_preview",
                                     "drawable",
                                     holder.rootView.context.packageName))
             themeHolder.firstBinding = false

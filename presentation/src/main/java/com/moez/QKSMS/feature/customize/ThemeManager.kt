@@ -1,9 +1,6 @@
 package com.moez.QKSMS.feature.customize
 
 import android.content.Context
-import android.preference.PreferenceManager
-import com.f2prateek.rx.preferences2.RxSharedPreferences
-import com.moez.QKSMS.common.BaseApplication
 import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,7 +36,7 @@ class ThemeManager @Inject constructor(
 
 
     val isThemeApplied: Boolean
-        get() = !(currentThemeName == DEFAULT_THEME_NAME || currentThemeName == DEFAULT_THEME_NAME_DARK)
+        get() = !(currentThemeName == DEFAULT_THEME_NAME_LIGHT || currentThemeName == DEFAULT_THEME_NAME_DARK)
 
 
     val currentTheme: ThemeInfo?
@@ -54,7 +51,7 @@ class ThemeManager @Inject constructor(
         }
 
     companion object {
-        const val DEFAULT_THEME_NAME = "default"
+        const val DEFAULT_THEME_NAME_LIGHT = "light"
         const val DEFAULT_THEME_NAME_DARK = "dark"
     }
 }
