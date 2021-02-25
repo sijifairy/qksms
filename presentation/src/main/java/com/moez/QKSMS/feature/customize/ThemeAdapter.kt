@@ -71,6 +71,7 @@ class ThemeAdapter @Inject constructor(
                 themeHolder.actionBtn.text = "Apply Now"
                 themeHolder.actionBtn.setTextColor(-0xc5880b)
                 themeHolder.actionBtn.setOnClickListener { v: View? ->
+                    // todo: may crash in some devices...
                     (holder.itemView.context as Activity).finish()
                     themeManager.applyTheme(theme)
                 }
