@@ -145,7 +145,9 @@ abstract class QkThemedActivity : QkActivity() {
      * This can be overridden in case an activity does not want to use the default themes
      */
     open fun getActivityThemeRes(night: Boolean, black: Boolean) = when {
-        themeManager.isThemeApplied -> R.style.AppThemeCustomize
+        themeManager.isThemeApplied -> {
+            themeManager.currentTheme?.themeResourceId ?: 0
+        }
         night && black -> R.style.AppThemeBlack
         night && !black -> R.style.AppThemeDark
         else -> R.style.AppThemeLight

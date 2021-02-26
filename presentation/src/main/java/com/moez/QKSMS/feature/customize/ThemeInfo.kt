@@ -9,4 +9,5 @@ class ThemeInfo {
     var primaryColor = 0
     var listTitleColor = 0
     var listSubtitleColor = 0
+    var themeResourceId = 0
 }

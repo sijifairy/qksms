@@ -198,7 +198,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     syncingProgress?.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
-                    compose.setBackgroundTint(theme.theme)
+                    compose.setBackgroundTint(resolveThemeColor(R.attr.editIconColorBg, theme.theme))
 
                     val toolbarColor = resolveThemeColor(R.attr.toolbarBg)
                     toolbar.setBackgroundColor(toolbarColor)
@@ -206,7 +206,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     toolbarTitle.setTextColor(toolbarTextColor)
 
                     // Set the FAB compose icon color
-                    compose.setTint(theme.textPrimary)
+                    compose.setTint(resolveThemeColor(R.attr.editIconColor, theme.textPrimary))
                 }
 
         itemTouchCallback.adapter = conversationsAdapter

@@ -1,5 +1,6 @@
 package com.moez.QKSMS.feature.customize
 
+import com.moez.QKSMS.R
 import com.moez.QKSMS.customize.Fonts
 import java.util.*
 
@@ -14,6 +15,7 @@ object ThemeProvider {
             themeInfo.baseDark = false
             themeInfo.description = "Simple optimized default theme for you."
             themeInfo.fontName = Fonts.FONT_DEFAULT
+            themeInfo.themeResourceId = R.style.AppThemeRoseDream
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -25,6 +27,7 @@ object ThemeProvider {
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
+            themeInfo.themeResourceId = R.style.AppThemeRoseDream
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -36,6 +39,7 @@ object ThemeProvider {
             themeInfo.fontName = "merienda"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
+            themeInfo.themeResourceId = R.style.AppThemeRoseDream
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -47,6 +51,7 @@ object ThemeProvider {
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
+            themeInfo.themeResourceId = R.style.AppThemeRoseDream
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -58,6 +63,7 @@ object ThemeProvider {
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
+            themeInfo.themeResourceId = R.style.AppThemeRoseDream
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -69,6 +75,7 @@ object ThemeProvider {
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
+            themeInfo.themeResourceId = R.style.AppThemeRoseDream
             themeInfos.add(themeInfo)
 
             return themeInfos

@@ -26,6 +26,8 @@
   <attr name="bgDrawerTop" format="reference" />
   <attr name="toolbarBg" format="reference" />
   <attr name="toolbarBottomLineColor" format="reference" />
+  <attr name="editIconColor" format="reference" />
+  <attr name="editIconColorBg" format="reference" />
 
   <style name="AppThemeLight" parent="AppBaseThemeLight" />
 
@@ -133,7 +135,7 @@
   </style>
 
   <!-- Customize theme -->
-  <style name="AppThemeCustomize" parent="AppThemeDark">
+  <style name="AppThemeRoseDream" parent="AppThemeDark">
     <item name="android:divider">@color/separatorDark</item>
     <item name="android:navigationBarColor">@color/backgroundDark</item>
     <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
@@ -155,6 +157,8 @@
     <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
     <item name="selectableItemBackground">@drawable/ripple_dark</item>
     <item name="windowActionBar">false</item>
+    <item name="editIconColor">@color/rose_dream_edit_icon</item>
+    <item name="editIconColorBg">@color/rose_dream_edit_icon_bg</item>
   </style>
 
 </resources>
