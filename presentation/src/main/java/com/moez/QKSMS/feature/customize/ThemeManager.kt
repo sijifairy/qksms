@@ -21,7 +21,11 @@ class ThemeManager @Inject constructor(
     fun applyTheme(themeInfo: ThemeInfo) {
         prefs.themeId.set(themeInfo.themeId!!)
         prefs.fontFamily.set(themeInfo.fontName!!)
-        com.moez.QKSMS.common.util.Preferences.getDefault().putString(BubbleUtils.PREF_KEY_BUBBLE_INDEX, themeInfo.themeId)
+        if (isThemeApplied) {
+            com.moez.QKSMS.common.util.Preferences.getDefault().putString(BubbleUtils.PREF_KEY_BUBBLE_INDEX, themeInfo.themeId)
+        } else {
+            com.moez.QKSMS.common.util.Preferences.getDefault().putString(BubbleUtils.PREF_KEY_BUBBLE_INDEX, BubbleUtils.DEFAULT_BUBBLE_INDEX)
+        }
     }
 
     fun getColor(type: ColorType?): Int {
