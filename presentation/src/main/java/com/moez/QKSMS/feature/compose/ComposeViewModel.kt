@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.compose
 
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
@@ -670,6 +671,8 @@ class ComposeViewModel @Inject constructor(
                     }
 
                     view.setDraft("")
+                    view.showFiveStarAfterSend()
+
                     this.attachments.onNext(ArrayList())
 
                     if (state.editingMode) {

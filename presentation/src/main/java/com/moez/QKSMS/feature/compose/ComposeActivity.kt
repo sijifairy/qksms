@@ -57,6 +57,7 @@ import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.dialog.FiveStarRateDialog
 import com.moez.QKSMS.common.util.*
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.feature.plus.PlusManager
@@ -484,6 +485,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             setAction(R.string.button_more) { viewQksmsPlusIntent.onNext(Unit) }
             show()
         }
+    }
+
+    override fun showFiveStarAfterSend() {
+        FiveStarRateDialog.showFiveStarWhenSendMsgIfNeed(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
