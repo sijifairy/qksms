@@ -89,8 +89,11 @@ abstract class QkThemedActivity : QkActivity() {
             val statusBarColor = resolveThemeColor(R.attr.toolbarBg)
             setStatusBarColor(statusBarColor)
         }
-        setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
-
+        if (themeManager.isThemeApplied ) {
+            setSystemButtonsTheme(window, themeManager.currentTheme?.baseDark == false)
+        } else {
+            setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
+        }
         // When certain preferences change, we need to recreate the activity
         Observable.merge(
                 listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont, prefs.fontFamily, prefs.themeId).map { it.asObservable().skip(1) })

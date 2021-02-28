@@ -260,7 +260,7 @@ class MessagesAdapter @Inject constructor(
                 isMe = message.isMe()))
         if (BubbleUtils.hasCustomBubble()) {
             view.body.backgroundTintList = null
-            view.body.setTextColor(BubbleUtils.getCustomBubbleInfo()!!.color)
+            view.body.setTextColor(BubbleUtils.getCustomBubbleInfo()?.color?:0)
         } else {
             view.body.setPadding(12.dpToPx(context), 8.dpToPx(context), 12.dpToPx(context), 8.dpToPx(context))
         }

@@ -18,147 +18,245 @@
   -->
 <resources>
 
-  <attr name="bubbleColor" format="reference" />
-  <attr name="composeBackground" format="reference" />
-  <attr name="inMessageBackground" format="reference" />
-  <attr name="messageAddTint" format="reference" />
-  <attr name="messageAddBackgroundTint" format="reference" />
-  <attr name="bgDrawerTop" format="reference" />
-  <attr name="toolbarBg" format="reference" />
-  <attr name="toolbarBottomLineColor" format="reference" />
-  <attr name="editIconColor" format="reference" />
-  <attr name="editIconColorBg" format="reference" />
+    <attr name="bubbleColor" format="reference" />
+    <attr name="composeBackground" format="reference" />
+    <attr name="inMessageBackground" format="reference" />
+    <attr name="messageAddTint" format="reference" />
+    <attr name="messageAddBackgroundTint" format="reference" />
+    <attr name="bgDrawerTop" format="reference" />
+    <attr name="toolbarBg" format="reference" />
+    <attr name="toolbarBottomLineColor" format="reference" />
+    <attr name="editIconColor" format="reference" />
+    <attr name="editIconColorBg" format="reference" />
+    <attr name="sendIconColor" format="reference" />
+    <attr name="sendIconColorBg" format="reference" />
+    <attr name="editMessageColor" format="reference" />
+    <attr name="listItemTitleColor" format="reference" />
+    <attr name="listItemContentColor" format="reference" />
+    <attr name="listItemTimeColor" format="reference" />
 
-  <style name="AppThemeLight" parent="AppBaseThemeLight" />
+    <style name="AppThemeLight" parent="AppBaseThemeLight" />
 
-  <!-- Light theme -->
-  <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
-    <item name="android:divider">@color/separatorLight</item>
-    <item name="android:queryBackground">@color/toolbarSearchBackgroundLight</item>
-    <item name="android:textColorPrimary">@color/textPrimary</item>
-    <item name="android:textColorSecondary">@color/textSecondary</item>
-    <item name="android:textColorTertiary">@color/textTertiary</item>
-    <item name="android:windowBackground">@color/backgroundLight</item>
-    <item name="android:windowContentTransitions">true</item>
-    <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
-    <item name="bubbleColor">@color/bubbleLight</item>
-    <item name="colorPrimary">@color/toolbarLight</item>
-    <item name="composeBackground">@color/backgroundLight</item>
-    <item name="inMessageBackground">@color/inMessageBackgroundLight</item>
-    <item name="messageAddTint">@color/messageAddTintLight</item>
-    <item name="messageAddBackgroundTint">@color/messageAddBackgroundTintLight</item>
-    <item name="bgDrawerTop">@drawable/bg_drawer_light</item>
-    <item name="toolbarBg">@color/toolbarLight</item>
-    <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorLight</item>
-    <item name="selectableItemBackground">@drawable/ripple</item>
-    <item name="windowActionBar">false</item>
-  </style>
+    <!-- Light theme -->
+    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
+        <item name="android:divider">@color/separatorLight</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundLight</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
+        <item name="bubbleColor">@color/bubbleLight</item>
+        <item name="colorPrimary">@color/toolbarLight</item>
+        <item name="composeBackground">@color/backgroundLight</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundLight</item>
+        <item name="messageAddTint">@color/messageAddTintLight</item>
+        <item name="messageAddBackgroundTint">@color/messageAddBackgroundTintLight</item>
+        <item name="bgDrawerTop">@drawable/bg_drawer_light</item>
+        <item name="toolbarBg">@color/toolbarLight</item>
+        <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorLight</item>
+        <item name="selectableItemBackground">@drawable/ripple</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
-  <style name="AppThemeLightDialog" parent="Theme.AppCompat.Light.Dialog">
-    <item name="android:textColorPrimary">@color/textPrimary</item>
-    <item name="android:textColorSecondary">@color/textSecondary</item>
-    <item name="android:textColorTertiary">@color/textTertiary</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
-    <item name="bubbleColor">@color/bubbleLight</item>
-    <item name="colorPrimary">@color/toolbarLight</item>
-    <item name="composeBackground">@color/backgroundLight</item>
-    <item name="selectableItemBackground">@drawable/ripple</item>
-    <item name="windowActionBar">false</item>
-  </style>
+    <style name="AppThemeLightDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
+        <item name="bubbleColor">@color/bubbleLight</item>
+        <item name="colorPrimary">@color/toolbarLight</item>
+        <item name="composeBackground">@color/backgroundLight</item>
+        <item name="selectableItemBackground">@drawable/ripple</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
-  <style name="PopupThemeLight" parent="ThemeOverlay.AppCompat.Light">
-    <item name="android:colorBackground">@color/white</item>
-    <item name="android:textColor">@color/textPrimary</item>
-  </style>
+    <style name="PopupThemeLight" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
 
-  <!-- Dark theme -->
-  <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:divider">@color/separatorDark</item>
-    <item name="android:navigationBarColor">@color/backgroundDark</item>
-    <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
-    <item name="android:textColorPrimary">@color/textPrimaryDark</item>
-    <item name="android:textColorSecondary">@color/textSecondaryDark</item>
-    <item name="android:textColorTertiary">@color/textTertiaryDark</item>
-    <item name="android:windowBackground">@color/backgroundDark</item>
-    <item name="android:windowContentTransitions">true</item>
-    <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
-    <item name="bubbleColor">@color/bubbleDark</item>
-    <item name="colorPrimary">@color/toolbarDark</item>
-    <item name="colorAccent">#288ec7</item>
-    <item name="composeBackground">@color/backgroundDark</item>
-    <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
-    <item name="messageAddTint">@color/messageAddTintDark</item>
-    <item name="messageAddBackgroundTint">@color/messageAddBackgroundTintDark</item>
-    <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
-    <item name="toolbarBg">@color/toolbarDark</item>
-    <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
-    <item name="selectableItemBackground">@drawable/ripple_dark</item>
-    <item name="windowActionBar">false</item>
-  </style>
+    <!-- Dark theme -->
+    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:divider">@color/separatorDark</item>
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+        <item name="android:textColorPrimary">@color/textPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textSecondaryDark</item>
+        <item name="android:textColorTertiary">@color/textTertiaryDark</item>
+        <item name="android:windowBackground">@color/backgroundDark</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="bubbleColor">@color/bubbleDark</item>
+        <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="colorAccent">#288ec7</item>
+        <item name="composeBackground">@color/backgroundDark</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
+        <item name="messageAddTint">@color/messageAddTintDark</item>
+        <item name="messageAddBackgroundTint">@color/messageAddBackgroundTintDark</item>
+        <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
+        <item name="toolbarBg">@color/toolbarDark</item>
+        <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
+        <item name="selectableItemBackground">@drawable/ripple_dark</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
-  <style name="AppThemeDarkDialog" parent="Theme.AppCompat.Dialog">
-    <item name="android:textColorPrimary">@color/textPrimaryDark</item>
-    <item name="android:textColorSecondary">@color/textSecondaryDark</item>
-    <item name="android:textColorTertiary">@color/textTertiaryDark</item>
-    <item name="android:windowBackground">@android:color/transparent</item>
-    <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
-    <item name="bubbleColor">@color/bubbleDark</item>
-    <item name="colorPrimary">@color/toolbarDark</item>
-    <item name="composeBackground">@color/backgroundDark</item>
-    <item name="selectableItemBackground">@drawable/ripple_dark</item>
-    <item name="windowActionBar">false</item>
-  </style>
+    <style name="AppThemeDarkDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:textColorPrimary">@color/textPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textSecondaryDark</item>
+        <item name="android:textColorTertiary">@color/textTertiaryDark</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="bubbleColor">@color/bubbleDark</item>
+        <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="composeBackground">@color/backgroundDark</item>
+        <item name="selectableItemBackground">@drawable/ripple_dark</item>
+        <item name="windowActionBar">false</item>
+    </style>
 
-  <style name="PopupThemeDark" parent="ThemeOverlay.AppCompat">
-    <item name="android:colorBackground">@color/backgroundDark</item>
-    <item name="android:textColor">@color/textPrimaryDark</item>
-  </style>
+    <style name="PopupThemeDark" parent="ThemeOverlay.AppCompat">
+        <item name="android:colorBackground">@color/backgroundDark</item>
+        <item name="android:textColor">@color/textPrimaryDark</item>
+    </style>
 
-  <!-- Black theme -->
-  <style name="AppThemeBlack" parent="AppThemeDark">
-    <item name="android:navigationBarColor">@color/black</item>
-    <item name="android:windowBackground">@color/black</item>
-    <item name="colorPrimary">@color/black</item>
-    <item name="composeBackground">@color/black</item>
-  </style>
+    <!-- Black theme -->
+    <style name="AppThemeBlack" parent="AppThemeDark">
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="composeBackground">@color/black</item>
+    </style>
 
-  <style name="AppThemeBlackDialog" parent="AppThemeDarkDialog">
-    <item name="actionBarPopupTheme">@style/PopupThemeBlack</item>
-    <item name="colorPrimary">@color/black</item>
-    <item name="composeBackground">@color/black</item>
-  </style>
+    <style name="AppThemeBlackDialog" parent="AppThemeDarkDialog">
+        <item name="actionBarPopupTheme">@style/PopupThemeBlack</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="composeBackground">@color/black</item>
+    </style>
 
-  <style name="PopupThemeBlack" parent="@style/PopupThemeDark">
-    <item name="android:colorBackground">@color/black</item>
-    <item name="android:textColor">@color/textPrimaryDark</item>
-  </style>
+    <style name="PopupThemeBlack" parent="@style/PopupThemeDark">
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:textColor">@color/textPrimaryDark</item>
+    </style>
 
-  <!-- Customize theme -->
-  <style name="AppThemeRoseDream" parent="AppThemeDark">
-    <item name="android:divider">@color/separatorDark</item>
-    <item name="android:navigationBarColor">@color/backgroundDark</item>
-    <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
-    <item name="android:textColorPrimary">@color/textPrimaryDark</item>
-    <item name="android:textColorSecondary">@color/textSecondaryDark</item>
-    <item name="android:textColorTertiary">@color/textTertiaryDark</item>
-    <item name="android:windowBackground">@color/backgroundCustomize</item>
-    <item name="android:windowContentTransitions">true</item>
-    <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
-    <item name="bubbleColor">@color/bubbleDark</item>
-    <item name="colorPrimary">@color/toolbarDark</item>
-    <item name="colorAccent">#288ec7</item>
-    <item name="composeBackground">@color/backgroundCustomize</item>
-    <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
-    <item name="messageAddTint">@color/messageAddTintDark</item>
-    <item name="messageAddBackgroundTint">@color/messageAddBackgroundTintDark</item>
-    <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
-    <item name="toolbarBg">@color/toolbarCustomize</item>
-    <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
-    <item name="selectableItemBackground">@drawable/ripple_dark</item>
-    <item name="windowActionBar">false</item>
-    <item name="editIconColor">@color/rose_dream_edit_icon</item>
-    <item name="editIconColorBg">@color/rose_dream_edit_icon_bg</item>
-  </style>
+    <!-- Customize theme -->
+    <style name="AppThemeRoseDream" parent="AppThemeDark">
+        <item name="android:divider">@color/separatorDark</item>
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+        <item name="android:textColorPrimary">@color/rose_dream_textPrimary</item>
+        <item name="android:textColorSecondary">@color/rose_dream_textSecondary</item>
+        <item name="android:textColorTertiary">@color/rose_dream_textTertiary</item>
+        <item name="android:windowBackground">@color/backgroundCustomize</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="bubbleColor">@color/rose_dream_bubble</item>
+        <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="colorAccent">#288ec7</item>
+        <item name="composeBackground">@color/backgroundCustomize</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
+        <item name="messageAddTint">@color/rose_dream_messageAddTint</item>
+        <item name="messageAddBackgroundTint">@color/rose_dream_messageAddBackgroundTint</item>
+        <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
+        <item name="toolbarBg">@color/toolbarCustomize</item>
+        <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
+        <item name="selectableItemBackground">@drawable/ripple_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="editIconColor">@color/rose_dream_edit_icon</item>
+        <item name="editIconColorBg">@color/rose_dream_edit_icon_bg</item>
+        <item name="sendIconColor">@color/rose_dream_send_icon</item>
+        <item name="sendIconColorBg">@color/rose_dream_send_icon_bg</item>
+        <item name="editMessageColor">@color/rose_dream_edit_message_color</item>
+    </style>
 
+    <style name="AppThemeElegantRose" parent="AppThemeDark">
+        <item name="android:divider">@color/separatorDark</item>
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+        <item name="android:textColorPrimary">@color/elegant_rose_textPrimary</item>
+        <item name="android:textColorSecondary">@color/elegant_rose_textSecondary</item>
+        <item name="android:textColorTertiary">@color/elegant_rose_textTertiary</item>
+        <item name="android:windowBackground">@color/backgroundCustomize</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="bubbleColor">@color/elegant_rose_bubble</item>
+        <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="colorAccent">#288ec7</item>
+        <item name="composeBackground">@color/backgroundCustomize</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
+        <item name="messageAddTint">@color/elegant_rose_messageAddTint</item>
+        <item name="messageAddBackgroundTint">@color/elegant_rose_messageAddBackgroundTint</item>
+        <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
+        <item name="toolbarBg">@color/toolbarCustomize</item>
+        <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
+        <item name="selectableItemBackground">@drawable/ripple_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="editIconColor">@color/elegant_rose_edit_icon</item>
+        <item name="editIconColorBg">@color/elegant_rose_edit_icon_bg</item>
+        <item name="sendIconColor">@color/elegant_rose_send_icon</item>
+        <item name="sendIconColorBg">@color/elegant_rose_send_icon_bg</item>
+        <item name="editMessageColor">@color/elegant_rose_edit_message_color</item>
+    </style>
+
+    <style name="AppThemeColorBall" parent="AppThemeDark">
+        <item name="android:divider">@color/separatorDark</item>
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+        <item name="android:textColorPrimary">@color/color_ball_textPrimary</item>
+        <item name="android:textColorSecondary">@color/color_ball_textSecondary</item>
+        <item name="android:textColorTertiary">@color/color_ball_textTertiary</item>
+        <item name="android:windowBackground">@color/backgroundCustomize</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="bubbleColor">@color/color_ball_bubble</item>
+        <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="colorAccent">#288ec7</item>
+        <item name="composeBackground">@color/backgroundCustomize</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
+        <item name="messageAddTint">@color/color_ball_messageAddTint</item>
+        <item name="messageAddBackgroundTint">@color/color_ball_messageAddBackgroundTint</item>
+        <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
+        <item name="toolbarBg">@color/toolbarCustomize</item>
+        <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
+        <item name="selectableItemBackground">@drawable/ripple_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="editIconColor">@color/color_ball_edit_icon</item>
+        <item name="editIconColorBg">@color/color_ball_edit_icon_bg</item>
+        <item name="sendIconColor">@color/color_ball_send_icon</item>
+        <item name="sendIconColorBg">@color/color_ball_send_icon_bg</item>
+        <item name="editMessageColor">@color/color_ball_edit_message_color</item>
+    </style>
+
+    <style name="AppThemeHoneyPark" parent="AppThemeDark">
+        <item name="android:divider">@color/separatorDark</item>
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+        <item name="android:textColorPrimary">@color/honey_park_textPrimary</item>
+        <item name="android:textColorSecondary">@color/honey_park_textSecondary</item>
+        <item name="android:textColorTertiary">@color/honey_park_textTertiary</item>
+        <item name="android:windowBackground">@color/backgroundCustomize</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
+        <item name="bubbleColor">@color/honey_park_bubble</item>
+        <item name="colorPrimary">@color/toolbarDark</item>
+        <item name="colorAccent">#288ec7</item>
+        <item name="composeBackground">@color/backgroundCustomize</item>
+        <item name="inMessageBackground">@color/inMessageBackgroundDark</item>
+        <item name="messageAddTint">@color/honey_park_messageAddTint</item>
+        <item name="messageAddBackgroundTint">@color/honey_park_messageAddBackgroundTint</item>
+        <item name="bgDrawerTop">@drawable/bg_drawer_dark</item>
+        <item name="toolbarBg">@color/toolbarCustomize</item>
+        <item name="toolbarBottomLineColor">@color/toolbarBottomLineColorDark</item>
+        <item name="selectableItemBackground">@drawable/ripple_dark</item>
+        <item name="windowActionBar">false</item>
+        <item name="editIconColor">@color/honey_park_edit_icon</item>
+        <item name="editIconColorBg">@color/honey_park_edit_icon_bg</item>
+        <item name="sendIconColor">@color/honey_park_send_icon</item>
+        <item name="sendIconColorBg">@color/honey_park_send_icon_bg</item>
+        <item name="editMessageColor">@color/honey_park_edit_message_color</item>
+        <item name="listItemTitleColor">@color/honey_park_list_item_title_color</item>
+        <item name="listItemContentColor">@color/honey_park_list_item_content_color</item>
+        <item name="listItemTimeColor">@color/honey_park_list_item_time_color</item>
+    </style>
 </resources>

@@ -12,7 +12,7 @@ object ThemeProvider {
             themeInfo.themeId = "dark"
             themeInfo.primaryColor = -0xd39413
             themeInfo.title = "Dark Mode"
-            themeInfo.baseDark = false
+            themeInfo.baseDark = true
             themeInfo.description = "Simple optimized default theme for you."
             themeInfo.fontName = Fonts.FONT_DEFAULT
             themeInfo.themeResourceId = R.style.AppThemeRoseDream
@@ -22,12 +22,12 @@ object ThemeProvider {
             themeInfo.themeId = "elegant_rose"
             themeInfo.primaryColor = -0xf8a1ab
             themeInfo.title = "Elegant Rose"
-            themeInfo.baseDark = false
+            themeInfo.baseDark = true
             themeInfo.description = "Fancy theme!"
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
-            themeInfo.themeResourceId = R.style.AppThemeRoseDream
+            themeInfo.themeResourceId = R.style.AppThemeElegantRose
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -46,19 +46,19 @@ object ThemeProvider {
             themeInfo.themeId = "honey"
             themeInfo.primaryColor = -0xf8a1ab
             themeInfo.title = "Elegant Rose"
-            themeInfo.baseDark = false
+            themeInfo.baseDark = true
             themeInfo.description = "Fancy theme!"
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
-            themeInfo.themeResourceId = R.style.AppThemeRoseDream
+            themeInfo.themeResourceId = R.style.AppThemeHoneyPark
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
             themeInfo.themeId = "rose_dream"
             themeInfo.primaryColor = -0xf8a1ab
             themeInfo.title = "Elegant Rose"
-            themeInfo.baseDark = false
+            themeInfo.baseDark = true
             themeInfo.description = "Fancy theme!"
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
@@ -70,12 +70,12 @@ object ThemeProvider {
             themeInfo.themeId = "color_ball"
             themeInfo.primaryColor = -0xf8a1ab
             themeInfo.title = "Elegant Rose"
-            themeInfo.baseDark = false
+            themeInfo.baseDark = true
             themeInfo.description = "Fancy theme!"
             themeInfo.fontName = "mali"
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
-            themeInfo.themeResourceId = R.style.AppThemeRoseDream
+            themeInfo.themeResourceId = R.style.AppThemeColorBall
             themeInfos.add(themeInfo)
 
             return themeInfos

@@ -17,115 +17,164 @@
   ~ along with Bling SMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-  <color name="white">#FFFFFF</color>
-  <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 
-  <color name="rippleLight">#1f000000</color>
-  <color name="rippleDark">#33ffffff</color>
+    <color name="rippleLight">#1f000000</color>
+    <color name="rippleDark">#33ffffff</color>
 
-  <color name="statusBarLight">#FFFFFF</color>
-  <color name="statusBarDark">#1d262b</color>
-  <color name="ripples_ripple_color">#FFCCCCCC</color>
+    <color name="statusBarLight">#FFFFFF</color>
+    <color name="statusBarDark">#1d262b</color>
+    <color name="ripples_ripple_color">#FFCCCCCC</color>
 
-  <color name="toolbarLight">#FFFFFF</color>
-  <color name="toolbarDark">#212A32</color>
-  <color name="toolbarCustomize">#00000000</color>
-  <color name="toolbarTranslucent">#88000000</color>
-  <color name="toolbarSearchBackgroundLight">#0D000000</color>
-  <color name="toolbarSearchBackgroundDark">#26000000</color>
+    <color name="toolbarLight">#FFFFFF</color>
+    <color name="toolbarDark">#212A32</color>
+    <color name="toolbarCustomize">#00000000</color>
+    <color name="toolbarTranslucent">#88000000</color>
+    <color name="toolbarSearchBackgroundLight">#0D000000</color>
+    <color name="toolbarSearchBackgroundDark">#26000000</color>
 
-  <color name="backgroundLight">#FFF</color>
-  <color name="backgroundDark">#181F25</color>
-  <color name="backgroundCustomize">#00000000</color>
+    <color name="backgroundLight">#FFF</color>
+    <color name="backgroundDark">#181F25</color>
+    <color name="backgroundCustomize">#00000000</color>
 
-  <color name="toolbarBottomLineColorLight">#33D8D8D8</color>
-  <color name="toolbarBottomLineColorDark">@color/backgroundDark</color>
+    <color name="toolbarBottomLineColorLight">#33D8D8D8</color>
+    <color name="toolbarBottomLineColorDark">@color/backgroundDark</color>
 
-  <color name="inMessageBackgroundLight">#F2F4F7</color>
-  <color name="inMessageBackgroundDark">#2B3640</color>
+    <color name="inMessageBackgroundLight">#F2F4F7</color>
+    <color name="inMessageBackgroundDark">#2B3640</color>
 
-  <color name="messageAddTintLight">#686F7C</color>
-  <color name="messageAddTintDark">#FFF</color>
+    <color name="messageAddTintLight">#686F7C</color>
+    <color name="messageAddTintDark">#FFF</color>
 
-  <color name="messageAddBackgroundTintLight">#F2F4F7</color>
-  <color name="messageAddBackgroundTintDark">#686F7C</color>
+    <color name="messageAddBackgroundTintLight">#F2F4F7</color>
+    <color name="messageAddBackgroundTintDark">#686F7C</color>
 
-  <color name="textPrimary">#04122F</color>
-  <color name="textSecondary">#686F7C</color>
-  <color name="textTertiary">#B7B9C0</color>
+    <color name="textPrimary">#04122F</color>
+    <color name="textSecondary">#686F7C</color>
+    <color name="textTertiary">#B7B9C0</color>
 
-  <color name="textPrimaryDark">#FFFFFFFF</color>
-  <color name="textSecondaryDark">#C2C5CB</color>
-  <color name="textTertiaryDark">#80ffffff</color>
+    <color name="textPrimaryDark">#FFFFFFFF</color>
+    <color name="textSecondaryDark">#C2C5CB</color>
+    <color name="textTertiaryDark">#80ffffff</color>
 
-  <color name="bubbleLight">#F2F4F7</color>
-  <color name="bubbleDark">#2B3640</color>
+    <color name="bubbleLight">#F2F4F7</color>
+    <color name="bubbleDark">#2B3640</color>
 
-  <color name="separatorLight">#0C000000</color>
-  <color name="separatorDark">#1AFFFFFF</color>
+    <color name="separatorLight">#0C000000</color>
+    <color name="separatorDark">#1AFFFFFF</color>
 
-  <color name="switchThumbEnabledLight">#ECECEC</color>
-  <color name="switchThumbEnabledDark">#B9B9B9</color>
+    <color name="switchThumbEnabledLight">#ECECEC</color>
+    <color name="switchThumbEnabledDark">#B9B9B9</color>
 
-  <color name="switchTrackEnabledLight">#A6A6A6</color>
-  <color name="switchTrackEnabledDark">#646464</color>
+    <color name="switchTrackEnabledLight">#A6A6A6</color>
+    <color name="switchTrackEnabledDark">#646464</color>
 
-  <color name="switchThumbDisabledLight">#B9B9B9</color>
-  <color name="switchThumbDisabledDark">#595959</color>
+    <color name="switchThumbDisabledLight">#B9B9B9</color>
+    <color name="switchThumbDisabledDark">#595959</color>
 
-  <color name="switchTrackDisabledLight">#D6D6D6</color>
-  <color name="switchTrackDisabledDark">#383838</color>
+    <color name="switchTrackDisabledLight">#D6D6D6</color>
+    <color name="switchTrackDisabledDark">#383838</color>
 
-  <!-- This colour should only ever be used for attrs with the tools tag -->
-  <color name="tools_theme">#00838F</color>
+    <!-- This colour should only ever be used for attrs with the tools tag -->
+    <color name="tools_theme">#00838F</color>
 
-  <color name="transparent_black_pressed_color">#40000000</color>
+    <color name="transparent_black_pressed_color">#40000000</color>
 
-  <color name="dialog_negative_button_color">#ebeef3</color>
-  <color name="dialog_positive_button_color">@android:color/black</color>
-  <color name="permission_guide_phone_frame">#373a3b</color>
-  <color name="divider_gray">#D8D8D8</color>
+    <color name="dialog_negative_button_color">#ebeef3</color>
+    <color name="dialog_positive_button_color">@android:color/black</color>
+    <color name="permission_guide_phone_frame">#373a3b</color>
+    <color name="divider_gray">#D8D8D8</color>
 
-  <color name="material_text_black_secondary">#8a000000</color>
-  <color name="material_text_black_primary">#de000000</color>
-  <color name="dialog_button_blue">#448aff</color>
-  <color name="ad_card" tools:ignore="all">#eaeaea</color>
+    <color name="material_text_black_secondary">#8a000000</color>
+    <color name="material_text_black_primary">#de000000</color>
+    <color name="dialog_button_blue">#448aff</color>
+    <color name="ad_card" tools:ignore="all">#eaeaea</color>
 
-  <color name="warn" tools:ignore="all">#FF3101</color>
-  <color name="text" tools:ignore="all">#666666</color>
+    <color name="warn" tools:ignore="all">#FF3101</color>
+    <color name="text" tools:ignore="all">#666666</color>
 
-  <color name="black_10_transparent">#1A000000</color>
-  <color name="black_12_transparent">#1f000000</color>
-  <color name="black_20_transparent">#32000000</color>
-  <color name="black_24_transparent">#3D000000</color>
-  <color name="black_27_transparent">#45000000</color>
-  <color name="black_30_transparent">#4D000000</color>
-  <color name="black_40_transparent">#66000000</color>
-  <color name="black_50_transparent">#7F000000</color>
-  <color name="black_54_transparent">#8A000000</color>
-  <color name="black_60_transparent">#99000000</color>
-  <color name="black_70_transparent">#B3000000</color>
-  <color name="black_80_transparent">#CC000000</color>
-  <color name="black_87_transparent">#DF000000</color>
-  <color name="black_90_transparent">#E6000000</color>
-  <color name="black_100_transparent">#FF000000</color>
+    <color name="black_10_transparent">#1A000000</color>
+    <color name="black_12_transparent">#1f000000</color>
+    <color name="black_20_transparent">#32000000</color>
+    <color name="black_24_transparent">#3D000000</color>
+    <color name="black_27_transparent">#45000000</color>
+    <color name="black_30_transparent">#4D000000</color>
+    <color name="black_40_transparent">#66000000</color>
+    <color name="black_50_transparent">#7F000000</color>
+    <color name="black_54_transparent">#8A000000</color>
+    <color name="black_60_transparent">#99000000</color>
+    <color name="black_70_transparent">#B3000000</color>
+    <color name="black_80_transparent">#CC000000</color>
+    <color name="black_87_transparent">#DF000000</color>
+    <color name="black_90_transparent">#E6000000</color>
+    <color name="black_100_transparent">#FF000000</color>
 
-  <color name="white_10_transparent">#1AFFFFFF</color>
-  <color name="white_20_transparent">#32FFFFFF</color>
-  <color name="white_30_transparent">#4DFFFFFF</color>
-  <color name="white_32_transparent">#ADFFFFFF</color>
-  <color name="white_40_transparent">#66FFFFFF</color>
-  <color name="white_50_transparent">#7FFFFFFF</color>
-  <color name="white_60_transparent">#99FFFFFF</color>
-  <color name="white_70_transparent">#B3FFFFFF</color>
-  <color name="white_75_transparent">#BFFFFFFF</color>
-  <color name="white_80_transparent">#CCFFFFFF</color>
-  <color name="white_86_transparent">#DCFFFFFF</color>
-  <color name="white_87_transparent">#DFFFFFFF</color>
-  <color name="white_100_transparent">#FFFFFF</color>
+    <color name="white_10_transparent">#1AFFFFFF</color>
+    <color name="white_20_transparent">#32FFFFFF</color>
+    <color name="white_30_transparent">#4DFFFFFF</color>
+    <color name="white_32_transparent">#ADFFFFFF</color>
+    <color name="white_40_transparent">#66FFFFFF</color>
+    <color name="white_50_transparent">#7FFFFFFF</color>
+    <color name="white_60_transparent">#99FFFFFF</color>
+    <color name="white_70_transparent">#B3FFFFFF</color>
+    <color name="white_75_transparent">#BFFFFFFF</color>
+    <color name="white_80_transparent">#CCFFFFFF</color>
+    <color name="white_86_transparent">#DCFFFFFF</color>
+    <color name="white_87_transparent">#DFFFFFFF</color>
+    <color name="white_100_transparent">#FFFFFF</color>
 
 
+    <color name="rose_dream_edit_icon">#fff</color>
+    <color name="rose_dream_edit_icon_bg">#ff494e</color>
+    <color name="rose_dream_send_icon">#fff</color>
+    <color name="rose_dream_send_icon_bg">#ff494e</color>
+    <color name="rose_dream_textPrimary">#FFFFFFFF</color>
+    <color name="rose_dream_textSecondary">#fff</color>
+    <color name="rose_dream_textTertiary">#fff</color>
+    <color name="rose_dream_messageAddTint">#ff494e</color>
+    <color name="rose_dream_messageAddBackgroundTint">#fff</color>
+    <color name="rose_dream_bubble">#fff</color>
+    <color name="rose_dream_edit_message_color">#ff494e</color>
 
-  <color name="rose_dream_edit_icon">#fff</color>
-  <color name="rose_dream_edit_icon_bg">#ff494e</color>
+    <color name="elegant_rose_edit_icon">#fff</color>
+    <color name="elegant_rose_edit_icon_bg">#0aabff</color>
+    <color name="elegant_rose_send_icon">#fff</color>
+    <color name="elegant_rose_send_icon_bg">#0aabff</color>
+    <color name="elegant_rose_textPrimary">#FFFFFFFF</color>
+    <color name="elegant_rose_textSecondary">#fff</color>
+    <color name="elegant_rose_textTertiary">#fff</color>
+    <color name="elegant_rose_messageAddTint">#122b5c</color>
+    <color name="elegant_rose_messageAddBackgroundTint">#fff</color>
+    <color name="elegant_rose_bubble">#fff</color>
+    <color name="elegant_rose_edit_message_color">#122b5c</color>
+
+    <color name="color_ball_edit_icon">#fff</color>
+    <color name="color_ball_edit_icon_bg">#6028ff</color>
+    <color name="color_ball_send_icon">#fff</color>
+    <color name="color_ball_send_icon_bg">#6028ff</color>
+    <color name="color_ball_textPrimary">#FFFFFFFF</color>
+    <color name="color_ball_textSecondary">#fff</color>
+    <color name="color_ball_textTertiary">#fff</color>
+    <color name="color_ball_messageAddTint">#6028ff</color>
+    <color name="color_ball_messageAddBackgroundTint">#fff</color>
+    <color name="color_ball_bubble">#fff</color>
+    <color name="color_ball_edit_message_color">#6028ff</color>
+
+    <color name="honey_park_edit_icon">#fff</color>
+    <color name="honey_park_edit_icon_bg">#ffc322</color>
+    <color name="honey_park_send_icon">#fff</color>
+    <color name="honey_park_send_icon_bg">#ffc322</color>
+    <color name="honey_park_textPrimary">#FFFFFFFF</color>
+    <color name="honey_park_textSecondary">#fff</color>
+    <color name="honey_park_textTertiary">#fff</color>
+    <color name="honey_park_messageAddTint">#d7155b</color>
+    <color name="honey_park_messageAddBackgroundTint">#fff</color>
+    <color name="honey_park_bubble">#fff</color>
+    <color name="honey_park_edit_message_color">#d7155b</color>
+
+    <color name="honey_park_list_item_title_color">#5215cd</color>
+    <color name="honey_park_list_item_content_color">#d7155b</color>
+    <color name="honey_park_list_item_time_color">#5215cd</color>
+
 </resources>

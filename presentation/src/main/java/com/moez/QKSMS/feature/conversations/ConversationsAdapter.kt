@@ -39,7 +39,7 @@ import kotlinx.android.synthetic.main.conversation_list_ad_container.*
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class ConversationsAdapter @Inject constructor(
+class  ConversationsAdapter @Inject constructor(
         private val colors: Colors,
         private val context: Context,
         private val dateFormatter: DateFormatter,
@@ -68,6 +68,7 @@ class ConversationsAdapter @Inject constructor(
                 val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
 
                 view.title.setTypeface(view.title.typeface, Typeface.BOLD)
+                view.title
 
                 view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
                 view.snippet.setTextColor(textColorPrimary)

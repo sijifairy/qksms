@@ -150,8 +150,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
 
-                    send?.setTint(theme.textPrimary)
-                    send?.setBackgroundTint(theme.theme)
+                    send?.setTint(resolveThemeColor(R.attr.sendIconColor,theme.textPrimary))
+                    send?.setBackgroundTint(resolveThemeColor(R.attr.sendIconColorBg,theme.theme))
+
+                    message?.setHintTextColor(resolveThemeColor(R.attr.editMessageColor, resolveThemeColor(android.R.attr.textColorTertiary)))
+                    message?.setTextColor(resolveThemeColor(R.attr.editMessageColor, getColorCompat(R.color.textPrimary)))
                 }
 
         showBackButton(true)
