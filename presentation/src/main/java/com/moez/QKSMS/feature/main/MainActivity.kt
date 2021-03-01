@@ -70,8 +70,11 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.android.synthetic.main.main_activity.toolbar
+import kotlinx.android.synthetic.main.main_activity.toolbarTitle
 import kotlinx.android.synthetic.main.main_permission_hint.*
 import kotlinx.android.synthetic.main.main_syncing.*
 import javax.inject.Inject
@@ -199,6 +202,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
                     compose.setBackgroundTint(resolveThemeColor(R.attr.editIconColorBg, theme.theme))
+                    drawer.setBackgroundColor(resolveThemeColor(R.attr.drawerBackground,theme.theme))
 
                     val toolbarColor = resolveThemeColor(R.attr.toolbarBg)
                     toolbar.setBackgroundColor(toolbarColor)

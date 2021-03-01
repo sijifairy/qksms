@@ -24,6 +24,7 @@
     <attr name="messageAddTint" format="reference" />
     <attr name="messageAddBackgroundTint" format="reference" />
     <attr name="bgDrawerTop" format="reference" />
+    <attr name="drawerBackground" format="reference" />
     <attr name="toolbarBg" format="reference" />
     <attr name="toolbarBottomLineColor" format="reference" />
     <attr name="editIconColor" format="reference" />
@@ -45,6 +46,7 @@
         <item name="android:textColorSecondary">@color/textSecondary</item>
         <item name="android:textColorTertiary">@color/textTertiary</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="drawerBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
         <item name="bubbleColor">@color/bubbleLight</item>
@@ -87,6 +89,7 @@
         <item name="android:textColorSecondary">@color/textSecondaryDark</item>
         <item name="android:textColorTertiary">@color/textTertiaryDark</item>
         <item name="android:windowBackground">@color/backgroundDark</item>
+        <item name="drawerBackground">@color/backgroundDark</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
         <item name="bubbleColor">@color/bubbleDark</item>
