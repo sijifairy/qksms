@@ -68,7 +68,6 @@ class  ConversationsAdapter @Inject constructor(
                 val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
 
                 view.title.setTypeface(view.title.typeface, Typeface.BOLD)
-                view.title
 
                 view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
                 view.snippet.setTextColor(textColorPrimary)
