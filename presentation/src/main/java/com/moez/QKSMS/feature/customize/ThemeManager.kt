@@ -25,6 +25,11 @@ class ThemeManager @Inject constructor(
             com.moez.QKSMS.common.util.Preferences.getDefault().putString(BubbleUtils.PREF_KEY_BUBBLE_INDEX, themeInfo.themeId)
         } else {
             com.moez.QKSMS.common.util.Preferences.getDefault().putString(BubbleUtils.PREF_KEY_BUBBLE_INDEX, BubbleUtils.DEFAULT_BUBBLE_INDEX)
+            if (DEFAULT_THEME_NAME_DARK == themeInfo.themeId) {
+                prefs.night.set(true)
+            } else {
+                prefs.night.set(false)
+            }
         }
     }
 

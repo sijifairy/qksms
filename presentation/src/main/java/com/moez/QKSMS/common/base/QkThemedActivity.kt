@@ -82,14 +82,16 @@ abstract class QkThemedActivity : QkActivity() {
         val black = prefs.black.get()
         setTheme(getActivityThemeRes(night, black))
 
-        setTransparentStatusBar()
+        if (themeManager.isThemeApplied) {
+            setTransparentStatusBar()
+        }
 
         super.onCreate(savedInstanceState)
         if (!themeManager.isThemeApplied) {
             val statusBarColor = resolveThemeColor(R.attr.toolbarBg)
             setStatusBarColor(statusBarColor)
         }
-        if (themeManager.isThemeApplied ) {
+        if (themeManager.isThemeApplied) {
             setSystemButtonsTheme(window, themeManager.currentTheme?.baseDark == false)
         } else {
             setSystemButtonsTheme(window, !prefs.black.get() and !prefs.night.get())
