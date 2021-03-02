@@ -34,6 +34,8 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.feature.customize.ThemeManager
 import com.moez.QKSMS.model.Conversation
 import kotlinx.android.synthetic.main.conversation_list_ad_container.*
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
@@ -43,7 +45,8 @@ class  ConversationsAdapter @Inject constructor(
         private val colors: Colors,
         private val context: Context,
         private val dateFormatter: DateFormatter,
-        private val navigator: Navigator
+        private val navigator: Navigator,
+        private val themeManager: ThemeManager
 ) : QkRealmAdapter<Conversation>() {
 
     init {
@@ -129,10 +132,24 @@ class  ConversationsAdapter @Inject constructor(
         } else {
             val conversation = getItem(position - if (hasAd) 1 else 0) ?: return
             val view = viewHolder.containerView
+            view.title.setTextColor(view.context.resolveThemeColor(R.attr.listItemTitleColor, view.context.resolveThemeColor(android.R.attr.textColorPrimary)))
+            view.snippet.setTextColor(view.context.resolveThemeColor(R.attr.listItemContentColor, view.context.resolveThemeColor(android.R.attr.textColorSecondary)))
+            view.date.setTextColor(view.context.resolveThemeColor(R.attr.listItemTimeColor, view.context.resolveThemeColor(android.R.attr.textColorTertiary)))
+
 
             view.isActivated = isSelected(conversation.id)
 
-            view.avatars.contacts = conversation.recipients
+            if (themeManager.isThemeApplied && themeManager.currentTheme?.avatarsList?.size ?: 0 > 0) {
+                view.avatars.setVisible(false)
+                view.theme_avatars.setVisible(true)
+                view.avatars_t.setImageResource(themeManager.currentTheme!!.avatarsList!![position % themeManager.currentTheme!!.avatarsList!!.size])
+                view.alphabet.text = conversation.getTitle().subSequence(0, 1)
+            } else {
+                view.avatars.setVisible(true)
+                view.theme_avatars.setVisible(false)
+                view.avatars.contacts = conversation.recipients
+            }
+
             view.title.collapseEnabled = conversation.recipients.size > 1
             view.title.text = conversation.getTitle()
             view.date.text = dateFormatter.getConversationTimestamp(conversation.date)

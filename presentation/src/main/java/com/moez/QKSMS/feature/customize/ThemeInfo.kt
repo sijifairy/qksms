@@ -10,4 +10,5 @@ class ThemeInfo {
     var listTitleColor = 0
     var listSubtitleColor = 0
     var themeResourceId = 0
+    var avatarsList: List<Int>? = null
 }

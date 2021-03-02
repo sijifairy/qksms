@@ -28,6 +28,9 @@ object ThemeProvider {
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
             themeInfo.themeResourceId = R.style.AppThemeElegantRose
+            themeInfo.avatarsList = mutableListOf<Int>().apply {
+                add(R.drawable.avatar_elegant_rose_1)
+            }
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -52,6 +55,12 @@ object ThemeProvider {
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
             themeInfo.themeResourceId = R.style.AppThemeHoneyPark
+            themeInfo.avatarsList = mutableListOf<Int>().apply {
+                add(R.drawable.avatar_honey_park_1)
+                add(R.drawable.avatar_honey_park_2)
+                add(R.drawable.avatar_honey_park_3)
+                add(R.drawable.avatar_honey_park_4)
+            }
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -64,6 +73,12 @@ object ThemeProvider {
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
             themeInfo.themeResourceId = R.style.AppThemeRoseDream
+            themeInfo.avatarsList = mutableListOf<Int>().apply {
+                add(R.drawable.avatar_rosedream_1)
+                add(R.drawable.avatar_rosedream_2)
+                add(R.drawable.avatar_rosedream_3)
+                add(R.drawable.avatar_rosedream_4)
+            }
             themeInfos.add(themeInfo)
 
             themeInfo = ThemeInfo()
@@ -76,6 +91,9 @@ object ThemeProvider {
             themeInfo.listTitleColor = -0x1
             themeInfo.listSubtitleColor = -0x1
             themeInfo.themeResourceId = R.style.AppThemeColorBall
+            themeInfo.avatarsList = mutableListOf<Int>().apply {
+                add(R.drawable.avatar_color_ball_1)
+            }
             themeInfos.add(themeInfo)
 
             return themeInfos

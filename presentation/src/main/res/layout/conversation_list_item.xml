@@ -29,15 +29,45 @@
     android:paddingEnd="16dp"
     android:paddingBottom="14dp">
 
-    <com.moez.QKSMS.common.widget.GroupAvatarView
-        android:id="@+id/avatars"
+    <FrameLayout
+        android:id="@+id/avatars_container"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintVertical_bias="0">
+
+        <com.moez.QKSMS.common.widget.GroupAvatarView
+            android:id="@+id/avatars"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <FrameLayout
+            android:id="@+id/theme_avatars"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/avatars_t"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <com.moez.QKSMS.common.widget.QkTextView
+                android:id="@+id/alphabet"
+                style="@style/TextPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:lines="1" />
+
+        </FrameLayout>
+
+    </FrameLayout>
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/title"
@@ -51,7 +81,7 @@
         android:lines="1"
         app:layout_constraintBottom_toTopOf="@id/snippet"
         app:layout_constraintEnd_toStartOf="@id/date"
-        app:layout_constraintStart_toEndOf="@id/avatars"
+        app:layout_constraintStart_toEndOf="@id/avatars_container"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@tools:sample/full_names" />
