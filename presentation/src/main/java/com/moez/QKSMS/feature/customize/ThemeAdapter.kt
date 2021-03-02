@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.ActivityUtils
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
 import java.util.*
@@ -46,7 +47,7 @@ class ThemeAdapter @Inject constructor(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewType = getItemViewType(position)
         if (viewType == VIEW_TYPE_MORE) {
-            (holder as MoreViewHolder).itemView.setOnClickListener { view: View? -> }
+            (holder as MoreViewHolder).name.setTextColor(holder.itemView.context.resolveThemeColor(R.attr.listItemTitleColor, holder.itemView.context.resolveThemeColor(android.R.attr.textColorPrimary)))
         } else {
             val theme = mData[position] as ThemeInfo
             val themeHolder = holder as ThemeViewHolder
@@ -103,7 +104,14 @@ class ThemeAdapter @Inject constructor(
         }
     }
 
-    private class MoreViewHolder internal constructor(container: View?) : RecyclerView.ViewHolder(container!!)
+    internal class MoreViewHolder(var rootView: View) : RecyclerView.ViewHolder(rootView) {
+        var name: TextView
+
+        init {
+            name = rootView.findViewById(R.id.tv_title)
+        }
+    }
+
     companion object {
         private const val VIEW_TYPE_THEME = 0
         private const val VIEW_TYPE_MORE = 2

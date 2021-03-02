@@ -6,6 +6,7 @@ class ThemeInfo {
     var description: String? = null
     var fontName: String? = null
     var baseDark = false
+    var textShadow = false
     var primaryColor = 0
     var listTitleColor = 0
     var listSubtitleColor = 0

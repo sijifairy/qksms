@@ -36,6 +36,7 @@
     <com.moez.QKSMS.common.widget.QkTextView
       style="@style/PreferenceCategory"
       android:layout_marginStart="16dp"
+      android:visibility="gone"
       android:text="@string/settings_category_appearance" />
 
     <com.moez.QKSMS.common.widget.PreferenceView
@@ -50,6 +51,7 @@
     <com.moez.QKSMS.common.widget.PreferenceView
       android:id="@+id/night"
       android:layout_width="match_parent"
+      android:visibility="gone"
       android:layout_height="wrap_content"
       app:icon="@drawable/icon_night"
       app:title="@string/settings_night_title"
@@ -99,6 +101,7 @@
     <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
+      android:visibility="gone"
       android:layout_marginTop="8dp"
       android:layout_marginBottom="8dp"
       android:background="?android:attr/divider" />

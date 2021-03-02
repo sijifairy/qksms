@@ -41,7 +41,7 @@ import kotlinx.android.synthetic.main.conversation_list_ad_container.*
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
-class  ConversationsAdapter @Inject constructor(
+class ConversationsAdapter @Inject constructor(
         private val colors: Colors,
         private val context: Context,
         private val dateFormatter: DateFormatter,
@@ -112,9 +112,13 @@ class  ConversationsAdapter @Inject constructor(
             val headlineView = adView.findViewById<TextView>(R.id.title)
             headlineView.text = ad.headline
             adView.headlineView = headlineView
+            headlineView.setTextColor(adView.context.resolveThemeColor(R.attr.listItemTitleColor, adView.context.resolveThemeColor(android.R.attr.textColorPrimary)))
+
             val subtitle = adView.findViewById<TextView>(R.id.snippet)
             subtitle.text = ad.body
             adView.bodyView = subtitle
+            subtitle.setTextColor(adView.context.resolveThemeColor(R.attr.listItemContentColor, adView.context.resolveThemeColor(android.R.attr.textColorSecondary)))
+
             val icon = adView.findViewById<ImageView>(R.id.avatars)
             if (ad.icon != null && ad.icon.drawable != null) {
                 icon.setImageDrawable(ad.icon.drawable)
@@ -123,6 +127,7 @@ class  ConversationsAdapter @Inject constructor(
             var cta = adView.findViewById<TextView>(R.id.cta)
             cta.text = ad.callToAction
             adView.callToActionView = cta
+            cta.setTextColor(adView.context.resolveThemeColor(R.attr.listItemTitleColor, adView.context.resolveThemeColor(android.R.attr.textColorPrimary)))
 
             adView.setNativeAd(ad)
 
@@ -145,7 +150,7 @@ class  ConversationsAdapter @Inject constructor(
                 view.avatars_t.setImageResource(themeManager.currentTheme!!.avatarsList!![position % themeManager.currentTheme!!.avatarsList!!.size])
                 view.alphabet.text = conversation.getTitle().let {
                     if (it.isNotEmpty())
-                        it.subSequence(0,1)
+                        it.subSequence(0, 1)
                     else
                         ""
                 }

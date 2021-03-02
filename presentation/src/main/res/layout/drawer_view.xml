@@ -134,7 +134,8 @@
 
     <LinearLayout
       android:id="@+id/themeColor"
-      style="@style/DrawerRow">
+      style="@style/DrawerRow"
+      android:visibility="gone">
 
       <ImageView
         style="@style/DrawerIcon"

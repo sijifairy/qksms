@@ -20,7 +20,7 @@ class CustomizeThemeAct : QkThemedActivity() {
 
     @Inject
     lateinit var themeAdapter: ThemeAdapter
-    
+
     private var textSizeId: Int = com.moez.QKSMS.util.Preferences.TEXT_SIZE_NORMAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class CustomizeThemeAct : QkThemedActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customize_theme)
 
-        setTitle(R.string.font_title)
+        setTitle(R.string.title_theme)
         showBackButton(true)
 
         theme

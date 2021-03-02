@@ -19,16 +19,22 @@
 package com.moez.QKSMS.common.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import androidx.emoji.widget.EmojiAppCompatTextView
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.Dimensions
 import com.moez.QKSMS.common.util.TextViewStyler
+import com.moez.QKSMS.feature.customize.ThemeManager
 import com.moez.QKSMS.injection.appComponent
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null
 ) : EmojiAppCompatTextView(context, attrs) {
+
+    @Inject
+    lateinit var themeManager: ThemeManager
 
     @Inject
     lateinit var textViewStyler: TextViewStyler
@@ -60,6 +66,10 @@ open class QkTextView @JvmOverloads constructor(
 
             textViewStyler.applyAttributes(this, attrs)
             includeFontPadding = false
+
+            if (themeManager.isThemeApplied && themeManager.currentTheme!!.textShadow && textColors.getColorForState(getDrawableState(), 0) == Color.WHITE) {
+                setShadowLayer(Dimensions.pxFromDp(1.7f).toFloat(), Dimensions.pxFromDp(0.7f).toFloat(), Dimensions.pxFromDp(0.7f).toFloat(), 0x59000000)
+            }
         } else {
             TextViewStyler.applyEditModeAttributes(this, attrs)
         }
