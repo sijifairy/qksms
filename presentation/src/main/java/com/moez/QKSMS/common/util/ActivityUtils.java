@@ -2,9 +2,11 @@ package com.moez.QKSMS.common.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +17,7 @@ import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BaseApplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TintContextWrapper;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -129,6 +132,20 @@ public class ActivityUtils {
             window.getDecorView().setSystemUiVisibility(systemUiVisibility);
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    public static Activity contextToActivitySafely(Context context) {
+        if (context == null) {
+            return null;
+        } else if (context instanceof Activity) {
+            return (Activity) context;
+        } else if (context instanceof ContextThemeWrapper) {
+            return (Activity) (((ContextThemeWrapper) context).getBaseContext());
+        }else if (context instanceof TintContextWrapper) {
+            return (Activity) (((TintContextWrapper) context).getBaseContext());
+        } else {
+            return null;
         }
     }
 }

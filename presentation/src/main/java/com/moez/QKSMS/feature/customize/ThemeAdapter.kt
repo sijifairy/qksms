@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.ActivityUtils
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
 import java.util.*
@@ -71,8 +72,7 @@ class ThemeAdapter @Inject constructor(
                 themeHolder.actionBtn.text = "Apply Now"
                 themeHolder.actionBtn.setTextColor(-0xc5880b)
                 themeHolder.actionBtn.setOnClickListener { v: View? ->
-                    // todo: may crash in some devices...
-                    (holder.itemView.context as Activity).finish()
+                    ActivityUtils.contextToActivitySafely(holder.itemView.context)?.finish()
                     themeManager.applyTheme(theme)
                 }
             }
