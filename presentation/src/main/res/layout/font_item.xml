@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="90dp"
+  android:paddingTop="8dp"
+  android:paddingRight="16dp"
+  android:paddingBottom="8dp">
+
+  <LinearLayout
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.moez.QKSMS.common.widget.QkTextView
+      android:id="@+id/name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="10dp"
+      android:includeFontPadding="false"
+      android:textColor="#04122F"
+      android:textSize="16dp"
+      app:font_family_changeable="false" />
+
+    <com.moez.QKSMS.common.widget.QkTextView
+      android:id="@+id/ex"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      android:layout_marginTop="6dp"
+      android:layout_marginBottom="10dp"
+      android:includeFontPadding="false"
+      android:text="AaBbCcDdEe"
+      android:textColor="#9DA0A8"
+      android:textSize="13dp"
+      app:font_family_changeable="false" />
+  </LinearLayout>
+
+  <ImageView
+    android:id="@+id/iv_selected"
+    android:layout_width="16dp"
+    android:layout_height="16dp"
+    android:layout_gravity="right"
+    android:src="@drawable/ic_font_selected"
+    android:visibility="gone" />
+</FrameLayout>

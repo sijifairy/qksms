@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of Bling SMS.
+  ~
+  ~ Bling SMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Bling SMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Bling SMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+
+  <attr name="textColor" format="enum">
+    <enum name="primary" value="0" />
+    <enum name="secondary" value="1" />
+    <enum name="tertiary" value="2" />
+    <enum name="primaryOnTheme" value="3" />
+    <enum name="secondaryOnTheme" value="4" />
+    <enum name="tertiaryOnTheme" value="5" />
+    <enum name="theme" value="6" />
+  </attr>
+
+  <attr name="textSize" format="enum">
+    <enum name="primary" value="0" />
+    <enum name="secondary" value="1" />
+    <enum name="tertiary" value="2" />
+    <enum name="toolbar" value="3" />
+    <enum name="dialog" value="4" />
+  </attr>
+
+  <attr name="font_family" format="enum">
+    <enum name="regular" value="0" />
+    <enum name="medium" value="1" />
+    <enum name="bold" value="2" />
+  </attr>
+
+  <declare-styleable name="QkTextView">
+    <attr name="textColor" />
+    <attr name="textSize" />
+    <attr name="font_family" />
+    <attr name="font_family_changeable" format="boolean" />
+  </declare-styleable>
+
+  <declare-styleable name="QkEditText">
+    <attr name="textColor" />
+    <attr name="textSize" />
+    <attr name="font_family" />
+  </declare-styleable>
+
+  <declare-styleable name="PreferenceView">
+    <attr name="title" format="string" />
+    <attr name="summary" format="string" />
+    <attr name="key" format="string" />
+    <attr name="widget" format="reference" />
+    <attr name="icon" format="reference" />
+  </declare-styleable>
+
+  <declare-styleable name="TypefacedTextView">
+    <attr name="typeface" format="reference" />
+    <attr name="font_style" format="enum">
+      <enum name="normal" value="0" />
+      <enum name="bold" value="1" />
+      <enum name="italic" value="2" />
+      <enum name="bold_italic" value="3" />
+    </attr>
+
+    <attr name="drawable_width" format="dimension" />
+    <attr name="drawable_height" format="dimension" />
+  </declare-styleable>
+
+  <declare-styleable name="ShapeImageView">
+    <attr name="shape" format="enum">
+      <enum name="rectangle" value="1" />
+      <enum name="circle" value="2" />
+      <enum name="oval" value="3" />
+    </attr>
+    <attr name="radius" format="dimension" />
+    <attr name="radius_leftTop" format="dimension" />
+    <attr name="radius_leftBottom" format="dimension" />
+    <attr name="radius_rightTop" format="dimension" />
+    <attr name="radius_rightBottom" format="dimension" />
+    <attr name="border_size" format="dimension" />
+    <attr name="border_color" format="color" />
+  </declare-styleable>
+
+  <declare-styleable name="FixedRatioLayout">
+    <attr name="aspectRatio" format="float" />
+  </declare-styleable>
+
+  <declare-styleable name="RatioRoundAttr">
+    <attr name="super_apps_base" format="enum">
+      <enum name="width" value="0"></enum>
+      <enum name="height" value="1"></enum>
+    </attr>
+    <attr name="super_apps_ratio" format="float"></attr>
+  </declare-styleable>
+
+</resources>

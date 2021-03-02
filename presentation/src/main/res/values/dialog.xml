@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!--new Dialog-->
+    <dimen name="dialog_corner_radius">8dp</dimen>
+    <dimen name="dialog_elevation">24dp</dimen>
+    <dimen name="dialog_rounded_corner_radius">6dp</dimen>
+    <color name="new_dialog_background">#00000000</color>
+    <dimen name="dialog_text_extra_line_height">20dp</dimen>
+    <item name="dialog_text_line_height_multiple" format="float" type="dimen">0</item>
+    <item name="dialog_background_dim_amount" format="float" type="dimen">0.6</item>
+
+    <!--Light Dialog -->
+    <dimen name="light_dialog_content_select_margin_top">20dp</dimen>
+    <dimen name="light_dialog_choice_text_size">16sp</dimen>
+    <dimen name="light_dialog_choice_icon_padding">24dp</dimen>
+    <item name="light_dialog_choice_text" format="float" type="dimen">1</item>
+
+    <!--Dialog Content-->
+    <dimen name="dialog_content_text_margin_top">12dp</dimen>
+    <dimen name="dialog_content_text_margin">16dp</dimen>
+    <dimen name="dialog_content_margin_left">24dp</dimen>
+    <dimen name="dialog_content_margin_right">24dp</dimen>
+    <dimen name="dialog_content_margin_top">16dp</dimen>
+    <dimen name="dialog_content_title_size">22sp</dimen>
+    <dimen name="dialog_content_text_size">16sp</dimen>
+    <item name="dialog_content_title" format="float" type="dimen">1</item>
+    <item name="dialog_content_text" format="float" type="dimen">0.78</item>
+
+    <!--Dialog btn-->
+    <dimen name="dialog_close_icon_margin_end">6dp</dimen>
+    <dimen name="dialog_btn_margin">16dp</dimen>
+    <dimen name="dialog_btn_padding">16dp</dimen>
+    <dimen name="dialog_btn_corner_radius">6dp</dimen>
+    <dimen name="dialog_btn_height">44dp</dimen>
+    <dimen name="dialog_btn_margin_left">24dp</dimen>
+    <dimen name="dialog_btn_margin_right">24dp</dimen>
+    <dimen name="dialog_btn_margin_top">32dp</dimen>
+    <dimen name="dialog_btn_margin_bottom">24dp</dimen>
+    <dimen name="dialog_btn_padding_left">24dp</dimen>
+    <dimen name="dialog_btn_padding_right">24dp</dimen>
+    <dimen name="dialog_two_btn_padding_left">16dp</dimen>
+    <dimen name="dialog_two_btn_padding_right">16dp</dimen>
+
+    <dimen name="dialog_group_btn_margin_left">24dp</dimen>
+    <dimen name="dialog_group_btn_margin_right">24dp</dimen>
+    <dimen name="dialog_group_btn_margin_top">32dp</dimen>
+    <dimen name="dialog_group_btn_margin_bottom">24dp</dimen>
+    <dimen name="dialog_ok_btn_text_size">15sp</dimen><![CDATA[
+    >
+
+    ]]><!--Dialog color-->
+    <color name="theme_main_color">#448AFF</color>
+
+    <color name="dialog_content_text">#454545</color>
+    <color name="color_dialog_title_text">#3c3c3c</color>
+    <color name="color_dialog_content_text">#454545</color>
+
+    <color name="dialog_background">#00000000</color>
+
+
+
+</resources>

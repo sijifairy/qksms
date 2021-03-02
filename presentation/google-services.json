@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "942685514780",
+    "project_id": "joy-sms-7952c",
+    "storage_bucket": "joy-sms-7952c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942685514780:android:00f74676978fee71fa03d9",
+        "android_client_info": {
+          "package_name": "com.joyinsight.sms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942685514780-u1evn1l45990fdf0abcclc6cpdc4ec20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClqkLepR5Ltrd_ot5SwaqFiLAnJAQYW4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942685514780-u1evn1l45990fdf0abcclc6cpdc4ec20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
