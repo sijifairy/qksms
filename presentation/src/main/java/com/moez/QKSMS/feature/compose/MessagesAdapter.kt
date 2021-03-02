@@ -48,6 +48,7 @@ import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
 import com.moez.QKSMS.feature.compose.BubbleUtils.getBubble
 import com.moez.QKSMS.feature.compose.part.PartsAdapter
+import com.moez.QKSMS.feature.customize.ThemeManager
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.Recipient
@@ -55,7 +56,11 @@ import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
+import kotlinx.android.synthetic.main.message_list_item_in.view.alphabet
+import kotlinx.android.synthetic.main.message_list_item_in.view.avatars_t
+import kotlinx.android.synthetic.main.message_list_item_in.view.theme_avatars
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -66,7 +71,8 @@ class MessagesAdapter @Inject constructor(
         private val dateFormatter: DateFormatter,
         private val navigator: Navigator,
         private val prefs: Preferences,
-        private val subscriptionManager: SubscriptionManagerCompat
+        private val subscriptionManager: SubscriptionManagerCompat,
+        private val themeManager: ThemeManager
 ) : QkRealmAdapter<Message>() {
 
     companion object {
@@ -226,9 +232,23 @@ class MessagesAdapter @Inject constructor(
 
         // Bind the avatar
         if (!message.isMe()) {
-            view.avatar.threadId = conversation?.id ?: 0
-            view.avatar.setContact(contactCache[message.address])
-            view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
+            if (themeManager.isThemeApplied && themeManager.currentTheme?.avatarsList?.size ?: 0 > 0) {
+                view.avatar.setVisible(false)
+                view.theme_avatars.setVisible(true)
+                view.avatars_t.setImageResource(themeManager.currentTheme!!.avatarsList!![position % themeManager.currentTheme!!.avatarsList!!.size])
+                view.alphabet.text = conversation?.getTitle()?.let {
+                    if (it.isNotEmpty())
+                        it.subSequence(0,1)
+                    else
+                        ""
+                }
+            } else {
+                view.avatar.setVisible(true)
+                view.theme_avatars.setVisible(false)
+                view.avatar.threadId = conversation?.id ?: 0
+                view.avatar.setContact(contactCache[message.address])
+                view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
+            }
         }
 
 

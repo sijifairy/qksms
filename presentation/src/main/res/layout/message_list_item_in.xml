@@ -87,11 +87,9 @@
 
         <com.moez.QKSMS.common.widget.AvatarView
             android:id="@+id/avatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/body"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
 
         <FrameLayout
             android:id="@+id/theme_avatars"

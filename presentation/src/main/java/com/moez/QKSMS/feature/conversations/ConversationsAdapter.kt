@@ -143,7 +143,12 @@ class  ConversationsAdapter @Inject constructor(
                 view.avatars.setVisible(false)
                 view.theme_avatars.setVisible(true)
                 view.avatars_t.setImageResource(themeManager.currentTheme!!.avatarsList!![position % themeManager.currentTheme!!.avatarsList!!.size])
-                view.alphabet.text = conversation.getTitle().subSequence(0, 1)
+                view.alphabet.text = conversation.getTitle().let {
+                    if (it.isNotEmpty())
+                        it.subSequence(0,1)
+                    else
+                        ""
+                }
             } else {
                 view.avatars.setVisible(true)
                 view.theme_avatars.setVisible(false)
