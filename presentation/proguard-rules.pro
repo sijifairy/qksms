@@ -32,3 +32,5 @@
 -dontwarn net.appcloudbox.**
 -dontwarn com.amazon.**
 -dontwarn com.appsflyer.FirebaseInstanceIdListener**
+
+-keep class com.moez.QKSMS.common.ad.QkAdConfig { *; }

@@ -31,15 +31,20 @@ import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import com.flurry.android.FlurryAgent
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.ad.AdEngine
 import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.common.util.Preferences
+import com.moez.QKSMS.common.util.RemoteConfig
 import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.feature.guide.topapp.TopAppManager
+import com.moez.QKSMS.feature.plus.PlusManager
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
+import com.mopub.common.MoPub
+import com.mopub.common.SdkConfiguration
 import dagger.android.*
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -48,9 +53,6 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import javax.inject.Inject
-import com.google.android.gms.ads.MobileAds;
-import com.moez.QKSMS.common.util.RemoteConfig
-import com.moez.QKSMS.feature.plus.PlusManager
 
 class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
@@ -92,7 +94,15 @@ class QKApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiv
                 .withLogEnabled(true)
                 .build(this, "Z6WVFVX93P2TK2WKYXY4")
 
-        MobileAds.initialize(this) {}
+        val sdkConfiguration = SdkConfiguration.Builder("3ab301a2ae794834b38a8683d2f0c5b5")
+                .withLegitimateInterestAllowed(false)
+                .build()
+        MoPub.initializeSdk(
+                this,
+                sdkConfiguration
+        ) {}
+
+        AdEngine.getInstance().applicationContext = this
 
         PlusManager.getInstance()
 

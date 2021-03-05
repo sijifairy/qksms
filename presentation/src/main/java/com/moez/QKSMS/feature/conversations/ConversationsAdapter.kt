@@ -19,20 +19,24 @@
 package com.moez.QKSMS.feature.conversations
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
-import com.google.android.gms.ads.formats.UnifiedNativeAd
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.ad.nativead.NmNativeAd
+import com.moez.QKSMS.common.ad.nativead.NmNativeAdContainer
+import com.moez.QKSMS.common.ad.nativead.NmNativeAdIconView
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.RemoteConfig
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.feature.customize.ThemeManager
@@ -53,10 +57,10 @@ class ConversationsAdapter @Inject constructor(
         setHasStableIds(true)
     }
 
-    lateinit var ad: UnifiedNativeAd
+    lateinit var ad: NmNativeAd
     var hasAd: Boolean = false
 
-    fun onAdLoaded(unifiedNativeAd: UnifiedNativeAd) {
+    fun onAdLoaded(unifiedNativeAd: NmNativeAd) {
         hasAd = true
         ad = unifiedNativeAd
         notifyDataSetChanged()
@@ -107,32 +111,37 @@ class ConversationsAdapter @Inject constructor(
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         if (hasAd && position == 0) {
-            val adView = LayoutInflater.from(viewHolder.containerView.context)
-                    .inflate(R.layout.conversation_list_ad, null) as UnifiedNativeAdView
-            val headlineView = adView.findViewById<TextView>(R.id.title)
-            headlineView.text = ad.headline
-            adView.headlineView = headlineView
-            headlineView.setTextColor(adView.context.resolveThemeColor(R.attr.listItemTitleColor, adView.context.resolveThemeColor(android.R.attr.textColorPrimary)))
+            val adContainerLayout = FrameLayout(viewHolder.itemView.context)
+            val adContent = LayoutInflater.from(viewHolder.itemView.context)
+                    .inflate(R.layout.conversation_list_ad, adContainerLayout, false) as ViewGroup
+            val adContainer: NmNativeAdContainer = ad.container
+            adContainer.setContent(adContainerLayout, adContent)
+            val icon: NmNativeAdIconView = adContainerLayout.findViewById(R.id.avatars)
+            adContainer.setIconView(icon)
 
-            val subtitle = adView.findViewById<TextView>(R.id.snippet)
-            subtitle.text = ad.body
-            adView.bodyView = subtitle
-            subtitle.setTextColor(adView.context.resolveThemeColor(R.attr.listItemContentColor, adView.context.resolveThemeColor(android.R.attr.textColorSecondary)))
+            val title: TextView = adContainerLayout.findViewById(R.id.title)
+            title.setTextColor(adContainerLayout.context.resolveThemeColor(R.attr.listItemTitleColor, adContainerLayout.context.resolveThemeColor(android.R.attr.textColorPrimary)))
+            adContainer.setTitle(title)
 
-            val icon = adView.findViewById<ImageView>(R.id.avatars)
-            if (ad.icon != null && ad.icon.drawable != null) {
-                icon.setImageDrawable(ad.icon.drawable)
+            val description: TextView = adContainerLayout.findViewById(R.id.snippet)
+            description.setTextColor(adContainerLayout.context.resolveThemeColor(R.attr.listItemContentColor, adContainerLayout.context.resolveThemeColor(android.R.attr.textColorSecondary)))
+            adContainer.setBody(description)
+
+            val actionBtn: TextView = adContainerLayout.findViewById(R.id.cta)
+            actionBtn.setTextColor(adContainerLayout.context.resolveThemeColor(R.attr.listItemTitleColor, adContainerLayout.context.resolveThemeColor(android.R.attr.textColorPrimary)))
+            adContainer.setCTA(actionBtn)
+
+            adContainer.setAdChoiceView(adContainerLayout.findViewById(R.id.ad_choice))
+            adContainer.fillNativeAd(ad)
+            if (RemoteConfig.instance.getBoolean("AdHomeNativeBgShow")) {
+//                adContent.setBackgroundColor()
             }
-            adView.iconView = icon
-            var cta = adView.findViewById<TextView>(R.id.cta)
-            cta.text = ad.callToAction
-            adView.callToActionView = cta
-            cta.setTextColor(adView.context.resolveThemeColor(R.attr.listItemTitleColor, adView.context.resolveThemeColor(android.R.attr.textColorPrimary)))
+//            val ivAdPreview = adContainerLayout.findViewById<ImageView>(R.id.ic_ad)
+//            ivAdPreview.drawable.setColorFilter(ConversationColors.get().getListTimeColor(), PorterDuff.Mode.SRC_ATOP)
 
-            adView.setNativeAd(ad)
 
             viewHolder.container.removeAllViews()
-            viewHolder.container.addView(adView)
+            viewHolder.container.addView(adContainerLayout)
             viewHolder.itemView.tag = 2
         } else {
             val conversation = getItem(position - if (hasAd) 1 else 0) ?: return

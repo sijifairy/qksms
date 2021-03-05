@@ -99,7 +99,7 @@
 
       <ImageView
         style="@style/DrawerIcon"
-        android:src="@drawable/icon_font" />
+        android:src="@drawable/icon_theme" />
 
       <com.moez.QKSMS.common.widget.QkTextView
         style="@style/DrawerText"

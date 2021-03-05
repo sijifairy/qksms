@@ -23,12 +23,15 @@ import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
@@ -37,20 +40,14 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.google.ads.mediation.facebook.FacebookAdapter
-import com.google.ads.mediation.facebook.FacebookExtras
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.formats.UnifiedNativeAd
-import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.ad.AdConfig
+import com.moez.QKSMS.common.ad.nativead.*
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
@@ -64,17 +61,15 @@ import com.moez.QKSMS.feature.guide.SettingLauncherPadActivity
 import com.moez.QKSMS.feature.guide.UsageUtils
 import com.moez.QKSMS.feature.plus.PlusManager
 import com.moez.QKSMS.repository.SyncRepository
+import com.mopub.nativeads.ViewBinder
 import com.uber.autodispose.kotlin.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.compose_activity.*
 import kotlinx.android.synthetic.main.drawer_view.*
 import kotlinx.android.synthetic.main.main_activity.*
-import kotlinx.android.synthetic.main.main_activity.toolbar
-import kotlinx.android.synthetic.main.main_activity.toolbarTitle
 import kotlinx.android.synthetic.main.main_permission_hint.*
 import kotlinx.android.synthetic.main.main_syncing.*
 import javax.inject.Inject
@@ -202,7 +197,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     plusIcon.setTint(theme.theme)
                     rateIcon.setTint(theme.theme)
                     compose.setBackgroundTint(resolveThemeColor(R.attr.editIconColorBg, theme.theme))
-                    drawer.setBackgroundColor(resolveThemeColor(R.attr.drawerBackground,theme.theme))
+                    drawer.setBackgroundColor(resolveThemeColor(R.attr.drawerBackground, theme.theme))
 
                     val toolbarColor = resolveThemeColor(R.attr.toolbarBg)
                     toolbar.setBackgroundColor(toolbarColor)
@@ -225,7 +220,7 @@ class MainActivity : QkThemedActivity(), MainView {
         return if (!BuildConfig.DEBUG)
             (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
                     > DateUtils.MINUTE_IN_MILLIS * 10
-                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_home_native_click_time", -1))
+//                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_home_native_click_time", -1))
                     && !PlusManager.isPremiumUser()
                     && RemoteConfig.instance.getBoolean("AdHomeNativeEnabled"))
         else
@@ -233,44 +228,31 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     private fun loadNativeAd() {
-        val adLoader = AdLoader.Builder(this,
-                if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/2247696110"
-                else "ca-app-pub-9729300831038244/7265080455")
-                .forUnifiedNativeAd { ad: UnifiedNativeAd ->
-                    // If this callback occurs after the activity is destroyed, you
-                    // must call destroy and return or you may get a memory leak.
-                    // Note `isDestroyed` is a method on Activity.
-                    if (isDestroyed) {
-                        ad.destroy()
-                        return@forUnifiedNativeAd
-                    }
-
-                    conversationsAdapter.onAdLoaded(ad)
+        val viewBinder = ViewBinder.Builder(R.layout.conversation_list_ad)
+                .iconImageId(R.id.avatars)
+                .titleId(R.id.title)
+                .textId(R.id.snippet)
+                .privacyInformationIconImageId(R.id.native_privacy_information_icon_image)
+                .callToActionId(R.id.cta)
+                .build()
+        NmNativeAdLoader(this, viewBinder, AdConfig.homeNativeAdConfig, object : NmNativeAdListener {
+            override fun onAdLoaded(ad: NmNativeAd) {
+                if (isDestroyed()) {
+                    return
                 }
-                .withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                        // Handle the failure by logging, altering the UI, and so on.
-                        Log.d("MainActivity", "failed to load native ad")
-                    }
+                conversationsAdapter.onAdLoaded(ad)
+            }
 
-                    override fun onAdClicked() {
-                        Preferences.getDefault().putLong("pref_home_native_click_time", System.currentTimeMillis())
-                    }
-                })
-                .withNativeAdOptions(NativeAdOptions.Builder()
-                        // Methods in the NativeAdOptions.Builder class can be
-                        // used here to specify individual options settings.
-                        .build())
-                .build()
+            override fun onAdClose() {}
+            override fun onAdFailedToLoad(var1: Int) {}
+            override fun onAdOpened() {}
+            override fun onAdLoaded() {}
+            override fun onAdClicked() {
+                Preferences.getDefault().putLong("pref_home_native_click_time", System.currentTimeMillis())
+            }
 
-        var extras = FacebookExtras()
-                .setNativeBanner(true)
-                .build()
-
-        var adrequest = AdRequest.Builder()
-                .addNetworkExtrasBundle(FacebookAdapter::class.java, extras)
-                .build()
-        adLoader.loadAd(adrequest)
+            override fun onAdImpression() {}
+        })
     }
 
     override fun render(state: MainState) {

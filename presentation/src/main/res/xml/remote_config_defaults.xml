@@ -12,4 +12,12 @@
     <key>AdComposeNativeEnabled</key>
     <value>false</value>
   </entry>
+  <entry>
+    <key>AdConfigDetailWire</key>
+    <value>[{"vendorName":"facebook","adUnitId":"143325504253225_161996382386137","index":0},{"vendorName":"mopub","adUnitId":"e054906cf06b4ab9a939a6ca72d14896","index":1}]</value>
+  </entry>
+  <entry>
+    <key>AdConfigHomeNative</key>
+    <value>[{"vendorName":"facebooknativebanner", "adUnitId":"143325504253225_143326594253116", "index":0}]</value>
+  </entry>
 </defaultsMap>

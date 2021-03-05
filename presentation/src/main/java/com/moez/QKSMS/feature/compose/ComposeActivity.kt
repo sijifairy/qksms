@@ -32,33 +32,30 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.format.DateFormat
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.google.ads.mediation.facebook.FacebookAdapter
-import com.google.ads.mediation.facebook.FacebookExtras
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.formats.UnifiedNativeAd
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
-import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.ad.AdConfig
+import com.moez.QKSMS.common.ad.NmAdListener
+import com.moez.QKSMS.common.ad.interstitial.InterstitialAdManager
+import com.moez.QKSMS.common.ad.interstitial.InterstitialAdRequest
 import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.dialog.FiveStarRateDialog
-import com.moez.QKSMS.common.util.*
+import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.Preferences
+import com.moez.QKSMS.common.util.RemoteConfig
+import com.moez.QKSMS.common.util.SmsAnalytics
 import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.feature.plus.PlusManager
 import com.moez.QKSMS.model.Attachment
@@ -100,8 +97,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var mInterstitialAd: InterstitialAd
-
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val queryBackspaceIntent: Observable<*> by lazy { chipsAdapter.backspaces }
@@ -131,8 +126,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
-//    lateinit var mAdView: AdView
-
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
     private var cameraDestination: Uri? = null
@@ -150,8 +143,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     val toolbarTextColor = resolveThemeColor(android.R.attr.textColorPrimary)
                     toolbarTitle.setTextColor(toolbarTextColor)
 
-                    send?.setTint(resolveThemeColor(R.attr.sendIconColor,theme.textPrimary))
-                    send?.setBackgroundTint(resolveThemeColor(R.attr.sendIconColorBg,theme.theme))
+                    send?.setTint(resolveThemeColor(R.attr.sendIconColor, theme.textPrimary))
+                    send?.setBackgroundTint(resolveThemeColor(R.attr.sendIconColorBg, theme.theme))
 
                     message?.setHintTextColor(resolveThemeColor(R.attr.editMessageColor, resolveThemeColor(android.R.attr.textColorTertiary)))
                     message?.setTextColor(resolveThemeColor(R.attr.editMessageColor, getColorCompat(R.color.textPrimary)))
@@ -194,107 +187,78 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             composeBackground.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
         }
 
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/1033173712" else "ca-app-pub-9729300831038244/6544785911"
         if (fulfillAdLimitation()) {
-            mInterstitialAd.loadAd(AdRequest.Builder().build())
-            mInterstitialAd.adListener = object : AdListener() {
-                override fun onAdLoaded() {
-                    // Code to be executed when an ad finishes loading.
-                }
-
-                override fun onAdFailedToLoad(errorCode: Int) {
-                    // Code to be executed when an ad request fails.
-                }
-
-                override fun onAdOpened() {
-                    // Code to be executed when the ad is displayed.
-                }
-
-                override fun onAdClicked() {
-                    // Code to be executed when the user clicks on an ad.
-                    SmsAnalytics.logEvent("Detail_Wire_Click")
-                    Preferences.getDefault().putLong("pref_detail_wire_click_time", System.currentTimeMillis())
-                }
-
-                override fun onAdLeftApplication() {
-                    // Code to be executed when the user has left the app.
-                }
-
-                override fun onAdClosed() {
-                    // Code to be executed when the interstitial ad is closed.
-                }
-            }
+            InterstitialAdManager.preload(this, "detail-wire", AdConfig.detailWireAdConfig)
         }
 
         SmsAnalytics.logEvent("Compose_Create")
 
         if (fulfillAdLimitationNative()) {
-            loadNativeAd()
+//            loadNativeAd()
         }
     }
 
-    private fun loadNativeAd() {
-        val adLoader = AdLoader.Builder(this,
-                if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/2247696110"
-                else "ca-app-pub-9729300831038244/8596497510")
-                .forUnifiedNativeAd { ad: UnifiedNativeAd ->
-                    // If this callback occurs after the activity is destroyed, you
-                    // must call destroy and return or you may get a memory leak.
-                    // Note `isDestroyed` is a method on Activity.
-                    if (isDestroyed) {
-                        ad.destroy()
-                        return@forUnifiedNativeAd
-                    }
-
-                    adContainer.visibility = View.VISIBLE
-
-                    val adView = layoutInflater.inflate(R.layout.conversation_list_ad, null) as UnifiedNativeAdView
-                    val headlineView = adView.findViewById<TextView>(R.id.title)
-                    headlineView.text = ad.headline
-                    adView.headlineView = headlineView
-                    val subtitle = adView.findViewById<TextView>(R.id.snippet)
-                    subtitle.text = ad.body
-                    adView.bodyView = subtitle
-                    val icon = adView.findViewById<ImageView>(R.id.avatars)
-                    if (ad.icon != null && ad.icon.drawable != null) {
-                        icon.setImageDrawable(ad.icon.drawable)
-                    }
-                    adView.iconView = icon
-                    var cta = adView.findViewById<TextView>(R.id.cta)
-                    cta.text = ad.callToAction
-                    adView.callToActionView = cta
-
-                    adView.setNativeAd(ad)
-
-                    adContainer.removeAllViews()
-                    adContainer.addView(adView)
-                }
-                .withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(adError: LoadAdError) {
-                        // Handle the failure by logging, altering the UI, and so on.
-                        Log.d("MainActivity", "failed to load native ad")
-                    }
-
-                    override fun onAdClicked() {
-                        Preferences.getDefault().putLong("pref_detail_native_click_time", System.currentTimeMillis())
-                    }
-                })
-                .withNativeAdOptions(NativeAdOptions.Builder()
-                        // Methods in the NativeAdOptions.Builder class can be
-                        // used here to specify individual options settings.
-                        .build())
-                .build()
-
-        var extras = FacebookExtras()
-                .setNativeBanner(true)
-                .build()
-
-        var adrequest = AdRequest.Builder()
-                .addNetworkExtrasBundle(FacebookAdapter::class.java, extras)
-                .build()
-        adLoader.loadAd(adrequest)
-    }
+//    private fun loadNativeAd() {
+//        val adLoader = AdLoader.Builder(this,
+//                if (BuildConfig.DEBUG) "ca-app-pub-3940256099942544/2247696110"
+//                else "ca-app-pub-9729300831038244/8596497510")
+//                .forUnifiedNativeAd { ad: UnifiedNativeAd ->
+//                    // If this callback occurs after the activity is destroyed, you
+//                    // must call destroy and return or you may get a memory leak.
+//                    // Note `isDestroyed` is a method on Activity.
+//                    if (isDestroyed) {
+//                        ad.destroy()
+//                        return@forUnifiedNativeAd
+//                    }
+//
+//                    adContainer.visibility = View.VISIBLE
+//
+//                    val adView = layoutInflater.inflate(R.layout.conversation_list_ad, null) as UnifiedNativeAdView
+//                    val headlineView = adView.findViewById<TextView>(R.id.title)
+//                    headlineView.text = ad.headline
+//                    adView.headlineView = headlineView
+//                    val subtitle = adView.findViewById<TextView>(R.id.snippet)
+//                    subtitle.text = ad.body
+//                    adView.bodyView = subtitle
+//                    val icon = adView.findViewById<ImageView>(R.id.avatars)
+//                    if (ad.icon != null && ad.icon.drawable != null) {
+//                        icon.setImageDrawable(ad.icon.drawable)
+//                    }
+//                    adView.iconView = icon
+//                    var cta = adView.findViewById<TextView>(R.id.cta)
+//                    cta.text = ad.callToAction
+//                    adView.callToActionView = cta
+//
+//                    adView.setNativeAd(ad)
+//
+//                    adContainer.removeAllViews()
+//                    adContainer.addView(adView)
+//                }
+//                .withAdListener(object : AdListener() {
+//                    override fun onAdFailedToLoad(adError: LoadAdError) {
+//                        // Handle the failure by logging, altering the UI, and so on.
+//                        Log.d("MainActivity", "failed to load native ad")
+//                    }
+//
+//                    override fun onAdClicked() {
+//                        Preferences.getDefault().putLong("pref_detail_native_click_time", System.currentTimeMillis())
+//                    }
+//                })
+//                .withNativeAdOptions(NativeAdOptions.Builder()
+//                        // Methods in the NativeAdOptions.Builder class can be
+//                        // used here to specify individual options settings.
+//                        .build())
+//                .build()
+//
+//        var extras = FacebookExtras()
+//                .setNativeBanner(true)
+//                .build()
+//
+//        var adrequest = AdRequest.Builder()
+//                .addNetworkExtrasBundle(FacebookAdapter::class.java, extras)
+//                .build()
+//        adLoader.loadAd(adrequest)
+//    }
 
     private fun fulfillAdLimitation(): Boolean {
         return if (!BuildConfig.DEBUG)
@@ -302,7 +266,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     > DateUtils.MINUTE_IN_MILLIS * 30
                     && System.currentTimeMillis() - Preferences.getDefault().getLong("pref_detail_wire_show_time", -1)
                     > DateUtils.MINUTE_IN_MILLIS * 5
-                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_wire_click_time", -1))
+//                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_wire_click_time", -1))
                     && !PlusManager.isPremiumUser()
                     && RemoteConfig.instance.getBoolean("AdComposeInterstitialEnabled"))
         else
@@ -313,7 +277,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         return if (!BuildConfig.DEBUG)
             (System.currentTimeMillis() - Preferences.getDefault().getLong("pref_key_install_time", -1)
                     > DateUtils.MINUTE_IN_MILLIS * 10
-                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_native_click_time", -1))
+//                    && !Calendars.isSameDay(System.currentTimeMillis(), Preferences.getDefault().getLong("pref_detail_native_click_time", -1))
                     && !PlusManager.isPremiumUser()
                     && RemoteConfig.instance.getBoolean("AdComposeNativeEnabled"))
         else
@@ -523,12 +487,22 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         SmsAnalytics.logEvent("Compose_Back")
 
         if (fulfillAdLimitation()) {
-            if (mInterstitialAd.isLoaded) {
-                mInterstitialAd.show()
-                Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
+            val ad: InterstitialAdRequest? = InterstitialAdManager.fetch("detail-wire")
+            if (ad != null && ad.isLoaded) {
+                ad.listener = object : NmAdListener {
+                    override fun onAdClose() {}
+                    override fun onAdFailedToLoad(var1: Int) {}
+                    override fun onAdOpened() {}
+                    override fun onAdLoaded() {}
+                    override fun onAdClicked() {}
+                    override fun onAdImpression() {}
+                }
+                ad.show()
 
+                Preferences.getDefault().putLong("pref_detail_wire_show_time", System.currentTimeMillis())
                 SmsAnalytics.logEvent("Detail_Wire_Show")
             }
+
 
             SmsAnalytics.logEvent("Detail_Wire_Chance")
         }
