@@ -73,14 +73,29 @@ import javax.inject.Inject
 
 class MainActivity : QkThemedActivity(), MainView {
 
-    @Inject lateinit var blockingDialog: BlockingDialog
-    @Inject lateinit var disposables: CompositeDisposable
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var conversationsAdapter: ConversationsAdapter
-    @Inject lateinit var drawerBadgesExperiment: DrawerBadgesExperiment
-    @Inject lateinit var searchAdapter: SearchAdapter
-    @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var blockingDialog: BlockingDialog
+
+    @Inject
+    lateinit var disposables: CompositeDisposable
+
+    @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var conversationsAdapter: ConversationsAdapter
+
+    @Inject
+    lateinit var drawerBadgesExperiment: DrawerBadgesExperiment
+
+    @Inject
+    lateinit var searchAdapter: SearchAdapter
+
+    @Inject
+    lateinit var itemTouchCallback: ConversationItemTouchCallback
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val activityResumedIntent: Subject<Boolean> = PublishSubject.create()
@@ -112,7 +127,8 @@ class MainActivity : QkThemedActivity(), MainView {
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
-    override val changelogMoreIntent by lazy { changelogDialog.moreClicks }
+
+    //    override val changelogMoreIntent by lazy { changelogDialog.moreClicks }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
     override val snackbarButtonIntent: Subject<Unit> = PublishSubject.create()
 

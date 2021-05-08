@@ -58,26 +58,26 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    billingManager: BillingManager,
-    contactAddedListener: ContactAddedListener,
-    markAllSeen: MarkAllSeen,
-    migratePreferences: MigratePreferences,
-    syncRepository: SyncRepository,
-    private val changelogManager: ChangelogManager,
-    private val conversationRepo: ConversationRepository,
-    private val deleteConversations: DeleteConversations,
-    private val markArchived: MarkArchived,
-    private val markPinned: MarkPinned,
-    private val markRead: MarkRead,
-    private val markUnarchived: MarkUnarchived,
-    private val markUnpinned: MarkUnpinned,
-    private val markUnread: MarkUnread,
-    private val navigator: Navigator,
-    private val permissionManager: PermissionManager,
-    private val prefs: Preferences,
-    private val ratingManager: RatingManager,
-    private val syncContacts: SyncContacts,
-    private val syncMessages: SyncMessages
+        billingManager: BillingManager,
+        contactAddedListener: ContactAddedListener,
+        markAllSeen: MarkAllSeen,
+        migratePreferences: MigratePreferences,
+        syncRepository: SyncRepository,
+        private val changelogManager: ChangelogManager,
+        private val conversationRepo: ConversationRepository,
+        private val deleteConversations: DeleteConversations,
+        private val markArchived: MarkArchived,
+        private val markPinned: MarkPinned,
+        private val markRead: MarkRead,
+        private val markUnarchived: MarkUnarchived,
+        private val markUnpinned: MarkUnpinned,
+        private val markUnread: MarkUnread,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager,
+        private val prefs: Preferences,
+        private val ratingManager: RatingManager,
+        private val syncContacts: SyncContacts,
+        private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
     init {
@@ -110,7 +110,9 @@ class MainViewModel @Inject constructor(
 
         // If we have all permissions and we've never run a sync, run a sync. This will be the case
         // when upgrading from 2.7.3, or if the app's data was cleared
-        val lastSync = Realm.getDefaultInstance().use { realm -> realm.where(SyncLog::class.java)?.max("date") ?: 0 }
+        val lastSync = Realm.getDefaultInstance().use { realm ->
+            realm.where(SyncLog::class.java)?.max("date") ?: 0
+        }
         if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasReadSms() && permissionManager.hasContacts()) {
             syncMessages.execute(Unit)
         }
@@ -183,9 +185,9 @@ class MainViewModel @Inject constructor(
             changelogManager.markChangelogSeen()
         }
 
-        view.changelogMoreIntent
-                .autoDisposable(view.scope())
-                .subscribe { navigator.showChangelog() }
+//        view.changelogMoreIntent
+//                .autoDisposable(view.scope())
+//                .subscribe { navigator.showChangelog() }
 
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)

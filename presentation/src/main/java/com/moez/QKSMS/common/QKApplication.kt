@@ -25,6 +25,7 @@ import android.content.BroadcastReceiver
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import androidx.fragment.app.Fragment
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.CrashlyticsTree
 import com.moez.QKSMS.common.util.FileLoggingTree
@@ -38,11 +39,8 @@ import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
 import com.uber.rxdogtag.RxDogTag
 import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasBroadcastReceiverInjector
-import dagger.android.HasServiceInjector
+import dagger.android.*
+import dagger.android.support.HasSupportFragmentInjector
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.coroutines.Dispatchers
@@ -51,24 +49,45 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
+class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector, HasSupportFragmentInjector {
 
     /**
      * Inject these so that they are forced to initialize
      */
     @Suppress("unused")
-    @Inject lateinit var analyticsManager: AnalyticsManager
-    @Suppress("unused")
-    @Inject lateinit var qkMigration: QkMigration
+    @Inject
+    lateinit var analyticsManager: AnalyticsManager
 
-    @Inject lateinit var billingManager: BillingManager
-    @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-    @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-    @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
-    @Inject lateinit var fileLoggingTree: FileLoggingTree
-    @Inject lateinit var nightModeManager: NightModeManager
-    @Inject lateinit var realmMigration: QkRealmMigration
-    @Inject lateinit var referralManager: ReferralManager
+    @Suppress("unused")
+    @Inject
+    lateinit var qkMigration: QkMigration
+
+    @Inject
+    lateinit var billingManager: BillingManager
+
+    @Inject
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+
+    @Inject
+    lateinit var dispatchingFragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
+
+    @Inject
+    lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+
+    @Inject
+    lateinit var fileLoggingTree: FileLoggingTree
+
+    @Inject
+    lateinit var nightModeManager: NightModeManager
+
+    @Inject
+    lateinit var realmMigration: QkRealmMigration
+
+    @Inject
+    lateinit var referralManager: ReferralManager
 
     override fun onCreate() {
         super.onCreate()
@@ -120,4 +139,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
         return dispatchingServiceInjector
     }
 
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+        return dispatchingFragmentInjector
+    }
 }

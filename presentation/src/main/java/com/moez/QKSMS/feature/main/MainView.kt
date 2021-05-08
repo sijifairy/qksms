@@ -39,7 +39,8 @@ interface MainView : QkView<MainState> {
     val conversationsSelectedIntent: Observable<List<Long>>
     val confirmDeleteIntent: Observable<List<Long>>
     val swipeConversationIntent: Observable<Pair<Long, Int>>
-    val changelogMoreIntent: Observable<*>
+
+    //    val changelogMoreIntent: Observable<*>
     val undoArchiveIntent: Observable<Unit>
     val snackbarButtonIntent: Observable<Unit>
 

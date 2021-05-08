@@ -42,6 +42,7 @@ import com.moez.QKSMS.feature.themepicker.injection.ThemePickerComponent
 import com.moez.QKSMS.feature.widget.WidgetAdapter
 import com.moez.QKSMS.injection.android.ActivityBuilderModule
 import com.moez.QKSMS.injection.android.BroadcastReceiverBuilderModule
+import com.moez.QKSMS.injection.android.FragmentBuilderModule
 import com.moez.QKSMS.injection.android.ServiceBuilderModule
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
@@ -53,7 +54,8 @@ import javax.inject.Singleton
     AppModule::class,
     ActivityBuilderModule::class,
     BroadcastReceiverBuilderModule::class,
-    ServiceBuilderModule::class])
+    ServiceBuilderModule::class,
+    FragmentBuilderModule::class])
 interface AppComponent {
 
     fun conversationInfoBuilder(): ConversationInfoComponent.Builder

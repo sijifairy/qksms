@@ -27,8 +27,6 @@ import com.moez.QKSMS.feature.contacts.ContactsActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
-import com.moez.QKSMS.feature.main.MainActivity
-import com.moez.QKSMS.feature.main.MainActivityModule
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivityModule
 import com.moez.QKSMS.feature.plus.PlusActivity
@@ -45,9 +43,9 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilderModule {
 
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [MainActivityModule::class])
-    abstract fun bindMainActivity(): MainActivity
+//    @ActivityScope
+//    @ContributesAndroidInjector(modules = [MainActivityModule::class])
+//    abstract fun bindMainActivity(): MainHolder
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [PlusActivityModule::class])
