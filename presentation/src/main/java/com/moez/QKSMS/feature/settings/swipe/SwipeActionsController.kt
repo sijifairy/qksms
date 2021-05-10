@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.settings.swipe
 
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.QkDialog
@@ -39,9 +40,14 @@ import javax.inject.Inject
 
 class SwipeActionsController : QkController<SwipeActionsView, SwipeActionsState, SwipeActionsPresenter>(), SwipeActionsView {
 
-    @Inject override lateinit var presenter: SwipeActionsPresenter
-    @Inject lateinit var actionsDialog: QkDialog
-    @Inject lateinit var colors: Colors
+    @Inject
+    override lateinit var presenter: SwipeActionsPresenter
+
+    @Inject
+    lateinit var actionsDialog: QkDialog
+
+    @Inject
+    lateinit var colors: Colors
 
     /**
      * Allows us to subscribe to [actionClicks] more than once
@@ -69,7 +75,7 @@ class SwipeActionsController : QkController<SwipeActionsView, SwipeActionsState,
         Observable.merge(
                 right.clicks().map { SwipeActionsView.Action.RIGHT },
                 left.clicks().map { SwipeActionsView.Action.LEFT })
-                .autoDisposable(scope())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(actionClicks)
     }
 

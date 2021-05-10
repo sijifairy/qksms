@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.settings
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -46,18 +47,18 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-    colors: Colors,
-    syncRepo: SyncRepository,
-    private val analytics: AnalyticsManager,
-    private val context: Context,
-    private val billingManager: BillingManager,
-    private val dateFormatter: DateFormatter,
-    private val deleteOldMessages: DeleteOldMessages,
-    private val messageRepo: MessageRepository,
-    private val navigator: Navigator,
-    private val nightModeManager: NightModeManager,
-    private val prefs: Preferences,
-    private val syncMessages: SyncMessages
+        colors: Colors,
+        syncRepo: SyncRepository,
+        private val analytics: AnalyticsManager,
+        private val context: Context,
+        private val billingManager: BillingManager,
+        private val dateFormatter: DateFormatter,
+        private val deleteOldMessages: DeleteOldMessages,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val nightModeManager: NightModeManager,
+        private val prefs: Preferences,
+        private val syncMessages: SyncMessages
 ) : QkPresenter<SettingsView, SettingsState>(SettingsState(
         nightModeId = prefs.nightMode.get()
 )) {
@@ -147,7 +148,7 @@ class SettingsPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.preferenceClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
 
@@ -208,7 +209,7 @@ class SettingsPresenter @Inject constructor(
         view.aboutLongClicks()
                 .map { !prefs.logging.get() }
                 .doOnNext { enabled -> prefs.logging.set(enabled) }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { enabled ->
                     context.makeToast(when (enabled) {
                         true -> R.string.settings_logging_enabled
@@ -224,23 +225,23 @@ class SettingsPresenter @Inject constructor(
                         nightModeManager.updateNightMode(mode)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.viewQksmsPlusClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showQksmsPlusActivity("settings_night") }
 
         view.nightStartSelected()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { nightModeManager.setNightStart(it.first, it.second) }
 
         view.nightEndSelected()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { nightModeManager.setNightEnd(it.first, it.second) }
 
         view.textSizeSelected()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
@@ -251,12 +252,12 @@ class SettingsPresenter @Inject constructor(
                         prefs.sendDelay.set(duration)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.signatureChanged()
                 .doOnNext(prefs.signature::set)
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.autoDeleteChanged()
@@ -283,11 +284,11 @@ class SettingsPresenter @Inject constructor(
                     }
                 }
                 .doOnNext(prefs.autoDelete::set)
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.mmsSizeSelected()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(prefs.mmsSize::set)
     }
 

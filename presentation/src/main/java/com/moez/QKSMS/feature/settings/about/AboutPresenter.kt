@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.settings.about
 
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -26,14 +27,14 @@ import com.uber.autodispose.autoDisposable
 import javax.inject.Inject
 
 class AboutPresenter @Inject constructor(
-    private val navigator: Navigator
+        private val navigator: Navigator
 ) : QkPresenter<AboutView, Unit>(Unit) {
 
     override fun bindIntents(view: AboutView) {
         super.bindIntents(view)
 
         view.preferenceClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { preference ->
                     when (preference.id) {
                         R.id.developer -> navigator.showDeveloper()

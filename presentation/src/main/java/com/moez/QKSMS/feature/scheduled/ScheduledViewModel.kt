@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.scheduled
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
@@ -34,11 +35,11 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class ScheduledViewModel @Inject constructor(
-    billingManager: BillingManager,
-    private val context: Context,
-    private val navigator: Navigator,
-    private val scheduledMessageRepo: ScheduledMessageRepository,
-    private val sendScheduledMessage: SendScheduledMessage
+        billingManager: BillingManager,
+        private val context: Context,
+        private val navigator: Navigator,
+        private val scheduledMessageRepo: ScheduledMessageRepository,
+        private val sendScheduledMessage: SendScheduledMessage
 ) : QkViewModel<ScheduledView, ScheduledState>(ScheduledState(
         scheduledMessages = scheduledMessageRepo.getScheduledMessages()
 )) {
@@ -52,7 +53,7 @@ class ScheduledViewModel @Inject constructor(
         super.bindView(view)
 
         view.messageClickIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.showMessageOptions() }
 
         view.messageMenuIntent
@@ -67,15 +68,15 @@ class ScheduledViewModel @Inject constructor(
                     }
                     Unit
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.composeIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showCompose() }
 
         view.upgradeIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showQksmsPlusActivity("schedule_fab") }
     }
 

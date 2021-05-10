@@ -21,6 +21,7 @@ package com.moez.QKSMS.feature.notificationprefs
 import android.content.Context
 import android.media.RingtoneManager
 import android.net.Uri
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
@@ -37,11 +38,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class NotificationPrefsViewModel @Inject constructor(
-    @Named("threadId") private val threadId: Long,
-    private val context: Context,
-    private val conversationRepo: ConversationRepository,
-    private val navigator: Navigator,
-    private val prefs: Preferences
+        @Named("threadId") private val threadId: Long,
+        private val context: Context,
+        private val conversationRepo: ConversationRepository,
+        private val navigator: Navigator,
+        private val prefs: Preferences
 ) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
     private val notifications = prefs.notifications(threadId)
@@ -102,7 +103,7 @@ class NotificationPrefsViewModel @Inject constructor(
         super.bindView(view)
 
         view.preferenceClickIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     when (it.id) {
                         R.id.notificationsO -> navigator.showNotificationChannel(threadId)
@@ -130,11 +131,11 @@ class NotificationPrefsViewModel @Inject constructor(
                 }
 
         view.previewModeSelectedIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { previews.set(it) }
 
         view.ringtoneSelectedIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { ringtone -> this.ringtone.set(ringtone) }
 
         view.actionsSelectedIntent
@@ -145,7 +146,7 @@ class NotificationPrefsViewModel @Inject constructor(
                         R.id.action3 -> prefs.notifAction3.set(action)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
     }
 }

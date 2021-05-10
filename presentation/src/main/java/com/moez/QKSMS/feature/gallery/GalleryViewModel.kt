@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.gallery
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
@@ -37,13 +38,13 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class GalleryViewModel @Inject constructor(
-    conversationRepo: ConversationRepository,
-    @Named("partId") private val partId: Long,
-    private val context: Context,
-    private val messageRepo: MessageRepository,
-    private val navigator: Navigator,
-    private val saveImage: SaveImage,
-    private val permissions: PermissionManager
+        conversationRepo: ConversationRepository,
+        @Named("partId") private val partId: Long,
+        private val context: Context,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val saveImage: SaveImage,
+        private val permissions: PermissionManager
 ) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
 
     init {
@@ -66,7 +67,7 @@ class GalleryViewModel @Inject constructor(
         view.screenTouched()
                 .withLatestFrom(state) { _, state -> state.navigationVisible }
                 .map { navigationVisible -> !navigationVisible }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigationVisible -> newState { copy(navigationVisible = navigationVisible) } }
 
         // Save image to device
@@ -74,7 +75,7 @@ class GalleryViewModel @Inject constructor(
                 .filter { itemId -> itemId == R.id.save }
                 .filter { permissions.hasStorage().also { if (!it) view.requestStoragePermission() } }
                 .withLatestFrom(view.pageChanged()) { _, part -> part.id }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { partId -> saveImage.execute(partId) { context.makeToast(R.string.gallery_toast_saved) } }
 
         // Share image externally
@@ -82,7 +83,7 @@ class GalleryViewModel @Inject constructor(
                 .filter { itemId -> itemId == R.id.share }
                 .filter { permissions.hasStorage().also { if (!it) view.requestStoragePermission() } }
                 .withLatestFrom(view.pageChanged()) { _, part -> part.id }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { partId -> messageRepo.savePart(partId)?.let(navigator::shareFile) }
     }
 

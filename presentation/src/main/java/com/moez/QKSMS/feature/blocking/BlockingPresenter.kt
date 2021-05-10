@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.blocking
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.common.base.QkPresenter
@@ -29,9 +30,9 @@ import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class BlockingPresenter @Inject constructor(
-    context: Context,
-    private val blockingClient: BlockingClient,
-    private val prefs: Preferences
+        context: Context,
+        private val blockingClient: BlockingClient,
+        private val prefs: Preferences
 ) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
 
     init {
@@ -54,11 +55,11 @@ class BlockingPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.blockingManagerIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.openBlockingManager() }
 
         view.blockedNumbersIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     if (prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_QKSMS) {
                         // TODO: This is a hack, get rid of it once we implement AndroidX navigation
@@ -69,11 +70,11 @@ class BlockingPresenter @Inject constructor(
                 }
 
         view.blockedMessagesIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.openBlockedMessages() }
 
         view.dropClickedIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { prefs.drop.set(!prefs.drop.get()) }
     }
 

@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.conversationinfo
 
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.R
@@ -41,13 +42,20 @@ import kotlinx.android.synthetic.main.conversation_info_controller.*
 import javax.inject.Inject
 
 class ConversationInfoController(
-    val threadId: Long = 0
+        val threadId: Long = 0
 ) : QkController<ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
 
-    @Inject override lateinit var presenter: ConversationInfoPresenter
-    @Inject lateinit var blockingDialog: BlockingDialog
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var adapter: ConversationInfoAdapter
+    @Inject
+    override lateinit var presenter: ConversationInfoPresenter
+
+    @Inject
+    lateinit var blockingDialog: BlockingDialog
+
+    @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var adapter: ConversationInfoAdapter
 
     private val nameDialog: TextInputDialog by lazy {
         TextInputDialog(activity!!, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
@@ -76,7 +84,7 @@ class ConversationInfoController(
         }
 
         themedActivity?.theme
-                ?.autoDisposable(scope())
+                ?.autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 ?.subscribe { recyclerView.scrapViews() }
     }
 

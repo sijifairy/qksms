@@ -24,6 +24,7 @@ import android.os.Vibrator
 import android.provider.ContactsContract
 import android.telephony.SmsMessage
 import androidx.core.content.getSystemService
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
@@ -74,29 +75,29 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ComposeViewModel @Inject constructor(
-    @Named("query") private val query: String,
-    @Named("threadId") private val threadId: Long,
-    @Named("addresses") private val addresses: List<String>,
-    @Named("text") private val sharedText: String,
-    @Named("attachments") private val sharedAttachments: Attachments,
-    private val contactRepo: ContactRepository,
-    private val context: Context,
-    private val activeConversationManager: ActiveConversationManager,
-    private val addScheduledMessage: AddScheduledMessage,
-    private val billingManager: BillingManager,
-    private val cancelMessage: CancelDelayedMessage,
-    private val conversationRepo: ConversationRepository,
-    private val deleteMessages: DeleteMessages,
-    private val markRead: MarkRead,
-    private val messageDetailsFormatter: MessageDetailsFormatter,
-    private val messageRepo: MessageRepository,
-    private val navigator: Navigator,
-    private val permissionManager: PermissionManager,
-    private val phoneNumberUtils: PhoneNumberUtils,
-    private val prefs: Preferences,
-    private val retrySending: RetrySending,
-    private val sendMessage: SendMessage,
-    private val subscriptionManager: SubscriptionManagerCompat
+        @Named("query") private val query: String,
+        @Named("threadId") private val threadId: Long,
+        @Named("addresses") private val addresses: List<String>,
+        @Named("text") private val sharedText: String,
+        @Named("attachments") private val sharedAttachments: Attachments,
+        private val contactRepo: ContactRepository,
+        private val context: Context,
+        private val activeConversationManager: ActiveConversationManager,
+        private val addScheduledMessage: AddScheduledMessage,
+        private val billingManager: BillingManager,
+        private val cancelMessage: CancelDelayedMessage,
+        private val conversationRepo: ConversationRepository,
+        private val deleteMessages: DeleteMessages,
+        private val markRead: MarkRead,
+        private val messageDetailsFormatter: MessageDetailsFormatter,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager,
+        private val phoneNumberUtils: PhoneNumberUtils,
+        private val prefs: Preferences,
+        private val retrySending: RetrySending,
+        private val sendMessage: SendMessage,
+        private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && addresses.isEmpty(),
         threadId = threadId,
@@ -125,7 +126,9 @@ class ComposeViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .doOnNext { newState { copy(loading = true) } }
                 .observeOn(Schedulers.io())
-                .map { addresses -> Pair(conversationRepo.getOrCreateConversation(addresses)?.id ?: 0, addresses) }
+                .map { addresses ->
+                    Pair(conversationRepo.getOrCreateConversation(addresses)?.id ?: 0, addresses)
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { newState { copy(loading = false) } }
                 .switchMap { (threadId, addresses) ->
@@ -222,7 +225,8 @@ class ComposeViewModel @Inject constructor(
 
         val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
         disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
-            val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
+            val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId }
+                    ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
     }
@@ -260,7 +264,7 @@ class ComposeViewModel @Inject constructor(
                                         contact = lookupKey?.let(contactRepo::getUnmanagedContact))
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { chips ->
                     chipsReducer.onNext { list -> list + chips }
                     view.showKeyboard()
@@ -272,12 +276,12 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(selectedChips) { _, chips ->
                     view.showContacts(sharing, chips)
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
         view.chipDeletedIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { contact ->
                     chipsReducer.onNext { contacts ->
                         val result = contacts.filterNot { it == contact }
@@ -290,7 +294,7 @@ class ComposeViewModel @Inject constructor(
 
         // When the menu is loaded, trigger a new state so that the menu options can be rendered correctly
         view.menuReadyIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { newState { copy() } }
 
         // Open the phone dialer if the call button is clicked
@@ -299,14 +303,14 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .mapNotNull { conversation -> conversation.recipients.firstOrNull() }
                 .map { recipient -> recipient.address }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { address -> navigator.makePhoneCall(address) }
 
         // Open the conversation settings if info button is clicked
         view.optionsItemIntent
                 .filter { it == R.id.info }
                 .withLatestFrom(conversation) { _, conversation -> conversation }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { conversation -> navigator.showConversationInfo(conversation.id) }
 
         // Copy the message contents
@@ -327,7 +331,7 @@ class ComposeViewModel @Inject constructor(
 
                     ClipboardUtils.copy(context, text)
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.clearSelection() }
 
         // Show the message details
@@ -337,7 +341,7 @@ class ComposeViewModel @Inject constructor(
                 .mapNotNull { messages -> messages.firstOrNull().also { view.clearSelection() } }
                 .mapNotNull(messageRepo::getMessage)
                 .map(messageDetailsFormatter::format)
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.showDetails(it) }
 
         // Delete the messages
@@ -347,7 +351,7 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(view.messagesSelectedIntent, conversation) { _, messages, conversation ->
                     deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.clearSelection() }
 
         // Forward the message
@@ -359,7 +363,7 @@ class ComposeViewModel @Inject constructor(
                         navigator.showCompose(message.getText(), images)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.clearSelection() }
 
         // Show the previous search result
@@ -371,7 +375,7 @@ class ComposeViewModel @Inject constructor(
                     else messages.getOrNull(currentPosition - 1)?.id ?: -1
                 }
                 .filter { id -> id != -1L }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(searchSelection)
 
         // Show the next search result
@@ -383,32 +387,32 @@ class ComposeViewModel @Inject constructor(
                     else messages.getOrNull(currentPosition + 1)?.id ?: -1
                 }
                 .filter { id -> id != -1L }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(searchSelection)
 
         // Clear the search
         view.optionsItemIntent
                 .filter { it == R.id.clear }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { newState { copy(query = "", searchSelectionId = -1) } }
 
         // Toggle the group sending mode
         view.sendAsGroupIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { prefs.sendAsGroup.set(!prefs.sendAsGroup.get()) }
 
         // Scroll to search position
         searchSelection
                 .filter { id -> id != -1L }
                 .doOnNext { id -> newState { copy(searchSelectionId = id) } }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(view::scrollToMessage)
 
         // Theme changes
         prefs.keyChanges
                 .filter { key -> key.contains("theme") }
                 .doOnNext { view.themeChanged() }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Retry sending
@@ -416,21 +420,21 @@ class ComposeViewModel @Inject constructor(
                 .mapNotNull(messageRepo::getMessage)
                 .filter { message -> message.isFailedMessage() }
                 .doOnNext { message -> retrySending.execute(message.id) }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Media attachment clicks
         view.messagePartClickIntent
                 .mapNotNull(messageRepo::getPart)
                 .filter { part -> part.isImage() || part.isVideo() }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { part -> navigator.showMedia(part.id) }
 
         // Non-media attachment clicks
         view.messagePartClickIntent
                 .mapNotNull(messageRepo::getPart)
                 .filter { part -> !part.isImage() && !part.isVideo() }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { part ->
                     if (permissionManager.hasStorage()) {
                         messageRepo.savePart(part.id)?.let(navigator::viewFile)
@@ -442,14 +446,14 @@ class ComposeViewModel @Inject constructor(
         // Update the State when the message selected count changes
         view.messagesSelectedIntent
                 .map { selection -> selection.size }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { messages -> newState { copy(selectedMessages = messages, editingMode = false) } }
 
         // Cancel sending a message
         view.cancelSendingIntent
                 .mapNotNull(messageRepo::getMessage)
                 .doOnNext { message -> view.setDraft(message.getText()) }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { message ->
                     cancelMessage.execute(CancelDelayedMessage.Params(message.id, message.threadId))
                 }
@@ -471,7 +475,7 @@ class ComposeViewModel @Inject constructor(
                         false -> activeConversationManager.setActiveConversation(null)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Save draft when the activity goes into the background
@@ -483,17 +487,17 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(view.textChangedIntent) { threadId, draft ->
                     conversationRepo.saveDraft(threadId, draft.toString())
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Open the attachment options
         view.attachIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { newState { copy(attaching = !attaching) } }
 
         // Attach a photo from camera
         view.cameraIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     if (permissionManager.hasStorage()) {
                         newState { copy(attaching = false) }
@@ -506,7 +510,7 @@ class ComposeViewModel @Inject constructor(
         // Attach a photo from gallery
         view.galleryIntent
                 .doOnNext { newState { copy(attaching = false) } }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.requestGallery() }
 
         // Choose a time to schedule the message
@@ -516,7 +520,7 @@ class ComposeViewModel @Inject constructor(
                 .filter { upgraded ->
                     upgraded.also { if (!upgraded) view.showQksmsPlusSnackbar(R.string.compose_scheduled_plus) }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.requestDatePicker() }
 
         // A photo was selected
@@ -525,7 +529,7 @@ class ComposeViewModel @Inject constructor(
                 view.inputContentIntent.map { inputContent -> Attachment.Image(inputContent = inputContent) })
                 .withLatestFrom(attachments) { attachment, attachments -> attachments + attachment }
                 .doOnNext(attachments::onNext)
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { newState { copy(attaching = false) } }
 
         // Set the scheduled time
@@ -535,13 +539,13 @@ class ComposeViewModel @Inject constructor(
                         if (!future) context.makeToast(R.string.compose_scheduled_future)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { scheduled -> newState { copy(scheduled = scheduled) } }
 
         // Attach a contact
         view.attachContactIntent
                 .doOnNext { newState { copy(attaching = false) } }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.requestContact() }
 
         // Contact was selected for attachment
@@ -549,7 +553,7 @@ class ComposeViewModel @Inject constructor(
                 .map { uri -> Attachment.Contact(getVCard(uri)!!) }
                 .withLatestFrom(attachments) { attachment, attachments -> attachments + attachment }
                 .subscribeOn(Schedulers.io())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(attachments::onNext) { error ->
                     context.makeToast(R.string.compose_contact_error)
                     Timber.w(error)
@@ -558,13 +562,13 @@ class ComposeViewModel @Inject constructor(
         // Detach a photo
         view.attachmentDeletedIntent
                 .withLatestFrom(attachments) { bitmap, attachments -> attachments.filter { it !== bitmap } }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { attachments.onNext(it) }
 
         conversation
                 .map { conversation -> conversation.draft }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { draft ->
 
                     // If text was shared into the conversation, it should take priority over the
@@ -584,7 +588,7 @@ class ComposeViewModel @Inject constructor(
                 .combineLatest(view.textChangedIntent, attachments) { text, attachments ->
                     text.isNotBlank() || attachments.isNotEmpty()
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { canSend -> newState { copy(canSend = canSend) } }
 
         // Show the remaining character counter when necessary
@@ -602,12 +606,12 @@ class ComposeViewModel @Inject constructor(
                     }
                 }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { remaining -> newState { copy(remaining = remaining) } }
 
         // Cancel the scheduled time
         view.scheduleCancelIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { newState { copy(scheduled = 0) } }
 
         // Toggle to the next sim slot
@@ -629,7 +633,7 @@ class ComposeViewModel @Inject constructor(
 
                     newState { copy(subscription = subscription) }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
@@ -692,7 +696,8 @@ class ComposeViewModel @Inject constructor(
                                     TelephonyCompat.getOrCreateThreadId(context, addr)
                                 } ?: 0
                                 val address = listOf(conversationRepo
-                                        .getConversation(threadId)?.recipients?.firstOrNull()?.address ?: addr)
+                                        .getConversation(threadId)?.recipients?.firstOrNull()?.address
+                                        ?: addr)
                                 sendMessage.execute(SendMessage
                                         .Params(subId, threadId, address, body, attachments, delay))
                             }
@@ -706,12 +711,12 @@ class ComposeViewModel @Inject constructor(
                         newState { copy(editingMode = false, hasError = !sendAsGroup) }
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // View QKSMS+
         view.viewQksmsPlusIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showQksmsPlusActivity("compose_schedule") }
 
         // Navigate back
@@ -725,7 +730,7 @@ class ComposeViewModel @Inject constructor(
                         else -> newState { copy(hasError = true) }
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
     }

@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.blocking.numbers
 
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.interactor.MarkUnblocked
 import com.moez.QKSMS.repository.BlockingRepository
@@ -28,9 +29,9 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class BlockedNumbersPresenter @Inject constructor(
-    private val blockingRepo: BlockingRepository,
-    private val conversationRepo: ConversationRepository,
-    private val markUnblocked: MarkUnblocked
+        private val blockingRepo: BlockingRepository,
+        private val conversationRepo: ConversationRepository,
+        private val markUnblocked: MarkUnblocked
 ) : QkPresenter<BlockedNumbersView, BlockedNumbersState>(
         BlockedNumbersState(numbers = blockingRepo.getBlockedNumbers())
 ) {
@@ -46,16 +47,16 @@ class BlockedNumbersPresenter @Inject constructor(
                 }
                 .doOnNext(blockingRepo::unblockNumber)
                 .subscribeOn(Schedulers.io())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.addAddress()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.showAddDialog() }
 
         view.saveAddress()
                 .subscribeOn(Schedulers.io())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { address -> blockingRepo.blockNumber(address) }
     }
 

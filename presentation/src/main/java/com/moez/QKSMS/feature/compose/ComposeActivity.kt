@@ -36,6 +36,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -82,12 +83,23 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         private const val CameraDestinationKey = "camera_destination"
     }
 
-    @Inject lateinit var attachmentAdapter: AttachmentAdapter
-    @Inject lateinit var chipsAdapter: ChipsAdapter
-    @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var messageAdapter: MessagesAdapter
-    @Inject lateinit var navigator: Navigator
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var attachmentAdapter: AttachmentAdapter
+
+    @Inject
+    lateinit var chipsAdapter: ChipsAdapter
+
+    @Inject
+    lateinit var dateFormatter: DateFormatter
+
+    @Inject
+    lateinit var messageAdapter: MessagesAdapter
+
+    @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val chipsSelectedIntent: Subject<HashMap<String, String?>> = PublishSubject.create()
@@ -151,7 +163,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .doOnNext { attach.setBackgroundTint(it.theme) }
                 .doOnNext { attach.setTint(it.textPrimary) }
                 .doOnNext { messageAdapter.theme = it }
-                .autoDisposable(scope())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         window.callback = ComposeWindowCallback(window.callback, this)

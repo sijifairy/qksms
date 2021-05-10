@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.contacts
 
 import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
@@ -48,14 +49,14 @@ import kotlinx.coroutines.rx2.awaitFirst
 import javax.inject.Inject
 
 class ContactsViewModel @Inject constructor(
-    sharing: Boolean,
-    serializedChips: HashMap<String, String?>,
-    private val contactFilter: ContactFilter,
-    private val contactGroupFilter: ContactGroupFilter,
-    private val contactsRepo: ContactRepository,
-    private val conversationRepo: ConversationRepository,
-    private val phoneNumberUtils: PhoneNumberUtils,
-    private val setDefaultPhoneNumber: SetDefaultPhoneNumber
+        sharing: Boolean,
+        serializedChips: HashMap<String, String?>,
+        private val contactFilter: ContactFilter,
+        private val contactGroupFilter: ContactGroupFilter,
+        private val contactsRepo: ContactRepository,
+        private val conversationRepo: ConversationRepository,
+        private val phoneNumberUtils: PhoneNumberUtils,
+        private val setDefaultPhoneNumber: SetDefaultPhoneNumber
 ) : QkViewModel<ContactsContract, ContactsState>(ContactsState()) {
 
     private val contactGroups: Observable<List<ContactGroup>> by lazy { contactsRepo.getUnmanagedContactGroups() }
@@ -85,12 +86,12 @@ class ContactsViewModel @Inject constructor(
 
         // Update the state's query, so we know if we should show the cancel button
         view.queryChangedIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { query -> newState { copy(query = query.toString()) } }
 
         // Clear the query
         view.queryClearedIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.clearQuery() }
 
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
@@ -167,7 +168,7 @@ class ContactsViewModel @Inject constructor(
                     composeItems
                 }
                 .subscribeOn(Schedulers.computation())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { items -> newState { copy(composeItems = items) } }
 
         // Listen for ComposeItems being selected, and then send them off to the number picker dialog in case
@@ -183,7 +184,8 @@ class ContactsViewModel @Inject constructor(
                 .map { (composeItem, force) ->
                     HashMap(composeItem.getContacts().associate { contact ->
                         if (contact.numbers.size == 1 || contact.getDefaultNumber() != null && !force) {
-                            val address = contact.getDefaultNumber()?.address ?: contact.numbers[0]!!.address
+                            val address = contact.getDefaultNumber()?.address
+                                    ?: contact.numbers[0]!!.address
                             address to contact.lookupKey
                         } else {
                             runBlocking {
@@ -209,7 +211,7 @@ class ContactsViewModel @Inject constructor(
                 }
                 .filter { result -> result.isNotEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { result -> view.finish(result) }
     }
 

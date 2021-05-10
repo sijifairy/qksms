@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.themepicker
 
+import androidx.lifecycle.Lifecycle
 import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -33,12 +34,12 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ThemePickerPresenter @Inject constructor(
-    prefs: Preferences,
-    @Named("recipientId") private val recipientId: Long,
-    private val billingManager: BillingManager,
-    private val colors: Colors,
-    private val navigator: Navigator,
-    private val widgetManager: WidgetManager
+        prefs: Preferences,
+        @Named("recipientId") private val recipientId: Long,
+        private val billingManager: BillingManager,
+        private val colors: Colors,
+        private val navigator: Navigator,
+        private val widgetManager: WidgetManager
 ) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(recipientId = recipientId)) {
 
     private val theme: Preference<Int> = prefs.theme(recipientId)
@@ -47,12 +48,12 @@ class ThemePickerPresenter @Inject constructor(
         super.bindIntents(view)
 
         theme.asObservable()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { color -> view.setCurrentTheme(color) }
 
         // Update the theme when a material theme is clicked
         view.themeSelected()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { color ->
                     theme.set(color)
                     if (recipientId == 0L) {
@@ -65,12 +66,12 @@ class ThemePickerPresenter @Inject constructor(
                 .doOnNext { color -> newState { copy(newColor = color) } }
                 .map { color -> colors.textPrimaryOnThemeForColor(color) }
                 .doOnNext { color -> newState { copy(newTextColor = color) } }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Toggle the visibility of the apply group
         Observables.combineLatest(theme.asObservable(), view.hsvThemeSelected()) { old, new -> old != new }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { themeChanged -> newState { copy(applyThemeVisible = themeChanged) } }
 
         // Update the theme, when apply is clicked
@@ -86,18 +87,18 @@ class ThemePickerPresenter @Inject constructor(
                         }
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Show QKSMS+ activity
         view.viewQksmsPlusClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showQksmsPlusActivity("settings_theme") }
 
         // Reset the theme
         view.clearHsvThemeClicks()
                 .withLatestFrom(theme.asObservable()) { _, color -> color }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { color -> view.setCurrentTheme(color) }
     }
 

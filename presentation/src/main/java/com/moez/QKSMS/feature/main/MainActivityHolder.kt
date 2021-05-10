@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkActivity
@@ -26,7 +27,22 @@ import com.moez.QKSMS.common.base.QkActivity
 class MainActivityHolder : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_Black)
+
+        Log.d("Lifecycle", "main create")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_holder)
+
+    }
+
+    override fun onStart() {
+        Log.d("Lifecycle", "main start")
+        super.onStart()
+
+    }
+
+    override fun onResume() {
+        Log.d("Lifecycle", "main resume")
+        super.onResume()
     }
 }

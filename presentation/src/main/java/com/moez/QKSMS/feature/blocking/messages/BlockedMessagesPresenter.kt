@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.blocking.messages
 
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.common.Navigator
@@ -30,10 +31,10 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class BlockedMessagesPresenter @Inject constructor(
-    conversationRepo: ConversationRepository,
-    private val blockingClient: BlockingClient,
-    private val deleteConversations: DeleteConversations,
-    private val navigator: Navigator
+        conversationRepo: ConversationRepository,
+        private val blockingClient: BlockingClient,
+        private val deleteConversations: DeleteConversations,
+        private val navigator: Navigator
 ) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState(
         data = conversationRepo.getBlockedConversationsAsync()
 )) {
@@ -42,7 +43,7 @@ class BlockedMessagesPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.menuReadyIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { newState { copy() } }
 
         view.optionsItemIntent
@@ -58,22 +59,22 @@ class BlockedMessagesPresenter @Inject constructor(
                     }
 
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.confirmDeleteIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { conversations ->
                     deleteConversations.execute(conversations)
                     view.clearSelection()
                 }
 
         view.conversationClicks
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { threadId -> navigator.showConversation(threadId) }
 
         view.selectionChanges
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { selection -> newState { copy(selected = selection.size) } }
 
         view.backClicked
@@ -83,7 +84,7 @@ class BlockedMessagesPresenter @Inject constructor(
                         else -> view.clearSelection()
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
     }
 

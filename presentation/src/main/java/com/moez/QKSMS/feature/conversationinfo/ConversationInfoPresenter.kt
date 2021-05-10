@@ -48,15 +48,15 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ConversationInfoPresenter @Inject constructor(
-    @Named("threadId") threadId: Long,
-    messageRepo: MessageRepository,
-    private val context: Context,
-    private val conversationRepo: ConversationRepository,
-    private val deleteConversations: DeleteConversations,
-    private val markArchived: MarkArchived,
-    private val markUnarchived: MarkUnarchived,
-    private val navigator: Navigator,
-    private val permissionManager: PermissionManager
+        @Named("threadId") threadId: Long,
+        messageRepo: MessageRepository,
+        private val context: Context,
+        private val conversationRepo: ConversationRepository,
+        private val deleteConversations: DeleteConversations,
+        private val markArchived: MarkArchived,
+        private val markUnarchived: MarkUnarchived,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager
 ) : QkPresenter<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId)
 ) {
@@ -123,7 +123,7 @@ class ConversationInfoPresenter @Inject constructor(
                 .mapNotNull(conversationRepo::getRecipient)
                 .map { recipient -> recipient.address }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { address ->
                     ClipboardUtils.copy(context, address)
                     context.makeToast(R.string.info_copied_address)
@@ -131,14 +131,14 @@ class ConversationInfoPresenter @Inject constructor(
 
         // Show the theme settings for the conversation
         view.themeClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(view::showThemePicker)
 
         // Show the conversation title dialog
         view.nameClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .map { conversation -> conversation.name }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(view::showNameDialog)
 
         // Set the conversation title
@@ -146,19 +146,19 @@ class ConversationInfoPresenter @Inject constructor(
                 .withLatestFrom(conversation) { name, conversation ->
                     conversationRepo.setConversationName(conversation.id, name)
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         // Show the notifications settings for the conversation
         view.notificationClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { conversation -> navigator.showNotificationSettings(conversation.id) }
 
         // Toggle the archived state of the conversation
         view.archiveClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { conversation ->
                     when (conversation.archived) {
                         true -> markUnarchived.execute(listOf(conversation.id))
@@ -169,24 +169,24 @@ class ConversationInfoPresenter @Inject constructor(
         // Toggle the blocked state of the conversation
         view.blockClicks()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { conversation -> view.showBlockingDialog(listOf(conversation.id), !conversation.blocked) }
 
         // Show the delete confirmation dialog
         view.deleteClicks()
                 .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.showDeleteDialog() }
 
         // Delete the conversation
         view.confirmDelete()
                 .withLatestFrom(conversation) { _, conversation -> conversation }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { conversation -> deleteConversations.execute(listOf(conversation.id)) }
 
         // Media
         view.mediaClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(navigator::showMedia)
     }
 

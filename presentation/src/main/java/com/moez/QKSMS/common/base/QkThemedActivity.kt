@@ -56,11 +56,20 @@ import javax.inject.Inject
  */
 abstract class QkThemedActivity : QkActivity() {
 
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var conversationRepo: ConversationRepository
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
-    @Inject lateinit var prefs: Preferences
+    @Inject
+    lateinit var colors: Colors
+
+    @Inject
+    lateinit var conversationRepo: ConversationRepository
+
+    @Inject
+    lateinit var messageRepo: MessageRepository
+
+    @Inject
+    lateinit var phoneNumberUtils: PhoneNumberUtils
+
+    @Inject
+    lateinit var prefs: Preferences
 
     /**
      * In case the activity should be themed for a specific conversation, the selected conversation
@@ -107,7 +116,7 @@ abstract class QkThemedActivity : QkActivity() {
         Observable.merge(triggers.map { it.asObservable().skip(1) })
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(scope())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { recreate() }
 
         // We can only set light nav bar on API 27 in attrs, but we can do it in API 26 here

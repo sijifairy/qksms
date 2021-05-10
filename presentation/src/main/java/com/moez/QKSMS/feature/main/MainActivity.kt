@@ -169,11 +169,11 @@ class MainActivity : QkThemedActivity(), MainView {
         conversationsAdapter.autoScrollToStart(recyclerView)
 
         // Don't allow clicks to pass through the drawer layout
-        drawer.clicks().autoDisposable(scope()).subscribe()
+        drawer.clicks().autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
         theme
-                .autoDisposable(scope())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { theme ->
                     // Set the color for the drawer icons
                     val states = arrayOf(

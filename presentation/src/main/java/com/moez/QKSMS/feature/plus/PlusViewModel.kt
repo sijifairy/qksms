@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.feature.plus
 
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.manager.AnalyticsManager
@@ -29,9 +30,9 @@ import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class PlusViewModel @Inject constructor(
-    private val analyticsManager: AnalyticsManager,
-    private val billingManager: BillingManager,
-    private val navigator: Navigator
+        private val analyticsManager: AnalyticsManager,
+        private val billingManager: BillingManager,
+        private val navigator: Navigator
 ) : QkViewModel<PlusView, PlusState>(PlusState()) {
 
     init {
@@ -43,8 +44,10 @@ class PlusViewModel @Inject constructor(
                     newState {
                         val upgrade = products.firstOrNull { it.sku == BillingManager.SKU_PLUS }
                         val upgradeDonate = products.firstOrNull { it.sku == BillingManager.SKU_PLUS_DONATE }
-                        copy(upgradePrice = upgrade?.price ?: "", upgradeDonatePrice = upgradeDonate?.price ?: "",
-                                currency = upgrade?.priceCurrencyCode ?: upgradeDonate?.priceCurrencyCode ?: "")
+                        copy(upgradePrice = upgrade?.price
+                                ?: "", upgradeDonatePrice = upgradeDonate?.price ?: "",
+                                currency = upgrade?.priceCurrencyCode
+                                        ?: upgradeDonate?.priceCurrencyCode ?: "")
                     }
                 }
     }
@@ -56,31 +59,31 @@ class PlusViewModel @Inject constructor(
                 view.upgradeIntent.map { BillingManager.SKU_PLUS },
                 view.upgradeDonateIntent.map { BillingManager.SKU_PLUS_DONATE })
                 .doOnNext { sku -> analyticsManager.track("Clicked Upgrade", Pair("sku", sku)) }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { sku -> view.initiatePurchaseFlow(billingManager, sku) }
 
         view.donateIntent
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showDonation() }
 
         view.themeClicks
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showSettings() }
 
         view.scheduleClicks
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showScheduled() }
 
         view.backupClicks
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showBackup() }
 
         view.delayedClicks
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showSettings() }
 
         view.nightClicks
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { navigator.showSettings() }
     }
 

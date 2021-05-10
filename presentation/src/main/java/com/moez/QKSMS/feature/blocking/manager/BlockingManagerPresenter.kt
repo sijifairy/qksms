@@ -1,6 +1,7 @@
 package com.moez.QKSMS.feature.blocking.manager
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.blocking.CallControlBlockingClient
@@ -20,14 +21,14 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class BlockingManagerPresenter @Inject constructor(
-    private val analytics: AnalyticsManager,
-    private val callControl: CallControlBlockingClient,
-    private val context: Context,
-    private val conversationRepo: ConversationRepository,
-    private val navigator: Navigator,
-    private val prefs: Preferences,
-    private val qksms: QksmsBlockingClient,
-    private val shouldIAnswer: ShouldIAnswerBlockingClient
+        private val analytics: AnalyticsManager,
+        private val callControl: CallControlBlockingClient,
+        private val context: Context,
+        private val conversationRepo: ConversationRepository,
+        private val navigator: Navigator,
+        private val prefs: Preferences,
+        private val qksms: QksmsBlockingClient,
+        private val shouldIAnswer: ShouldIAnswerBlockingClient
 ) : QkPresenter<BlockingManagerView, BlockingManagerState>(BlockingManagerState(
         blockingManager = prefs.blockingManager.get(),
         callControlInstalled = callControl.isAvailable(),
@@ -45,20 +46,20 @@ class BlockingManagerPresenter @Inject constructor(
         view.activityResumed()
                 .map { callControl.isAvailable() }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { available -> newState { copy(callControlInstalled = available) } }
 
         view.activityResumed()
                 .map { shouldIAnswer.isAvailable() }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { available -> newState { copy(siaInstalled = available) } }
 
         view.qksmsClicked()
                 .observeOn(Schedulers.io())
                 .map { getAddressesToBlock(qksms) }
                 .switchMap { numbers -> qksms.block(numbers).andThen(Observable.just(Unit)) } // Hack
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     analytics.setUserProperty("Blocking Manager", "QKSMS")
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_QKSMS)
@@ -90,7 +91,7 @@ class BlockingManagerPresenter @Inject constructor(
                 .observeOn(Schedulers.io())
                 .map { getAddressesToBlock(callControl) } // This sucks. Can't wait to use coroutines
                 .switchMap { numbers -> callControl.block(numbers).andThen(Observable.just(Unit)) } // Hack
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     callControl.getAction("callcontrol").blockingGet()
                     analytics.setUserProperty("Blocking Manager", "Call Control")
@@ -108,7 +109,7 @@ class BlockingManagerPresenter @Inject constructor(
                     val enabled = prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_SIA
                     installed && !enabled
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe {
                     analytics.setUserProperty("Blocking Manager", "SIA")
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)

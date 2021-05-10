@@ -24,6 +24,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
@@ -132,11 +133,13 @@ class MainHolder : DaggerFragment(), MainView {
     private val viewModel by lazy { ViewModelProviders.of(activity!! as FragmentActivity, viewModelFactory)[MainViewModel::class.java] }
     private val toggle by lazy { ActionBarDrawerToggle(activity!!, binding.drawerLayout, binding.toolbar, R.string.main_drawer_open_cd, 0) }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
-    private val progressAnimator by lazy { ObjectAnimator.ofInt(syncing.findViewById(R.id.syncingProgress), "progress", 0, 0) }
+    private val progressAnimator by lazy { ObjectAnimator.ofInt(syncingView.findViewById(R.id.syncingProgress), "progress", 0, 0) }
 
     //    private val changelogDialog by lazy { ChangelogDialog(this) }
     private val snackbar by lazy { binding.root.findViewById<View>(R.id.snackbar) }
+    private lateinit var snackbarView: View
     private val syncing by lazy { binding.root.findViewById<View>(R.id.syncing) }
+    private lateinit var syncingView: View
     private val backPressedSubject: Subject<NavItem> = PublishSubject.create()
 
     private var _binding: MainActivityBinding? = null
@@ -147,15 +150,18 @@ class MainHolder : DaggerFragment(), MainView {
         _binding = MainActivityBinding.inflate(inflater, container, false)
 
         viewModel.bindView(this)
+        Log.d("Lifecycle", "main bind view")
 //        onNewIntentIntent.onNext(intent)
 
         (snackbar as? ViewStub)?.setOnInflateListener { _, view ->
+            snackbarView = view
             view.findViewById<View>(R.id.snackbarButton).clicks()
                     .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                     .subscribe(snackbarButtonIntent)
         }
 
-        (syncing as? ViewStub)?.setOnInflateListener { _, _ ->
+        (syncing as? ViewStub)?.setOnInflateListener { _, view ->
+            syncingView = view
 //            syncingProgress?.progressTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
 //            syncingProgress?.indeterminateTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
         }
@@ -175,11 +181,11 @@ class MainHolder : DaggerFragment(), MainView {
         conversationsAdapter.autoScrollToStart(binding.recyclerView)
 
         // Don't allow clicks to pass through the drawer layout
-        binding.drawer.root.clicks().autoDisposable(scope()).subscribe()
+        binding.drawer.root.clicks().autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
 //        theme
-//                .autoDisposable(scope())
+//                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
 //                .subscribe { theme ->
 //                    // Set the color for the drawer icons
 //                    val states = arrayOf(
@@ -323,30 +329,30 @@ class MainHolder : DaggerFragment(), MainView {
 
             is SyncRepository.SyncProgress.Running -> {
                 syncing.isVisible = true
-                (syncing.findViewById(R.id.syncingProgress) as ProgressBar).max = state.syncing.max
-                progressAnimator.apply { setIntValues((syncing.findViewById(R.id.syncingProgress) as ProgressBar).progress, state.syncing.progress) }.start()
-                (syncing.findViewById(R.id.syncingProgress) as ProgressBar).isIndeterminate = state.syncing.indeterminate
+                (syncingView.findViewById(R.id.syncingProgress) as ProgressBar).max = state.syncing.max
+                progressAnimator.apply { setIntValues((syncingView.findViewById(R.id.syncingProgress) as ProgressBar).progress, state.syncing.progress) }.start()
+                (syncingView.findViewById(R.id.syncingProgress) as ProgressBar).isIndeterminate = state.syncing.indeterminate
                 snackbar.isVisible = false
             }
         }
 
         when {
             !state.defaultSms -> {
-                (snackbar.findViewById(R.id.snackbarTitle) as QkTextView)?.setText(R.string.main_default_sms_title)
-                (snackbar.findViewById(R.id.snackbarMessage) as QkTextView)?.setText(R.string.main_default_sms_message)
-                (snackbar.findViewById(R.id.snackbarButton) as QkTextView)?.setText(R.string.main_default_sms_change)
+                (snackbarView.findViewById(R.id.snackbarTitle) as QkTextView)?.setText(R.string.main_default_sms_title)
+                (snackbarView.findViewById(R.id.snackbarMessage) as QkTextView)?.setText(R.string.main_default_sms_message)
+                (snackbarView.findViewById(R.id.snackbarButton) as QkTextView)?.setText(R.string.main_default_sms_change)
             }
 
             !state.smsPermission -> {
-                (snackbar.findViewById(R.id.snackbarTitle) as QkTextView)?.setText(R.string.main_permission_required)
-                (snackbar.findViewById(R.id.snackbarMessage) as QkTextView)?.setText(R.string.main_permission_sms)
-                (snackbar.findViewById(R.id.snackbarButton) as QkTextView)?.setText(R.string.main_permission_allow)
+                (snackbarView.findViewById(R.id.snackbarTitle) as QkTextView)?.setText(R.string.main_permission_required)
+                (snackbarView.findViewById(R.id.snackbarMessage) as QkTextView)?.setText(R.string.main_permission_sms)
+                (snackbarView.findViewById(R.id.snackbarButton) as QkTextView)?.setText(R.string.main_permission_allow)
             }
 
             !state.contactPermission -> {
-                (snackbar.findViewById(R.id.snackbarTitle) as QkTextView)?.setText(R.string.main_permission_required)
-                (snackbar.findViewById(R.id.snackbarMessage) as QkTextView)?.setText(R.string.main_permission_contacts)
-                (snackbar.findViewById(R.id.snackbarButton) as QkTextView)?.setText(R.string.main_permission_allow)
+                (snackbarView.findViewById(R.id.snackbarTitle) as QkTextView)?.setText(R.string.main_permission_required)
+                (snackbarView.findViewById(R.id.snackbarMessage) as QkTextView)?.setText(R.string.main_permission_contacts)
+                (snackbarView.findViewById(R.id.snackbarButton) as QkTextView)?.setText(R.string.main_permission_allow)
             }
         }
     }

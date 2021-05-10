@@ -26,6 +26,7 @@ import android.text.format.DateFormat
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
@@ -67,14 +68,26 @@ import kotlin.coroutines.resume
 
 class SettingsController : QkController<SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var nightModeDialog: QkDialog
-    @Inject lateinit var textSizeDialog: QkDialog
-    @Inject lateinit var sendDelayDialog: QkDialog
-    @Inject lateinit var mmsSizeDialog: QkDialog
+    @Inject
+    lateinit var context: Context
 
-    @Inject override lateinit var presenter: SettingsPresenter
+    @Inject
+    lateinit var colors: Colors
+
+    @Inject
+    lateinit var nightModeDialog: QkDialog
+
+    @Inject
+    lateinit var textSizeDialog: QkDialog
+
+    @Inject
+    lateinit var sendDelayDialog: QkDialog
+
+    @Inject
+    lateinit var mmsSizeDialog: QkDialog
+
+    @Inject
+    override lateinit var presenter: SettingsPresenter
 
     private val signatureDialog: TextInputDialog by lazy {
         TextInputDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
@@ -97,7 +110,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         layoutRes = R.layout.settings_controller
 
         colors.themeObservable()
-                .autoDisposable(scope())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { activity?.recreate() }
     }
 

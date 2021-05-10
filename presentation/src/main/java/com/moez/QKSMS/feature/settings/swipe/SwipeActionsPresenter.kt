@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.settings.swipe
 
 import android.content.Context
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.util.Preferences
@@ -30,8 +31,8 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 
 class SwipeActionsPresenter @Inject constructor(
-    context: Context,
-    private val prefs: Preferences
+        context: Context,
+        private val prefs: Preferences
 ) : QkPresenter<SwipeActionsView, SwipeActionsState>(SwipeActionsState()) {
 
     init {
@@ -54,7 +55,7 @@ class SwipeActionsPresenter @Inject constructor(
                         SwipeActionsView.Action.LEFT -> prefs.swipeLeft.get()
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(view::showSwipeActions)
 
         view.actionSelected()
@@ -64,7 +65,7 @@ class SwipeActionsPresenter @Inject constructor(
                         SwipeActionsView.Action.LEFT -> prefs.swipeLeft.set(actionId)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
     }
 

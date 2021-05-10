@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.backup
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -38,13 +39,13 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
-    private val backupRepo: BackupRepository,
-    private val billingManager: BillingManager,
-    private val context: Context,
-    private val dateFormatter: DateFormatter,
-    private val navigator: Navigator,
-    private val performBackup: PerformBackup,
-    private val permissionManager: PermissionManager
+        private val backupRepo: BackupRepository,
+        private val billingManager: BillingManager,
+        private val context: Context,
+        private val dateFormatter: DateFormatter,
+        private val navigator: Navigator,
+        private val performBackup: PerformBackup,
+        private val permissionManager: PermissionManager
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     private val storagePermissionSubject: Subject<Boolean> = BehaviorSubject.createDefault(permissionManager.hasStorage())
@@ -83,7 +84,7 @@ class BackupPresenter @Inject constructor(
 
         view.activityVisible()
                 .map { permissionManager.hasStorage() }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(storagePermissionSubject)
 
         view.restoreClicks()
@@ -100,29 +101,29 @@ class BackupPresenter @Inject constructor(
                         else -> view.selectFile()
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe()
 
         view.restoreFileSelected()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.confirmRestore() }
 
         view.restoreConfirmed()
                 .withLatestFrom(view.restoreFileSelected()) { _, backup -> backup }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { backup -> RestoreBackupService.start(context, backup.path) }
 
         view.stopRestoreClicks()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { view.stopRestore() }
 
         view.stopRestoreConfirmed()
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { backupRepo.stopRestore() }
 
         view.fabClicks()
                 .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe { upgraded ->
                     when {
                         !upgraded -> navigator.showQksmsPlusActivity("backup_fab")

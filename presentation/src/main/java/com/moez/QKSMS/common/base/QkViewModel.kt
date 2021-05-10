@@ -19,6 +19,7 @@
 package com.moez.QKSMS.common.base
 
 import androidx.annotation.CallSuper
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -49,7 +50,7 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
     open fun bindView(view: View) {
         state
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(view::render)
     }
 

@@ -25,6 +25,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
@@ -46,9 +47,14 @@ import javax.inject.Inject
 
 class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
-    @Inject lateinit var previewModeDialog: QkDialog
-    @Inject lateinit var actionsDialog: QkDialog
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var previewModeDialog: QkDialog
+
+    @Inject
+    lateinit var actionsDialog: QkDialog
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val previewModeSelectedIntent by lazy { previewModeDialog.adapter.menuItemClicks }
@@ -86,7 +92,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
                 .mapNotNull { view -> view as? PreferenceView }
                 .map { preference -> preference.clicks().map { preference } }
                 .let { Observable.merge(it) }
-                .autoDisposable(scope())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(preferenceClickIntent)
     }
 
