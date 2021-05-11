@@ -23,6 +23,8 @@ import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -43,11 +45,13 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
-import com.moez.QKSMS.common.util.extensions.autoScrollToStart
-import com.moez.QKSMS.common.util.extensions.scrapViews
-import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.*
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.databinding.MainActivityBinding
+import com.moez.QKSMS.extensions.Optional
+import com.moez.QKSMS.extensions.asObservable
+import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.feature.blocking.BlockingDialog
 import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
@@ -63,6 +67,9 @@ import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 class MainHolder : DaggerFragment(), MainView {
+
+    @Inject
+    lateinit var colors: Colors
 
     @Inject
     lateinit var blockingDialog: BlockingDialog
@@ -144,6 +151,7 @@ class MainHolder : DaggerFragment(), MainView {
 
     private var _binding: MainActivityBinding? = null
     private val binding get() = _binding!!
+    private val theme by lazy { colors.themeObservable() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -162,8 +170,8 @@ class MainHolder : DaggerFragment(), MainView {
 
         (syncing as? ViewStub)?.setOnInflateListener { _, view ->
             syncingView = view
-//            syncingProgress?.progressTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
-//            syncingProgress?.indeterminateTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
+            (syncingView.findViewById(R.id.syncingProgress) as ProgressBar)?.progressTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
+            (syncingView.findViewById(R.id.syncingProgress) as ProgressBar)?.indeterminateTintList = ColorStateList.valueOf(theme.blockingFirst().theme)
         }
 
         toggle.syncState()
@@ -184,40 +192,40 @@ class MainHolder : DaggerFragment(), MainView {
         binding.drawer.root.clicks().autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
-//        theme
-//                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
-//                .subscribe { theme ->
-//                    // Set the color for the drawer icons
-//                    val states = arrayOf(
-//                            intArrayOf(android.R.attr.state_activated),
-//                            intArrayOf(-android.R.attr.state_activated))
-//
-//                    resolveThemeColor(android.R.attr.textColorSecondary)
-//                            .let { textSecondary -> ColorStateList(states, intArrayOf(theme.theme, textSecondary)) }
-//                            .let { tintList ->
-//                                inboxIcon.imageTintList = tintList
-//                                archivedIcon.imageTintList = tintList
-//                            }
-//
-//                    // Miscellaneous views
-//                    listOf(plusBadge1, plusBadge2).forEach { badge ->
-//                        badge.setBackgroundTint(theme.theme)
-//                        badge.setTextColor(theme.textPrimary)
-//                    }
-//                    syncingProgress?.progressTintList = ColorStateList.valueOf(theme.theme)
-//                    syncingProgress?.indeterminateTintList = ColorStateList.valueOf(theme.theme)
-//                    plusIcon.setTint(theme.theme)
-//                    rateIcon.setTint(theme.theme)
-//                    compose.setBackgroundTint(theme.theme)
-//
-//                    // Set the FAB compose icon color
-//                    compose.setTint(theme.textPrimary)
-//                }
+        theme
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+                .subscribe { theme ->
+                    // Set the color for the drawer icons
+                    val states = arrayOf(
+                            intArrayOf(android.R.attr.state_activated),
+                            intArrayOf(-android.R.attr.state_activated))
+
+                    activity!!.resolveThemeColor(android.R.attr.textColorSecondary)
+                            .let { textSecondary -> ColorStateList(states, intArrayOf(theme.theme, textSecondary)) }
+                            .let { tintList ->
+                                binding.drawer.inboxIcon.imageTintList = tintList
+                                binding.drawer.archivedIcon.imageTintList = tintList
+                            }
+
+                    // Miscellaneous views
+                    listOf(binding.drawer.plusBadge1, binding.drawer.plusBadge2).forEach { badge ->
+                        badge.setBackgroundTint(theme.theme)
+                        badge.setTextColor(theme.textPrimary)
+                    }
+//                    (syncingView.findViewById(R.id.syncingProgress) as ProgressBar)?.progressTintList = ColorStateList.valueOf(theme.theme)
+//                    (syncingView.findViewById(R.id.syncingProgress) as ProgressBar)?.indeterminateTintList = ColorStateList.valueOf(theme.theme)
+                    binding.drawer.plusIcon.setTint(theme.theme)
+                    binding.drawer.rateIcon.setTint(theme.theme)
+                    binding.compose.setBackgroundTint(theme.theme)
+
+                    // Set the FAB compose icon color
+                    binding.compose.setTint(theme.textPrimary)
+                }
 
         // These theme attributes don't apply themselves on API 21
-//        if (Build.VERSION.SDK_INT <= 22) {
-//            toolbarSearch.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
-//        }
+        if (Build.VERSION.SDK_INT <= 22) {
+            binding.toolbarSearch.setBackgroundTint(activity!!.resolveThemeColor(R.attr.bubbleColor))
+        }
 
         return binding.root
     }
@@ -283,8 +291,8 @@ class MainHolder : DaggerFragment(), MainView {
 
         when (state.page) {
             is Inbox -> {
-//                showBackButton(state.page.selected > 0)
-//                title = getString(R.string.main_title_selected, state.page.selected)
+                showBackButton(state.page.selected > 0)
+                binding.toolbarTitle.text = getString(R.string.main_title_selected, state.page.selected)
                 if (binding.recyclerView.adapter !== conversationsAdapter) binding.recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(binding.recyclerView)
@@ -292,7 +300,7 @@ class MainHolder : DaggerFragment(), MainView {
             }
 
             is Searching -> {
-//                showBackButton(true)
+                showBackButton(true)
                 if (binding.recyclerView.adapter !== searchAdapter) binding.recyclerView.adapter = searchAdapter
                 searchAdapter.data = state.page.data ?: listOf()
                 itemTouchHelper.attachToRecyclerView(null)
@@ -300,11 +308,11 @@ class MainHolder : DaggerFragment(), MainView {
             }
 
             is Archived -> {
-//                showBackButton(state.page.selected > 0)
-//                title = when (state.page.selected != 0) {
-//                    true -> getString(R.string.main_title_selected, state.page.selected)
-//                    false -> getString(R.string.title_archived)
-//                }
+                showBackButton(state.page.selected > 0)
+                binding.toolbarTitle.text = when (state.page.selected != 0) {
+                    true -> getString(R.string.main_title_selected, state.page.selected)
+                    false -> getString(R.string.title_archived)
+                }
                 if (binding.recyclerView.adapter !== conversationsAdapter) binding.recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.updateData(state.page.data)
                 itemTouchHelper.attachToRecyclerView(null)
@@ -372,13 +380,13 @@ class MainHolder : DaggerFragment(), MainView {
         disposables.dispose()
     }
 
-//    override fun showBackButton(show: Boolean) {
-//        toggle.onDrawerSlide(drawer, if (show) 1f else 0f)
-//        toggle.drawerArrowDrawable.color = when (show) {
-//            true -> resolveThemeColor(android.R.attr.textColorSecondary)
-//            false -> resolveThemeColor(android.R.attr.textColorPrimary)
-//        }
-//    }
+    fun showBackButton(show: Boolean) {
+        toggle.onDrawerSlide(binding.drawer.root, if (show) 1f else 0f)
+        toggle.drawerArrowDrawable.color = when (show) {
+            true -> activity!!.resolveThemeColor(android.R.attr.textColorSecondary)
+            false -> activity!!.resolveThemeColor(android.R.attr.textColorPrimary)
+        }
+    }
 
     override fun requestDefaultSms() {
         navigator.showDefaultSmsDialog(activity!!)
@@ -435,10 +443,10 @@ class MainHolder : DaggerFragment(), MainView {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.main, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.main, menu)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         optionsItemIntent.onNext(item.itemId)
