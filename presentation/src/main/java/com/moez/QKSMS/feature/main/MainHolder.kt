@@ -31,6 +31,7 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
@@ -225,6 +226,12 @@ class MainHolder : DaggerFragment(), MainView {
         // These theme attributes don't apply themselves on API 21
         if (Build.VERSION.SDK_INT <= 22) {
             binding.toolbarSearch.setBackgroundTint(activity!!.resolveThemeColor(R.attr.bubbleColor))
+        }
+
+        binding.toolbar.inflateMenu(R.menu.main)
+        binding.toolbar.setOnMenuItemClickListener {
+            optionsItemIntent.onNext(it.itemId)
+            true
         }
 
         return binding.root
@@ -438,23 +445,13 @@ class MainHolder : DaggerFragment(), MainView {
     override fun showArchivedSnackbar() {
         Snackbar.make(binding.drawerLayout, R.string.toast_archived, Snackbar.LENGTH_LONG).apply {
             setAction(R.string.button_undo) { undoArchiveIntent.onNext(Unit) }
-//            setActionTextColor(colors.theme().theme)
+            setActionTextColor(colors.theme().theme)
             show()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.main, menu)
+    fun handleBackPressed(): Boolean {
+        backPressedSubject.onNext(NavItem.BACK)
+        return false
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        optionsItemIntent.onNext(item.itemId)
-        return true
-    }
-
-//    override fun onBackPressed() {
-//        backPressedSubject.onNext(NavItem.BACK)
-//    }
-
 }

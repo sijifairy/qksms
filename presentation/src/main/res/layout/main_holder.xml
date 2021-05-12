@@ -5,7 +5,7 @@
   android:background="?attr/winBgColor">
 
   <fragment
-    android:id="@+id/main"
+    android:id="@+id/main_message"
     android:name="com.moez.QKSMS.feature.main.MainHolder"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

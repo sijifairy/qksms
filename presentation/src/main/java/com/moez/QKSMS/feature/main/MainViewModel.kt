@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.main
 
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.android.launcher3.Launcher
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
@@ -260,7 +261,9 @@ class MainViewModel @Inject constructor(
                             state.page !is Inbox -> {
                                 newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
                             }
-                            else -> newState { copy(hasError = true) }
+                            else -> {
+                                ((view as MainHolder).activity!! as Launcher).handleBackPressed()
+                            }
                         }
                         NavItem.BACKUP -> navigator.showBackup()
                         NavItem.SCHEDULED -> navigator.showScheduled()

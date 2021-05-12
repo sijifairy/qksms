@@ -141,6 +141,7 @@ import com.android.launcher3.widget.WidgetAddFlowHandler;
 import com.android.launcher3.widget.WidgetHostViewLoader;
 import com.android.launcher3.widget.WidgetsContainerView;
 import com.moez.QKSMS.R;
+import com.moez.QKSMS.feature.main.MainHolder;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -2240,6 +2241,16 @@ public class Launcher extends BaseActivity
 
   @Override
   public void onBackPressed() {
+    if (isOnCustomContent()) {
+      MainHolder smsFragment =
+          (MainHolder) getSupportFragmentManager().findFragmentById(R.id.main_message);
+      smsFragment.handleBackPressed();
+    } else {
+      handleBackPressed();
+    }
+  }
+
+  public void handleBackPressed() {
     if (mLauncherCallbacks != null && mLauncherCallbacks.handleBackPressed()) {
       return;
     }
