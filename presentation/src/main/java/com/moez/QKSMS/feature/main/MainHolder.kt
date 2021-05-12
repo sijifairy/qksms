@@ -35,6 +35,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.core.view.iterator
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -58,13 +59,17 @@ import com.moez.QKSMS.feature.conversations.ConversationItemTouchCallback
 import com.moez.QKSMS.feature.conversations.ConversationsAdapter
 import com.moez.QKSMS.manager.ChangelogManager
 import com.moez.QKSMS.repository.SyncRepository
+import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.support.DaggerFragment
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.toolbar.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainHolder : DaggerFragment(), MainView {
@@ -95,6 +100,9 @@ class MainHolder : DaggerFragment(), MainView {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var prefs: Preferences
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val activityResumedIntent: Subject<Boolean> = PublishSubject.create()
@@ -186,7 +194,7 @@ class MainHolder : DaggerFragment(), MainView {
             homeIntent.onNext(Unit)
         }
 
-        itemTouchCallback.adapter = conversationsAdapter
+//        itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(binding.recyclerView)
 
         // Don't allow clicks to pass through the drawer layout
@@ -213,8 +221,6 @@ class MainHolder : DaggerFragment(), MainView {
                         badge.setBackgroundTint(theme.theme)
                         badge.setTextColor(theme.textPrimary)
                     }
-//                    (syncingView.findViewById(R.id.syncingProgress) as ProgressBar)?.progressTintList = ColorStateList.valueOf(theme.theme)
-//                    (syncingView.findViewById(R.id.syncingProgress) as ProgressBar)?.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     binding.drawer.plusIcon.setTint(theme.theme)
                     binding.drawer.rateIcon.setTint(theme.theme)
                     binding.compose.setBackgroundTint(theme.theme)
@@ -233,6 +239,21 @@ class MainHolder : DaggerFragment(), MainView {
             optionsItemIntent.onNext(it.itemId)
             true
         }
+        binding.toolbar.overflowIcon = binding.toolbar.overflowIcon?.apply {
+            setTint(activity!!.resolveThemeColor(android.R.attr.textColorSecondary))
+        }
+        binding.toolbar.menu.iterator().forEach { menuItem ->
+            val tint = activity!!.resolveThemeColor(android.R.attr.textColorSecondary)
+            menuItem.icon = menuItem.icon?.apply { setTint(tint) }
+        }
+
+        // When certain preferences change, we need to recreate the activity
+        val triggers = listOf(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont)
+        Observable.merge(triggers.map { it.asObservable().skip(1) })
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+                .subscribe { activity!!.recreate() }
 
         return binding.root
     }
@@ -302,7 +323,7 @@ class MainHolder : DaggerFragment(), MainView {
                 binding.toolbarTitle.text = getString(R.string.main_title_selected, state.page.selected)
                 if (binding.recyclerView.adapter !== conversationsAdapter) binding.recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.updateData(state.page.data)
-                itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+//                itemTouchHelper.attachToRecyclerView(binding.recyclerView)
                 binding.empty.setText(R.string.inbox_empty_text)
             }
 
@@ -310,7 +331,7 @@ class MainHolder : DaggerFragment(), MainView {
                 showBackButton(true)
                 if (binding.recyclerView.adapter !== searchAdapter) binding.recyclerView.adapter = searchAdapter
                 searchAdapter.data = state.page.data ?: listOf()
-                itemTouchHelper.attachToRecyclerView(null)
+//                itemTouchHelper.attachToRecyclerView(null)
                 binding.empty.setText(R.string.inbox_search_empty_text)
             }
 
@@ -322,7 +343,7 @@ class MainHolder : DaggerFragment(), MainView {
                 }
                 if (binding.recyclerView.adapter !== conversationsAdapter) binding.recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.updateData(state.page.data)
-                itemTouchHelper.attachToRecyclerView(null)
+//                itemTouchHelper.attachToRecyclerView(null)
                 binding.empty.setText(R.string.archived_empty_text)
             }
         }
